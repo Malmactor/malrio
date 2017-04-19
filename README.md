@@ -1,2 +1,2 @@
 # Malrio
-Deep Learning AI + GAN based Map Generator for Super Mario Playing in Minecraft
+Visit our [GitHub Page](https://malmactor.github.io/malrio/ "malrio") for information.
