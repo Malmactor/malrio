@@ -19,6 +19,10 @@ TODO
  - G: Use CNN to generate the map from noise
  - A: Determine difficulty of the map, with average score of the actor
 
+#### For Training
+ - First, actor and generator will be seperately in a supervised fasion.
+ - Later, actor and generator can be trained in turn against each other to achieve the best result.<br>
+
 ### Evaluation Plan
 TODO
 
