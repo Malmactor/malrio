@@ -3,10 +3,10 @@ layout: default
 title: Proposal
 ---
 
-## Summary
+### Summary
 TODO
 
-## Algorithms
+### Algorithms
 
 #### For Actor (Mario)
  - CNN as encoder -> 
@@ -19,8 +19,8 @@ TODO
  - G: Use CNN to generating the map from noise
  - A: Determine difficulty of the map
 
-## Evaluation Plan
+### Evaluation Plan
 TODO
 
-## Appointment with the Instructor
+### Appointment with the Instructor
 TODO
