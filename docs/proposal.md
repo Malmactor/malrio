@@ -3,8 +3,8 @@ layout: default
 title: Proposal
 ---
 
+## Summary
 TODO
-
 
 ## Algorithms
 
@@ -18,3 +18,6 @@ TODO
  - Generative adversarial networks
  - G: Use CNN to generating the map from noise
  - A: Determine difficulty of the map
+
+## Evaluation Plan
+TODO
