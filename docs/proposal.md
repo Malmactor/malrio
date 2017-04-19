@@ -17,7 +17,7 @@ TODO
 #### For Level/Map Generator
  - Generative adversarial networks
  - G: Use CNN to generate the map from noise
- - A: Determine difficulty of the map
+ - A: Determine difficulty of the map, with average score of the actor
 
 ### Evaluation Plan
 TODO
