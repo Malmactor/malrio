@@ -21,3 +21,6 @@ TODO
 
 ## Evaluation Plan
 TODO
+
+## Appointment with the Instructor
+TODO
