@@ -1,2 +1,2 @@
 # Malrio
-A Reinforcement & GAN based AI for Super Mario Playing and Maze Generating in Minecraft
+Reinforcement AI + GAN based Level Generator for Super Mario Playing in Minecraft
