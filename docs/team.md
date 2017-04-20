@@ -10,8 +10,8 @@ title:  Team
 ***UCI Net ID***: cgao7
 
 ### User 2
-***Name***: name<br>
-***UCI Net ID***: ucinetid
+***Name***: Bruce Tan<br>
+***UCI Net ID***: junyangt
 
 ### User 3
 ***Name***: name<br>
