@@ -4,7 +4,7 @@ title: Proposal
 ---
 
 ### Summary
-The main idea of this project is to create a powerful AI + scalable map generator for Super Mario Playing on Minecraft. For AI, we use the observable map as input, through a deep learning pipeline, to generate an action as output. For the map generator, we use generative adversarial networks, which takes a noise as input and generate a map close to actual Super Mario level. For possible applications, this AI+map method could be inplemented in many actor-based games.
+The main idea of this project is to create a powerful AI + scalable map generator for Super Mario Playing on Minecraft. For AI, we use the observable map as input, through a deep learning pipeline, to generate an action as output. For the map generator, we use generative adversarial networks, which take a noise as input and generate a map close to actual Super Mario level. For possible applications, this AI+map method could be inplemented in many actor-based games.
 
 ### Algorithms
 __For Actor (Mario)__<br>
@@ -26,7 +26,7 @@ __Quantitative:__<br>
 __Qualitative__<br>
  - AI: In the end, the AI should be able to solve at least Level 1-1 in Super Mario. The quality of the AI can be further examined by more difficult levels.
  - Map: In the end, the map should looks similar to original Super Mario, with controllable difficulty of the map.
- - Validation of Algo: Since we first train them with supervised AI/Map, it could be directly reflected.
+ - Validation of Algo: Since we first train them with supervised AI/Map, it could be directly reflected by loss.
  - Moonshot: AI can solve a extremely difficult map that normal players cannot!
 
 ### Appointment with the Instructor
