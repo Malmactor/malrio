@@ -26,6 +26,7 @@ __Quantitative:__<br>
 __Qualitative__<br>
  - AI: In the end, the AI should be able to solve at least Level 1-1 in Super Mario. The quality of the AI can be further examined by more difficult levels.
  - Map: In the end, the map should looks similar to original Super Mario, with controllable difficulty of the map.
+ - Validation of Algo: Since we first train them with supervised AI/Map, it could be directly reflected.
  - Moonshot: AI can solve a extremely difficult map that normal players cannot!
 
 ### Appointment with the Instructor
