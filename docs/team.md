@@ -14,5 +14,5 @@ title:  Team
 ***UCI Net ID***: junyangt
 
 ### User 3
-***Name***: name<br>
-***UCI Net ID***: ucinetid
+***Name***: Liyan Chen<br>
+***UCI Net ID***: liyanc
