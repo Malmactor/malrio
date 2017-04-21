@@ -30,4 +30,4 @@ __Qualitative__<br>
  - Moonshot: AI can solve a extremely difficult map that normal players cannot!
 
 ### Appointment with the Instructor
-TODO
+ - 3PM on April 25th, at DBH 4204
