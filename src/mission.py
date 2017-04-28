@@ -49,7 +49,8 @@ while not world_state.has_mission_begun:
 
 # Loop until mission ends:
 while world_state.is_mission_running:
-    movement.act(agent_host)
+    actor = movement.Actor(agent_host)
+    actor.run()
 
 print
 print "Mission ended"

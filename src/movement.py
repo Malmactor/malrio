@@ -2,9 +2,6 @@ import time
 import json
 import numpy
 
-## TODO:
-## 1. bound back check and reaction
-## 2. touch ground check, to prevent increment gain in height
 
 class spos:
     def __init__(self, x, y, z):
@@ -24,71 +21,90 @@ class pos:
         self.y += rhs.y
         self.z += rhs.z
 
-    def printpos(self):
+    def __str__(self):
         return str(self.x) + ' ' + str(self.y) + ' ' + str(self.z)
 
 
-construe_action = {
-    0: [pos(0, 0, 0.1), pos(0, 0, 0.1), pos(0, 0, 0.15), pos(0, 0, 0.15),
-        pos(0, 0, 0.15), pos(0, 0, 0.15), pos(0, 0, 0.1), pos(0, 0, 0.1)], # move left
-    1: [pos(0, 0, -0.1), pos(0, 0, -0.1), pos(0, 0, -0.15), pos(0, 0, -0.15),
-        pos(0, 0, -0.15), pos(0, 0, -0.15), pos(0, 0, -0.1), pos(0, 0, -0.1)], # move right
-    2: [pos(0, 0.14, 0), pos(0, 0.14, 0), pos(0, 0.13, 0), pos(0, 0.13, 0), pos(0, 0.13, 0),
-        pos(0, 0.12, 0), pos(0, 0.12, 0), pos(0, 0.11, 0), pos(0, 0.11, 0), pos(0, 0.11, 0),
-        pos(0, -0.11, 0), pos(0, -0.11, 0), pos(0, -0.11, 0), pos(0, -0.12, 0), pos(0, -0.12, 0),
-        pos(0, -0.13, 0), pos(0, -0.13, 0), pos(0, -0.13, 0), pos(0, -0.14, 0), pos(0, -0.14, 0)], # low jump
-    3: [pos(0, 0, 0)], # mid jump
-    4: [pos(0, 0, 0)], # high jump
-    5: [pos(0, 0, 0)], # do nothing
-}
+class Actor:
+    def __init__(self, host):
+        self.host = host
+        self.state = host.getWorldState()
+        self.jump_status = 0  # Begin 0~1 Finish, 0 means not jumping, 0.5 for highest point
+        self.move_status = 0  # Begin 0~1 Finish, 0 means not left/right movig
+        self.jump_type = 0    # 0 for low, 1 for med, 2 for high
+        self.move_type = 0    # 0 far left, 1 for right
 
-def current_pos(state):
-    obs = json.loads(state.observations[-1].text)
-    return pos(obs[u'XPos'], obs[u'YPos'], obs[u'ZPos'])
+    def current_pos(self):
+        obs = json.loads(self.state.observations[-1].text)
+        return pos(obs[u'XPos'], obs[u'YPos'], obs[u'ZPos'])
 
-def get_action():
-    return 2  # numpy.random.randint(6)
+    def pos_shift(self):
+        #### TODO ####
+        return pos(0, 0, 1)
 
-def act(host):
-    actlist = []
-    on_jump = False
-    on_lr = False
-    while True:
-        world_state = host.getWorldState()
-        if world_state.number_of_observations_since_last_state > 0:
-            # get next action list
-            actnum = get_action()
-            # check or set if is in the air, or moving left and right
-            if actnum > 1 and actnum < 5:
-                if on_jump:
-                    actnum = 5
-                else:
-                    on_jump = True
-            elif actnum < 2:
-                if on_lr:
-                    actnum = 5
-                else:
-                    on_lr = True
-            newactlist = construe_action[actnum]
-            # merge into current action list
-            for i in range(len(newactlist)):
-                if len(actlist) > i:
-                    actlist[i].eltadd(newactlist[i])
-                else:
-                    actlist.append(newactlist[i])
-            # calc next position
-            nextpos = current_pos(world_state)
-            # reselt checker
-            if actlist[0].y == 0:
-                on_jump = False
-            if actlist[0].z == 0:
-                on_lr = False
-            print(nextpos.printpos())
-            print(actlist[0].printpos())
-            nextpos.eltadd(actlist.pop(0))
-            print(nextpos.printpos())
-            print
-            # action
-            host.sendCommand("tp " + str(nextpos.x) + " " + str(nextpos.y) + " " + str(nextpos.z))
-            prev_actnum = actnum
-            time.sleep(0.1)
+    def get_action(self):
+        """Get next action.
+        ret: {0: freeze, 1: left, 2: right, 3: low jump, 4: mid jump, 5: high jump}
+        """
+        #### TODO ####
+        return 0  # numpy.random.randint(6)
+
+    def boundcheck(self):
+        """Check boundaries in all four direction.
+        ret: [l ,r, u, d]
+        """
+        #### TODO ####
+        return [False, False, False, False]
+
+    def run(self):
+        while True:
+            self.state = self.host.getWorldState()
+            if self.state.number_of_observations_since_last_state > 0:
+                # get next action
+                actnum = self.get_action()
+
+                # 1. check all posibilities for current movement
+                # -- 1.1 if jumping up and hits block
+                if self.jump_status < 0.5 and self.boundcheck()[2] == True:
+                    self.jump_status = 0.5
+                # -- 1.2 if jumping down and hits block
+                elif self.jump_status >= 0.5 and self.boundcheck()[3] == True:
+                    self.jump_status = 0
+                # -- 1.3 if moving left and hits block
+                if self.move_type == 0 and self.move_status != 0 and self.boundcheck()[0] == True:
+                    self.move_status = 0
+                # -- 1.4 if moving right and hits block
+                elif self.move_type == 1 and self.move_status != 0 and self.boundcheck()[1] == True:
+                    self.move_status = 0
+
+                # 2. check all posibilities for next movement
+                # -- 2.1 check if already in air
+                if actnum > 2:
+                    if self.jump_status != 0:
+                        actnum = 0
+                    else:
+                        self.jump_type = actnum-3
+                # -- 2.2 check if already moving left/right
+                elif actnum <= 2 and actnum > 0:
+                    if self.move_status != 0:
+                        actnum = 0
+                    else:
+                        self.move_type = actnum
+
+                # 3. calc next position
+                nextpos = self.current_pos()
+                print(nextpos)
+                poxshift = self.pos_shift()
+                nextpos.eltadd(poxshift)
+                print(nextpos)
+                print
+
+                # 4. action
+                self.host.sendCommand("tp " + str(nextpos.x) + " " + str(nextpos.y) + " " + str(nextpos.z))
+                time.sleep(0.1)
+
+                # 5. reset status
+                if self.jump_status == 1:
+                    self.jump_status = 0
+                if self.move_status == 1:
+                    self.move_status = 0
