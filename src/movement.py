@@ -109,6 +109,6 @@ class Actor:
 
                 # 5. reset status
                 if nextpos.y < 0:
-                    return die()
+                    return self.die()
                 if self.move_status == 1:
                     self.move_status = 0
