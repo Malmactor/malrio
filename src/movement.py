@@ -48,7 +48,11 @@ class Actor:
         """
         #### TODO ####
         return 0  # numpy.random.randint(6)
-
+    
+    def die(self):
+        #### TODO ####
+        pass
+        
     def boundcheck(self):
         """Check boundaries in all four direction.
         ret: [l ,r, u, d]
@@ -104,7 +108,7 @@ class Actor:
                 time.sleep(0.1)
 
                 # 5. reset status
-                # if self.jump_status == 1:
-                    # self.jump_status = 0
+                if nextpos.y < 0:
+                    return die()
                 if self.move_status == 1:
                     self.move_status = 0
