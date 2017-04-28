@@ -35,12 +35,12 @@ def generate_world(world_dict):
                   <DrawingDecorator>
                     ''' + genItems() + '''
                   </DrawingDecorator>
-                  <ServerQuitFromTimeUp timeLimitMs="30000"/>
+                  <ServerQuitFromTimeUp timeLimitMs="300000"/>
                   <ServerQuitWhenAnyAgentFinishes/>
                 </ServerHandlers>
               </ServerSection>
 
-              <AgentSection mode="Survival">
+              <AgentSection mode="Creative">
                 <Name>MalmoTutorialBot</Name>
                 <AgentStart>
                     <Placement x="0" y="2" z="0" yaw="90"/>
