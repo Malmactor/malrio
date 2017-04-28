@@ -104,7 +104,7 @@ class Actor:
                 time.sleep(0.1)
 
                 # 5. reset status
-                if self.jump_status == 1:
-                    self.jump_status = 0
+                # if self.jump_status == 1:
+                    # self.jump_status = 0
                 if self.move_status == 1:
                     self.move_status = 0
