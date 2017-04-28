@@ -8,7 +8,12 @@ import time
 DEBUG = False
 
 # generate world
-world_dict = {"brick_block":[movement.spos(5,2,5),movement.spos(-5,2,5)]}
+world_dict = {
+                "brick_block":[movement.spos(3,2,0),movement.spos(5,2,0)],
+                "double_block":[movement.spos(8,2,0),movement.spos(14,2,0),movement.spos(16,2,0)],
+                "triple_block":[movement.spos(15,2,0),movement.spos(19,2,0),movement.spos(23,2,0),movement.spos(31,2,0)],
+                "lava":[movement.spos(0,2,0),movement.spos(1,2,0),movement.spos(26,2,0),movement.spos(27,2,0)]
+                }
 missionXML = generate_world(world_dict)
 
 if DEBUG:
@@ -28,10 +33,12 @@ if agent_host.receivedArgument("help"):
     exit(0)
 
 my_mission = MalmoPython.MissionSpec(missionXML, True)
-my_mission.setViewpoint(2)
+# my_mission.setViewpoint(2)
 my_mission_record = MalmoPython.MissionRecordSpec()
 my_mission.allowAllAbsoluteMovementCommands()
 agent_host.startMission(my_mission, my_mission_record)
+
+
 
 
 # Loop until mission starts:

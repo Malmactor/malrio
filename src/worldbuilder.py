@@ -4,15 +4,23 @@ def generate_world(world_dict):
     result = ''
     if "brick_block" in world_dict:
       for s in world_dict["brick_block"]:
-        result += '<DrawBlock x="' + s.x + '" y="' + s.y + '" z="' + s.z + '" type="brick_block"/>'
-    if "warp_pipe" in world_dict:
-      for warp in world_dict["warp_pipe"]:
-        result += '<DrawBlock x="' + warp.x + '" y="' + warp.y + '" z="' + warp.z + '" type="wool" colour="GREEN" />'
-        result += '<DrawBlock x="' + warp.x + '" y="' + warp.y + '" z="' + warp.z + '" type="wool" colour="GREEN" />'
-        result += '<DrawBlock x="' + warp.x + '" y="' + warp.y + '" z="' + warp.z + '" type="grass" colour="GREEN" />'
+        result += '<DrawBlock x="' + str(s.x) + '" y="' + str(s.y) + '" z="' + str(s.z) + '" type="brick_block"/>'
+    if "double_block" in world_dict:
+      for warp in world_dict["double_block"]:
+        result += '<DrawBlock x="' + str(warp.x) + '" y="' + str(warp.y) + '" z="' + str(warp.z) + '" type="brick_block"/>'
+        result += '<DrawBlock x="' + str(warp.x) + '" y="' + str(warp.y+1) + '" z="' + str(warp.z) + '" type="brick_block"/>'
+    if "triple_block" in world_dict:
+      for warp in world_dict["triple_block"]:
+        result += '<DrawBlock x="' + str(warp.x) + '" y="' + str(warp.y) + '" z="' + str(warp.z) + '" type="brick_block"/>'
+        result += '<DrawBlock x="' + str(warp.x) + '" y="' + str(warp.y+1) + '" z="' + str(warp.z) + '" type="brick_block"/>'
+        result += '<DrawBlock x="' + str(warp.x) + '" y="' + str(warp.y+2) + '" z="' + str(warp.z) + '" type="brick_block"/>'
     if "mushroom" in world_dict:
       for m in world_dict["mushroom"]:
-        result += '<DrawBlock x="' + m.x + '" y="' + m.y + '" z="' + m.z + '" type="red_mushroom"/>'
+        result += '<DrawBlock x="' + str(m.x) + '" y="' + str(m.y) + '" z="' + str(m.z) + '" type="red_mushroom"/>'
+    if "lava" in world_dict:
+      for l in world_dict["lava"]:
+        result += '<DrawBlock x="' + str(l.x) + '" y="' + str(1) + '" z="' + str(l.z) + '" type="air"/>'
+        result += '<DrawBlock x="' + str(l.x) + '" y="' + str(0) + '" z="' + str(l.z) + '" type="lava"/>'
     return result
 
   return '''<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
@@ -43,7 +51,7 @@ def generate_world(world_dict):
               <AgentSection mode="Creative">
                 <Name>MalmoTutorialBot</Name>
                 <AgentStart>
-                    <Placement x="0" y="2" z="0" yaw="90"/>
+                    <Placement x="-1" y="2" z="0" yaw="-90"/>
                 </AgentStart>
                 <AgentHandlers>
                   <ObservationFromFullStats/>

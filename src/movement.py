@@ -5,9 +5,9 @@ import numpy
 
 class spos:
     def __init__(self, x, y, z):
-        self.x = str(x)
-        self.y = str(y)
-        self.z = str(z)
+        self.x = x
+        self.y = y
+        self.z = z
 
 
 class pos:
