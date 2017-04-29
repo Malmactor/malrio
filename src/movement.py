@@ -105,6 +105,7 @@ class Actor:
                 self.bound[3] = True
             elif int(nextintpos / 3) == 2:
                 self.bound[2] = True
+        print(self.bound)
 
     def run(self):
         while True:
