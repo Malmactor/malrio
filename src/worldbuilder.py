@@ -51,10 +51,16 @@ def generate_world(world_dict):
               <AgentSection mode="Creative">
                 <Name>MalmoTutorialBot</Name>
                 <AgentStart>
-                    <Placement x="-1" y="2" z="0" yaw="-90"/>
+                    <Placement x="0" y="2" z="0" yaw="-90"/>
                 </AgentStart>
                 <AgentHandlers>
                   <ObservationFromFullStats/>
+                  <ObservationFromGrid>
+                      <Grid name="floor3x3">
+                        <min x="-1" y="-1" z="-1"/>
+                        <max x="1" y="1" z="-1"/>
+                      </Grid>
+                  </ObservationFromGrid>
                   <ContinuousMovementCommands turnSpeedDegs="180"/>
                 </AgentHandlers>
               </AgentSection>
