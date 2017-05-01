@@ -29,6 +29,10 @@ def generate_world(world_dict):
               <About>
                 <Summary>Hello world!</Summary>
               </About>
+              
+              <ModSettings>
+                <MsPerTick>17</MsPerTick>
+              </ModSettings>
 
             <ServerSection>
               <ServerInitialConditions>

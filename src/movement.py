@@ -1,7 +1,7 @@
 import time
 import json
-import numpy
 import numpy as np
+
 
 class spos:
     def __init__(self, x, y, z):
@@ -30,6 +30,56 @@ class pos:
         dy = int(self.y)-int(rhs.y)+1
         return dx + 3*dy
 
+
+class RigidEntity:
+    def __init__(self, x=0, y=0, z=0, config=None):
+        self.config = config
+
+        self.dtype = "float16" if config is None else config["dtype"]
+        self.delta_t = 1.0  if config is None else config["delta_t"]
+        self.delta_mat = np.identity(3, self.dtype)
+        self.delta_mat[1, 0] = self.delta_t
+        self.delta_mat[2, 1] = self.delta_t
+        self.delta_mat[2, 0] = self.delta_t ** 2 / 2.0
+
+        self.state = np.zeros([3, 3], dtype=self.dtype)
+        self.state[:, 0] = [x, y, z]
+
+    def __str__(self):
+        return ' '.join(map(lambda num: str(num), self.state[:, 0]))
+
+    def __getattr__(self, item):
+        mapping = {"x": self.state[0, 0], "y": self.state[1, 0], "z": self.state[2, 0]}
+        if item in mapping:
+            return mapping[item]
+        else:
+            raise AttributeError("object has no attribute \'{:}\'".format(str(item)))
+
+    def eltadd(self, rhs):
+        result = self.__class__(config=self.config)
+        result.state = self.state + rhs.state
+        return result
+
+    def shiftcheck(self, rhs):
+        """Check if it will shift into another block with given dx and dy.
+        ret: 0-8, indicate the target block with [-1, 1] x [-1 , 1]
+        """
+        dx = int(self.x)-int(rhs.x)+1
+        dy = int(self.y)-int(rhs.y)+1
+        return dx + 3*dy
+
+    def update(self):
+        self.state = np.dot(self.state, self.delta_mat)
+
+    def reaction(self, op):
+        op(self.state)
+
+
+class CollisionResolver:
+    def __init__(self, passive_box, active_box):
+        pass
+
+
 class Actor:
     def __init__(self, host):
         self.host = host
@@ -42,7 +92,7 @@ class Actor:
 
     def current_pos(self):
         obs = json.loads(self.state.observations[-1].text)
-        return pos(obs[u'XPos'], obs[u'YPos'], obs[u'ZPos'])
+        return RigidEntity(obs[u'XPos'], obs[u'YPos'], obs[u'ZPos'])
 
     def lowjumpfuc(self):
         return 0.3-0.5*self.jump_status
@@ -70,7 +120,7 @@ class Actor:
         # 2. for moving left/right
         if self.move_status > 0:
             dx += self.movefuc()
-        return pos(dx, dy, 0)
+        return RigidEntity(dx, dy, 0)
 
 
     def get_action(self):
@@ -107,7 +157,34 @@ class Actor:
                 self.bound[2] = True
         print(self.bound)
 
+    def run_1(self):
+        self.state = self.host.getWorldState()
+        if self.state.number_of_observations_since_last_state > 0:
+            # get next action
+            actnum = self.get_action()
+        self.boundcheck()
+        body = self.current_pos()
+
+        def jump_init_velocity(state):
+            state[1, 1] = 4.0 / 16.0
+            state[1, 2] = 2.0 / 16.0 / 16.0
+
+        body.reaction(jump_init_velocity)
+        while True:
+            self.state = self.host.getWorldState()
+            if self.state.number_of_observations_since_last_state > 0:
+                # get next action
+                actnum = self.get_action()
+            self.host.sendCommand("tp " + str(body.x) + " " + str(body.y) + " " + str(body.z))
+            body.update()
+
+
     def run(self):
+        turn = 0
+        def jump_init_velocity(state):
+            state[1, 1] = 4.0 / 16.0
+            state[1, 2] = -2.0 / 16.0 / 16.0
+            state[2, 1:3] = 0.0
         while True:
             self.state = self.host.getWorldState()
             if self.state.number_of_observations_since_last_state > 0:
@@ -148,15 +225,28 @@ class Actor:
                     self.move_status = 0
 
                 # 3. calc next position
-                curpos = self.current_pos()
-                print("current: " + str(curpos))
+                if turn == 0:
+                    curpos = self.current_pos()
+                else:
+                    curpos = nextpos
                 nextpos = curpos.eltadd(self.pos_shift())
+
+                if turn == 0:
+                    body = self.current_pos()
+                    body.state = nextpos.state
+                    body.reaction(jump_init_velocity)
+                    print body.state
+                    print body.delta_mat
+
+                print("current: " + str(curpos))
                 print("next: " + str(nextpos))
+                print "body:", str(body)
                 print
 
                 # 4. action
-                self.host.sendCommand("tp " + str(nextpos.x) + " " + str(nextpos.y) + " " + str(nextpos.z))
-                time.sleep(0.17)
+                #self.host.sendCommand("tp " + str(nextpos.x) + " " + str(nextpos.y) + " " + str(nextpos.z))
+                self.host.sendCommand("tp " + str(body.x) + " " + str(body.y) + " " + str(body.z))
+                body.update()
 
                 # 5. reset status
                 # -- 5.1 continue to jump
@@ -171,3 +261,4 @@ class Actor:
                 # -- 5.4 stop moving left/right if finish moving
                 if self.move_status == 1:
                     self.move_status = 0
+                turn += 1

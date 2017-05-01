@@ -24,7 +24,7 @@ if DEBUG:
 
 # start mission
 agent_host = MalmoPython.AgentHost()
-agent_host.addOptionalIntArgument("speed,s", "Length of tick, in ms.", 17)
+agent_host.addOptionalIntArgument("speed,s", "Length of tick, in ms.", 1)
 try:
     agent_host.parse(sys.argv)
 except RuntimeError as e:
