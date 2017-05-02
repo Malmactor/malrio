@@ -1,4 +1,4 @@
-"""
+"""Super Mario Bros simulation in Minecraft
 """
 
 __author__ = "Liyan Chen"
