@@ -4,6 +4,8 @@ from worldbuilder import generate_world
 import os
 import sys
 import time
+import numpy as np
+from SuperMarioBros.layout_loader import load_layout_xml
 
 DEBUG = False
 
@@ -16,7 +18,15 @@ world_dict = {
     "triple_block":[movement.spos(15,8,0),movement.spos(19,8,0),movement.spos(23,8,0),movement.spos(31,8,0)],
     # "lava":[movement.spos(-5,2,0),movement.spos(-6,2,0),movement.spos(26,2,0),movement.spos(27,2,0)]
 }
-missionXML = generate_world(world_dict)
+layout = np.array(
+    [
+        [0, 0, 1, 0, 0],
+        [1, 0, 1, 0, 0],
+        [0, 0, 0, 1, 1]
+    ]
+)
+#missionXML = generate_world(world_dict)
+missionXML = load_layout_xml(layout, {"template_path": "SuperMarioBros/mission_template.xml"})
 
 if DEBUG:
     print(missionXML)

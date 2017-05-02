@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Mission xmlns="http://ProjectMalmo.microsoft.com">
+
+    <About>
+        <Summary>Hello world!</Summary>
+    </About>
+
+    <ModSettings>
+        <MsPerTick>17</MsPerTick>
+    </ModSettings>
+
+    <ServerSection>
+        <ServerInitialConditions>
+            <Time>
+                <StartTime>12000</StartTime>
+                <AllowPassageOfTime>false</AllowPassageOfTime>
+            </Time>
+            <Weather>clear</Weather>
+        </ServerInitialConditions>
+        <ServerHandlers>
+            <FlatWorldGenerator generatorString="3;7,45;17;"/>
+            <DrawingDecorator>
+            </DrawingDecorator>
+            <ServerQuitFromTimeUp timeLimitMs="300000"/>
+            <ServerQuitWhenAnyAgentFinishes/>
+        </ServerHandlers>
+    </ServerSection>
+
+    <AgentSection mode="Creative">
+        <Name>Mario</Name>
+        <AgentStart>
+            <Placement x="0" y="2" z="0" yaw="-90"/>
+        </AgentStart>
+        <AgentHandlers>
+            <ObservationFromFullStats/>
+            <ObservationFromGrid>
+                <Grid name="floor3x3">
+                    <min x="-1" y="-1" z="-1"/>
+                    <max x="1" y="1" z="-1"/>
+                </Grid>
+            </ObservationFromGrid>
+            <ContinuousMovementCommands turnSpeedDegs="180"/>
+        </AgentHandlers>
+    </AgentSection>
+</Mission>
