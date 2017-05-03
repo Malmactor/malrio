@@ -103,5 +103,5 @@ class MarioSimulation:
 
         # Take an observation
 
-        # Take an action
+        # Render simulation results to malmo or other output module(optional)
         return closest_collision
