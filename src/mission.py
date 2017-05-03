@@ -5,7 +5,7 @@ import os
 import sys
 import time
 import numpy as np
-from SuperMarioBros.layout_loader import load_layout_xml
+from SuperMarioBros.layout_loader import layout_toxml
 
 DEBUG = False
 
@@ -26,7 +26,7 @@ layout = np.array(
     ]
 )
 #missionXML = generate_world(world_dict)
-missionXML = load_layout_xml(layout, {"template_path": "SuperMarioBros/mission_template.xml"})
+missionXML = layout_toxml(layout, {"template_path": "SuperMarioBros/mission_template.xml"})
 
 if DEBUG:
     print(missionXML)

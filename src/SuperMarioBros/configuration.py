@@ -10,3 +10,8 @@ simulation_config = {
     "delta_t": 1.0,
     "epsilon": 0.001
 }
+
+phyx_const = {
+    "norm": 65536.0,
+    "walk_speed": "01900"
+}

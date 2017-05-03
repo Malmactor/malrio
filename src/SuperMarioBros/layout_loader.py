@@ -7,9 +7,11 @@ __license__ = "MIT"
 
 
 import xml.etree.ElementTree as ET
+import numpy as np
+import default_layout
 
 
-def load_layout_xml(layout, config=None):
+def layout_toxml(layout, config=None):
     shape = layout.shape
     template_path = "mission_template.xml" if config is None or "template_path" not in config else config[
         "template_path"]
@@ -33,3 +35,11 @@ def load_layout_xml(layout, config=None):
                 parent.append(block_element)
 
     return ET.tostring(xmltree)
+
+
+def layout_fromfile(filename, config=None):
+    return np.load(filename)
+
+
+def layout_fromdefault():
+    layout = default_layout.layout
