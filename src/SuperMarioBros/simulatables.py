@@ -72,6 +72,10 @@ def seg_aabb_collision_resolution(box_center, radius, start, direction, padding=
 
 class RigidEntity:
     def __init__(self, center, config=None):
+        # A side note on matrix representations for rigid body dynamics:
+        # Rows represent spatial dimensions (x, y, z)
+        # Columns represent states of Newtonian mechanical dynamics (x, v_x, a_x)
+        # Each update follows: x' = x + v_x * dt + a_x * dt ^ 2 / 2, v_x' = v_x + a_x * dt
         self.config = config
 
         self.dtype = "float16" if config is None or "dtype" not in config else config["dtype"]

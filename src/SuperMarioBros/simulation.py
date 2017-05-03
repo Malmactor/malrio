@@ -97,6 +97,10 @@ class MarioSimulation:
         # Process momentum change
         self.mario.reaction(hit_edge_reaction(closest_collision[1]))
 
+        # Grab an action from input and simulate the force
+        # Either poll() from keyboard for realtime play or let an agent act
+        # Give corresponding handlers from momentum_handler.py to mario.reaction()
+
         # Take an observation
 
         # Take an action
