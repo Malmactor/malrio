@@ -10,7 +10,7 @@ from configuration import *
 
 def collision_resolved(state, delta):
     # Back to a collision-free position
-    state[0:2, 0] -= delta
+    state[0:2, 0] += delta
 
 
 def hit_ground(state):
@@ -42,6 +42,7 @@ def stop(state):
 
 
 def jump(state):
+    # Add initial velocity and gravity to the state
     v0 = int(phyx_const["jump_v0"], base=16) / phyx_const["norm"]
     gravity = int(phyx_const["gravity"], base=16) / phyx_const["norm"]
 

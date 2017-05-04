@@ -97,7 +97,7 @@ class MarioSimulation:
         # Advance a time step
         self.mario.update()
 
-        print '- next unchecked state:', self.mario.state
+        print '- next unchecked state:\n', self.mario.state
 
         # Locate blocks for collision detections
         bb_to_check = collision_proposal(self.mario, self.brick_bb, self.config)
@@ -106,16 +106,14 @@ class MarioSimulation:
         collisions = list(filter(lambda pair: pair[1]['hit'] is not None,
                                  map(lambda bb: (bb.get_center(), bb.collide(self.mario)), bb_to_check)))
 
-        try:
+        if collisions:
             closest_collision = min(collisions, key=lambda pair: pair[1]['hit']['time'])
 
-            print '- collision status:', closest_collision
+            print '- collision status:\n', closest_collision
             self.mario.reaction(collision_resolved, closest_collision[1]["hit"]["delta"])
 
             # Process momentum change
             self.mario.reaction(hit_edge_reaction(closest_collision[1]))
-        except Exception:
-            pass
 
 
         print '- boundcheck finished'
