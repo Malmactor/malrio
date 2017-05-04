@@ -1,31 +1,16 @@
 import MalmoPython
 import movement
-from worldbuilder import generate_world
+# from worldbuilder import generate_world
 import os
 import sys
 import time
 import numpy as np
-from SuperMarioBros.layout_loader import layout_toxml
+from SuperMarioBros.layout_loader import layout_toxml, layout_fromdefault
+from SuperMarioBros.simulation import MarioSimulation
 
 DEBUG = False
 
-# generate world
-world_dict = {
-    "brick_block":[movement.spos(-1,3,-1),movement.spos(-1,3,0),movement.spos(-1,3,1),
-                   movement.spos(0,3,-1),movement.spos(0,3,0),movement.spos(0,3,1),
-                   movement.spos(1,3,-1),movement.spos(1,3,0),movement.spos(1,3,1)],
-    "double_block":[movement.spos(8,6,0),movement.spos(14,6,0),movement.spos(16,6,0)],
-    "triple_block":[movement.spos(15,8,0),movement.spos(19,8,0),movement.spos(23,8,0),movement.spos(31,8,0)],
-    # "lava":[movement.spos(-5,2,0),movement.spos(-6,2,0),movement.spos(26,2,0),movement.spos(27,2,0)]
-}
-layout = np.array(
-    [
-        [0, 0, 1, 0, 0],
-        [1, 0, 1, 0, 0],
-        [0, 0, 0, 1, 1]
-    ]
-)
-#missionXML = generate_world(world_dict)
+layout = layout_fromdefault()
 missionXML = layout_toxml(layout, {"template_path": "SuperMarioBros/mission_template.xml"})
 
 if DEBUG:
@@ -47,7 +32,6 @@ if agent_host.receivedArgument("help"):
 
 
 my_mission = MalmoPython.MissionSpec(missionXML, True)
-# my_mission.setViewpoint(2)
 my_mission_record = MalmoPython.MissionRecordSpec()
 my_mission.allowAllAbsoluteMovementCommands()
 my_mission.allowAllDiscreteMovementCommands()

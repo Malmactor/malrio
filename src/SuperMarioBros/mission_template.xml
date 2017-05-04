@@ -18,9 +18,7 @@
             <Weather>clear</Weather>
         </ServerInitialConditions>
         <ServerHandlers>
-            <!--
             <FlatWorldGenerator generatorString="3;7,45;17;"/>
-            -->
             <DrawingDecorator>
             </DrawingDecorator>
             <ServerQuitFromTimeUp timeLimitMs="300000"/>

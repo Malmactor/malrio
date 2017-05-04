@@ -42,4 +42,4 @@ def layout_fromfile(filename, config=None):
 
 
 def layout_fromdefault():
-    layout = default_layout.layout
+    return default_layout.layout
