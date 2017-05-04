@@ -39,3 +39,11 @@ def walk(state):
 def stop(state):
     # Change the x-direction velocity to 0
     state[0, 1] = 0
+
+
+def jump(state):
+    v0 = int(phyx_const["jump_v0"], base=16) / phyx_const["norm"]
+    gravity = int(phyx_const["gravity"], base=16) / phyx_const["norm"]
+
+    state[1, 1] = v0
+    state[1, 2] = gravity
