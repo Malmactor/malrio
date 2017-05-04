@@ -41,5 +41,5 @@ class Actor:
                         " " + str(self.sim.mario.state[2, 0]))
                 print
                 # death check
-                if (self.sim.mario.state[1, 0] < 0):
-                    return die
+                if self.sim.mario.state[1, 0] < 0:
+                    return die()
