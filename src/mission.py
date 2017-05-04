@@ -6,7 +6,6 @@ import sys
 import time
 import numpy as np
 from SuperMarioBros.layout_loader import layout_toxml, layout_fromdefault
-from SuperMarioBros.simulation import MarioSimulation
 
 DEBUG = False
 
@@ -53,7 +52,7 @@ while not world_state.has_mission_begun:
 
 # Loop until mission ends:
 while world_state.is_mission_running:
-    actor = movement.Actor(agent_host)
+    actor = movement.Actor(agent_host, layout)
     actor.run()
 
 print
