@@ -167,7 +167,7 @@ class Actor:
 
         def jump_init_velocity(state):
             state[1, 1] = 4.0 / 16.0
-            state[1, 2] =  2.0 / 16.0 / 16.0
+            state[1, 2] = 2.0 / 16.0 / 16.0
 
         body.reaction(jump_init_velocity)
         while True:
