@@ -1,4 +1,4 @@
-"""Keyboard polling input module. Do NOT support Windows
+"""Keyboard polling input module. Do NOT and will NOT support Windows.
 """
 
 __author__ = "Liyan Chen"
