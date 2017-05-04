@@ -14,7 +14,8 @@ def collision_resolved(state, delta):
 
 
 def hit_ground(state):
-    # Cancel the gravitational acceleration
+    # Cancel the gravitational acceleration abd y-speed
+    state[1, 1] = 0.0
     state[:, 2] = [0.0, 0.0, 0.0]
 
 

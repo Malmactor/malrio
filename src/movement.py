@@ -7,7 +7,7 @@ class Actor:
     def __init__(self, host, layout):
         self.host = host
         self.world = host.getWorldState()
-        self.sim = MarioSimulation(layout, {"init_pos": (0, 2, 0), "dtype": "float16"})
+        self.sim = MarioSimulation(layout, {"dtype": "float16"})
 
     def get_action(self):
         """Get next action.

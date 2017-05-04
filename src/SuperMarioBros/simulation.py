@@ -66,20 +66,25 @@ class MarioSimulation:
         self.layout = layout
         self.config = config
 
-        init_pos = np.array([0, 2, 0]) if config is None or "init_pos" not in config else config["init_pos"]
+        init_pos = np.array([0, 3, 0]) if config is None or "init_pos" not in config else config["init_pos"]
         mario_bb = np.array([0.5, 1]) if config is None or "mario_bb" not in config else config["mario_bb"]
 
         self.mario = CollidableRigid(init_pos, mario_bb, config)
         self.brick_bb = layout_tobb(layout, config)
+        self.ck = True
 
     def act(self, actnum):
         """Perform next action by changing velocity and acceleration.
         """
         #### TODO ####
         ## Assume actnum = 4
-        if actnum == 4:
-            self.mario.state[1, 1] = 4.0 / 16.0
-            self.mario.state[1, 2] = - 2.0 / 16.0 / 16.0
+        if actnum == 4 and self.ck:
+            self.ck = False
+            # only jump when on land
+            if self.mario.state[1, 1] == 0 and self.mario.state[1, 2] == 0:
+                self.mario.state[1, 1] = 4.0 / 16.0
+                self.mario.state[1, 2] = - 2.0 / 16.0 / 16.0
+
 
     def run(self, input=None, observer=None, action=None):
         """
@@ -101,13 +106,17 @@ class MarioSimulation:
         collisions = list(filter(lambda pair: pair[1]['hit'] is not None,
                                  map(lambda bb: (bb.get_center(), bb.collide(self.mario)), bb_to_check)))
 
-        closest_collision = min(collisions, key=lambda pair: pair[1]['hit']['time'])
+        try:
+            closest_collision = min(collisions, key=lambda pair: pair[1]['hit']['time'])
 
-        print '- collision status:', closest_collision
-        self.mario.reaction(collision_resolved, closest_collision[1]["hit"]["delta"])
+            print '- collision status:', closest_collision
+            self.mario.reaction(collision_resolved, closest_collision[1]["hit"]["delta"])
 
-        # Process momentum change
-        self.mario.reaction(hit_edge_reaction(closest_collision[1]))
+            # Process momentum change
+            self.mario.reaction(hit_edge_reaction(closest_collision[1]))
+        except Exception:
+            pass
+
 
         print '- boundcheck finished'
         print '- next state with oldspeed:', self.mario.state
@@ -124,4 +133,4 @@ class MarioSimulation:
         # Take an observation
 
         # Render simulation results to malmo or other output module(optional)
-        return closest_collision
+        # return closest_collision

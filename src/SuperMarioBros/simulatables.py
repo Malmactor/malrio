@@ -30,7 +30,7 @@ def seg_aabb_collision_resolution(box_center, radius, start, direction, padding=
     :param config: Global configurations
     :return: None if no collision, else a dict with four fields: time, normal, delta, position
 
-    Resolve the collision between a segment and a axis-aligned bounding box. The segment is defined as 
+    Resolve the collision between a segment and a axis-aligned bounding box. The segment is defined as
     (start + t * direction)
     """
     dtype = "float16" if config is None or "dtype" not in config else config["dtype"]
