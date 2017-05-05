@@ -115,15 +115,13 @@ class MarioSimulation:
             # Process momentum change
             self.mario.reaction(hit_edge_reaction(closest_collision[1]))
 
-
-        print '- boundcheck finished'
         print '- next state with oldspeed:', self.mario.state
 
         # Grab an action from input and simulate the force
         # Either poll() from keyboard for realtime play or let an agent act
         actnum = input if input else action
         print '- action:', actnum
-        self.act(actnum)
+        self.mario.reaction(action_mapping["press_jump"])
 
         print '- next state:', self.mario.state
         # Give corresponding handlers from momentum_handler.py to mario.reaction()

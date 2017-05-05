@@ -6,6 +6,7 @@ __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 
 from configuration import *
+import numpy as np
 
 
 def collision_resolved(state, delta):
@@ -41,10 +42,20 @@ def stop(state):
     state[0, 1] = 0
 
 
-def jump(state):
+def press_jump(state):
     # Add initial velocity and gravity to the state
     v0 = int(phyx_const["jump_v0"], base=16) / phyx_const["norm"]
     gravity = int(phyx_const["gravity"], base=16) / phyx_const["norm"]
 
-    state[1, 1] = v0
-    state[1, 2] = gravity
+    if np.abs(state[1, 2]) > simulation_config["epsilon"]:
+        state[1, 2] = gravity
+
+    else:
+        state[1, 1] = v0
+        state[1, 2] = gravity
+
+
+action_mapping = {
+    "press_jump": press_jump,
+    "walk": walk
+}
