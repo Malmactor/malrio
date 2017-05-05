@@ -30,11 +30,19 @@ def hit_ceiling(state):
     state[1, 1] = -state[1, 1]
 
 
-def walk(state):
+def walk(state, direction=1):
     # Change the x-direction velocity to walk speed
     speed = int(phyx_const["walk_speed"], base=16) / phyx_const["norm"]
 
-    state[0, 1] = speed
+    state[0, 1] = direction * speed
+
+
+def right(state):
+    return walk(state, direction=1)
+
+
+def left(state):
+    return walk(state, direction=-1)
 
 
 def stop(state):
@@ -56,6 +64,7 @@ def press_jump(state):
 
 
 action_mapping = {
-    "press_jump": press_jump,
-    "walk": walk
+    1: left,
+    2: right,
+    3: press_jump
 }

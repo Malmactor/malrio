@@ -71,20 +71,6 @@ class MarioSimulation:
 
         self.mario = CollidableRigid(init_pos, mario_bb, config)
         self.brick_bb = layout_tobb(layout, config)
-        self.ck = True
-
-    def act(self, actnum):
-        """Perform next action by changing velocity and acceleration.
-        """
-        #### TODO ####
-        ## Assume actnum = 4
-        if actnum == 4 and self.ck:
-            self.ck = False
-            # only jump when on land
-            if self.mario.state[1, 1] == 0 and self.mario.state[1, 2] == 0:
-                self.mario.state[1, 1] = 4.0 / 16.0
-                self.mario.state[1, 2] = - 2.0 / 16.0 / 16.0
-
 
     def run(self, input=None, observer=None, action=None):
         """
@@ -115,15 +101,15 @@ class MarioSimulation:
             # Process momentum change
             self.mario.reaction(hit_edge_reaction(closest_collision[1]))
 
-        print '- next state with oldspeed:', self.mario.state
+        print '- next state with oldspeed:\n', self.mario.state
 
         # Grab an action from input and simulate the force
         # Either poll() from keyboard for realtime play or let an agent act
         actnum = input if input else action
         print '- action:', actnum
-        self.mario.reaction(action_mapping["press_jump"])
+        self.mario.reaction(action_mapping[actnum])
 
-        print '- next state:', self.mario.state
+        print '- next state:\n', self.mario.state
         # Give corresponding handlers from momentum_handler.py to mario.reaction()
 
         # Take an observation

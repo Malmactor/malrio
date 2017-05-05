@@ -11,12 +11,12 @@ class Actor:
 
     def get_action(self):
         """Get next action.
-        ret: {0: freeze, 1: left, 2: right, 3: low jump, 4: mid jump, 5: high jump}
+        ret: {0: freeze, 1: left, 2: right, 3: jump}
         """
         #### TODO ####
         # if numpy.random.randint(5) == 0:
         #     return 2
-        return 4
+        return 2
 
     def die(self):
         #### TODO ####
