@@ -42,4 +42,4 @@ class Actor:
                 print
                 # death check
                 if self.sim.mario.state[1, 0] < 0:
-                    return die()
+                    return self.die()
