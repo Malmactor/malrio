@@ -101,11 +101,12 @@ class AstarActor(Actor):
         while frontier_queue:
             # initial setup
             priority = frontier_queue.top()
-            raw_frontier = frontier_queue[priority][0]
+            random_top = np.random.randint(len(frontier_queue[priority]))
+            raw_frontier = frontier_queue[priority][random_top]
             frontier = self.decode_state(raw_frontier)
             # print frontier[0:2, 0], cost[raw_frontier]
             self.sim.mario.state = frontier
-            del frontier_queue[priority][0]
+            del frontier_queue[priority][random_top]
             if not frontier_queue[priority]:
                 del frontier_queue[priority]
 
