@@ -71,17 +71,24 @@ class AstarActor(Actor):
         self.start = np.array([1, 3])
         self.end = np.argwhere(self.layout == target).flatten()
 
-    def current_state(self):
-        return str(self.sim.mario.state)
+    def encode_state(self, state):
+        return str(state.flatten())
+
+    def decode_state(self, state):
+        return np.fromstring(state[1:-1], dtype="float16", sep=' ').reshape((3, 3))
 
     def init_path(self):
         r, c = self.layout.shape
+        init_state = self.encode_state(self.sim.mario.state)
 
-        # directions = [np.array([1, 0]), np.array([0, 1]), np.array([-1, 0]), np.array([0, -1])]
-        init_state = self.current_state()
+        # we use path to record states, and state_action_map to map state to action
         path = []
+        state_action_map = {init_state: None}
+        # state dict for previous state
         path_pre = {init_state: None}
+        # cost to get this state, in terms of time (moves)
         cost = {init_state: 0}
+
         frontier_queue = pqdict.minpq({0: [init_state]})
 
         # TODO: use actoin (base on state matrix) + domain (possible induced state matrix)
@@ -89,16 +96,24 @@ class AstarActor(Actor):
         # induced state, then push them into the heap. Notice that final position could be
         # a range (rough position), since we use float.
 
+        while frontier_queue:
+            priority = frontier_queue.top()
+            frontier = self.decode_state(frontier_queue[priority][0])
+            del frontier_queue[priority][0]
+            if not frontier_queue[priority]:
+                del frontier_queue[priority]
 
-        # while frontier_queue:
-        #     priority = frontier_queue.top()
-        #     frontier = frontier_queue[priority][0]
-        #     del frontier_queue[priority][0]
-        #     if not frontier_queue[priority]:
-        #         del frontier_queue[priority]
-        #
-        #     if frontier == self.end:
-        #         break
+            frontier_pos = []
+
+            # end test
+            if l1_distance(self.end, frontier[0:2, 0]) < 0.5:
+                break
+
+            for i in range(4):
+                pass
+            # get next possible states
+
+
 
         # while frontier_queue:
         #     priority = frontier_queue.top()
@@ -123,12 +138,17 @@ class AstarActor(Actor):
         #             else:
         #                 frontier_queue[heuristic] = [next_node]
         #
+
+        action_path = []
         # node = self.end
         # while node is not None:
         #     path.insert(0, (node[0]-1, node[1]-1)) # cancel the padding offset
         #     node = path_pre[node]
-        # return path
+        self.action_path = action_path
+
+
 
     def get_action(self):
-        # TODO: read from path
+        if self.action_path:
+            return self.action_path.pop()
         return 3
