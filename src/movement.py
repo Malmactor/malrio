@@ -102,8 +102,8 @@ class AstarActor(Actor):
             # initial setup
             priority = frontier_queue.top()
             raw_frontier = frontier_queue[priority][0]
-            print raw_frontier
             frontier = self.decode_state(raw_frontier)
+            # print frontier[0:2, 0], cost[raw_frontier]
             self.sim.mario.state = frontier
             del frontier_queue[priority][0]
             if not frontier_queue[priority]:
@@ -118,10 +118,11 @@ class AstarActor(Actor):
             for i in range(4):
                 self.sim.run(action=i, printable=False)
                 next_state = self.sim.mario.state
-                raw_next_state = self.decode_state(next_state)
+                raw_next_state = self.encode_state(next_state)
                 # if new state is legal
                 if not np.array_equal(next_state, frontier) and (
                         raw_next_state not in cost or next_cost < cost[raw_next_state]):
+                    print i, next_state[0:2, 0]
                     cost[raw_next_state] = next_cost
                     path_pre[raw_next_state] = raw_frontier
                     state_action_map[raw_next_state] = i
