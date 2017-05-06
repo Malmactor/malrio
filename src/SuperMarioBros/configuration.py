@@ -13,7 +13,7 @@ simulation_config = {
 
 phyx_const = {
     "norm": 65536.0,
-    "walk_speed": "01900",
+    "walk_speed": "02000", # original: "01900", here we increase it to simulate "continuous pressing the button"
     "jump_v0": "04000",
     "gravity": "-001E0"
 }

@@ -52,15 +52,22 @@ def l1_distance(a, b):
     return np.sum(np.abs(a - np.array(b)))
 
 
+def l2_distance(a, b):
+    return np.linalg.norm(a-b)
+
+
 def pad_layout(layout):
     return np.pad(layout, (1, 1), 'constant', constant_values=1)
 
 
 class AstarActor(Actor):
-    def __init__(self, host, layout):
+    def __init__(self, host, layout, interval):
         Actor.__init__(self, host, layout)
+        self.interval = interval # upsampling interval
+        self.interval_cnt = 0
         self.feed_map(layout, target=3) # we use the red mashroom as goal
         self.init_path()
+        self.finish = False
 
     def feed_map(self, layout, target):
         """Feed the layout into the solver.
@@ -96,7 +103,7 @@ class AstarActor(Actor):
         # instead of directions. For each loop in the heap, pop top state, calc all possible
         # induced state, then push them into the heap. Notice that final position could be
         # a range (rough position), since we use float.
-
+        closest_distance = 99999
         node = None
         while frontier_queue:
             # initial setup
@@ -110,40 +117,73 @@ class AstarActor(Actor):
             if not frontier_queue[priority]:
                 del frontier_queue[priority]
 
-            # task end test
-            if l1_distance(self.end, frontier[0:2, 0]) < 0.5:
-                node = raw_frontier
-
             # expand frontier
-            next_cost = cost[raw_frontier] + 1
             for i in range(4):
+                next_cost = cost[raw_frontier]
+                prev_state = self.sim.mario.state
                 self.sim.run(action=i, printable=False)
+                next_cost += l2_distance(prev_state[0:2, 0], self.sim.mario.state[0:2, 0])
+
+                # upsample runs
+                for j in range(self.interval - 1):
+                    prev_state = self.sim.mario.state
+                    self.sim.run(action=0, printable=False)
+                    next_cost += l2_distance(prev_state[0:2, 0], self.sim.mario.state[0:2, 0])
+
                 next_state = self.sim.mario.state
                 raw_next_state = self.encode_state(next_state)
+
                 # if new state is legal
-                if not np.array_equal(next_state, frontier) and (
+                if not np.array_equal(next_state, frontier) and next_state[0][0] > 0 and next_state[1][0] > 0 and (
                         raw_next_state not in cost or next_cost < cost[raw_next_state]):
-                    print i, next_state[0:2, 0]
                     cost[raw_next_state] = next_cost
                     path_pre[raw_next_state] = raw_frontier
                     state_action_map[raw_next_state] = i
+
+                    # task end test
+                    closest_distance = min(closest_distance, l1_distance(self.end, next_state[0:2, 0]))
+                    print i, next_state[0:2, 0], next_cost, closest_distance
+                    if closest_distance < 0.5:
+                        node = raw_next_state
+                        break
+
                     heuristic = next_cost + l1_distance(self.end, next_state[0:2, 0])
                     if heuristic in frontier_queue:
                         frontier_queue[heuristic].append(raw_next_state)
                     else:
                         frontier_queue[heuristic] = [raw_next_state]
 
+
                 self.sim.mario.state = frontier
+
+            if closest_distance < 0.5:
+                break
 
         action_path = []
         while node:
-            action_path.insert(state_action_map[node])
+            action_path.insert(0, state_action_map[node])
             node = path_pre[node]
+        action_path.pop(0)
 
         self.action_path = action_path
+        print action_path
+        self.sim.mario.state = self.decode_state(init_state)
 
 
     def get_action(self):
-        if self.action_path:
-            return self.action_path.pop()
-        return 3
+        # upsample check
+        if self.interval_cnt == self.interval - 1:
+            self.interval_cnt = 0
+            # path finish check
+            if self.action_path:
+                return self.action_path.pop(0)
+            elif not self.finish:
+                state[:, 1] = [0.0, 0.0, 0.0]
+                state[:, 2] = [0.0, 0.0, 0.0]
+                self.finish = True
+                return 0
+            else:
+                return 0
+        else:
+            self.interval_cnt += 1
+            return 0
