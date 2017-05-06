@@ -63,8 +63,14 @@ def press_jump(state):
         state[1, 2] = gravity
 
 
+def remains(state):
+    # no action
+    pass
+
+
 action_mapping = {
     1: left,
     2: right,
-    3: press_jump
+    3: press_jump,
+    4: remains
 }
