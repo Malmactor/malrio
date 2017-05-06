@@ -2,27 +2,28 @@ import time
 import json
 import numpy as np
 import pqdict
+from abc import ABCMeta, abstractmethod
 
 from SuperMarioBros.simulation import MarioSimulation
 
 class Actor:
+    __metaclass__ = ABCMeta
+
     def __init__(self, host, layout):
         self.host = host
         self.world = host.getWorldState()
         self.sim = MarioSimulation(layout, {"dtype": "float16"})
 
+    @abstractmethod
     def get_action(self):
         """Get next action.
         ret: {0: freeze, 1: left, 2: right, 3: jump}
         """
-        #### TODO ####
-        # if numpy.random.randint(5) == 0:
-        #     return 2
-        return 2
+        pass
 
     def die(self):
         #### TODO ####
-        pass
+        print 'You are dead!'
 
     def run(self):
         print 'int_state:', self.sim.mario.state
@@ -63,8 +64,8 @@ class AstarActor(Actor):
 
     def feed_map(self, layout, target):
         """Feed the layout into the solver.
-        note: the initial position is (0, 2) from the feet, (0, 3) from center
-              in our solver, the initial position is (1, 3) since we pad the map with a wall box
+        The initial position is (0, 2) from the feet, (0, 3) from center.
+        In our solver, the initial position is (1, 3) since we pad the map with a wall box.
         """
         self.layout = pad_layout(layout) # map
         self.target = target # end point
@@ -96,56 +97,48 @@ class AstarActor(Actor):
         # induced state, then push them into the heap. Notice that final position could be
         # a range (rough position), since we use float.
 
+        node = None
         while frontier_queue:
+            # initial setup
             priority = frontier_queue.top()
-            frontier = self.decode_state(frontier_queue[priority][0])
+            raw_frontier = frontier_queue[priority][0]
+            print raw_frontier
+            frontier = self.decode_state(raw_frontier)
+            self.sim.mario.state = frontier
             del frontier_queue[priority][0]
             if not frontier_queue[priority]:
                 del frontier_queue[priority]
 
-            frontier_pos = []
-
-            # end test
+            # task end test
             if l1_distance(self.end, frontier[0:2, 0]) < 0.5:
-                break
+                node = raw_frontier
 
+            # expand frontier
+            next_cost = cost[raw_frontier] + 1
             for i in range(4):
-                pass
-            # get next possible states
+                self.sim.run(action=i, printable=False)
+                next_state = self.sim.mario.state
+                raw_next_state = self.decode_state(next_state)
+                # if new state is legal
+                if not np.array_equal(next_state, frontier) and (
+                        raw_next_state not in cost or next_cost < cost[raw_next_state]):
+                    cost[raw_next_state] = next_cost
+                    path_pre[raw_next_state] = raw_frontier
+                    state_action_map[raw_next_state] = i
+                    heuristic = next_cost + l1_distance(self.end, next_state[0:2, 0])
+                    if heuristic in frontier_queue:
+                        frontier_queue[heuristic].append(raw_next_state)
+                    else:
+                        frontier_queue[heuristic] = [raw_next_state]
 
-
-
-        # while frontier_queue:
-        #     priority = frontier_queue.top()
-        #     frontier = frontier_queue[priority][0]
-        #     del frontier_queue[priority][0]
-        #     if not frontier_queue[priority]:
-        #         del frontier_queue[priority]
-        #
-        #     if frontier == self.end:
-        #         break
-        #
-        #     for dir_neighbor in directions:
-        #         next_node = tuple(frontier + dir_neighbor)
-        #         next_cost = cost[frontier] + 1
-        #         if self.layout[next_node] in [0, 3, 4] and (next_node not in cost or next_cost < cost[next_node]):
-        #             cost[next_node] = next_cost
-        #             path_pre[next_node] = frontier
-        #             heuristic = next_cost + l1_distance(next_node, self.end)
-        #             # print(next_node)
-        #             if heuristic in frontier_queue:
-        #                 frontier_queue[heuristic].append(next_node)
-        #             else:
-        #                 frontier_queue[heuristic] = [next_node]
-        #
+                self.sim.mario.state = frontier
 
         action_path = []
-        # node = self.end
-        # while node is not None:
-        #     path.insert(0, (node[0]-1, node[1]-1)) # cancel the padding offset
-        #     node = path_pre[node]
-        self.action_path = action_path
+        while node:
+            action_path.insert(state_action_map[node])
+            node = path_pre[node]
 
+        self.action_path = action_path
 
 
     def get_action(self):

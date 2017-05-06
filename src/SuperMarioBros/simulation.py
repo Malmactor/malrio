@@ -72,18 +72,19 @@ class MarioSimulation:
         self.mario = CollidableRigid(init_pos, mario_bb, config)
         self.brick_bb = layout_tobb(layout, config)
 
-    def run(self, input=None, observer=None, action=None):
+    def run(self, input=None, observer=None, action=None, printable=True):
         """
         Main loop of game simulation
         :param input: Input module, callable or with poll() function
         :param observer: Observation receiver
         :param action: Action module, callable or with act() function
+        :param printable: print control
         :return: None
         """
         # Advance a time step
         self.mario.update()
 
-        print '- next unchecked state:\n', self.mario.state
+        if printable: print '- next unchecked state:\n', self.mario.state
 
         # Locate blocks for collision detections
         bb_to_check = collision_proposal(self.mario, self.brick_bb, self.config)
@@ -95,21 +96,21 @@ class MarioSimulation:
         if collisions:
             closest_collision = min(collisions, key=lambda pair: pair[1]['hit']['time'])
 
-            print '- collision status:\n', closest_collision
+            if printable: print '- collision status:\n', closest_collision
             self.mario.reaction(collision_resolved, closest_collision[1]["hit"]["delta"])
 
             # Process momentum change
             self.mario.reaction(hit_edge_reaction(closest_collision[1]))
 
-        print '- next state with oldspeed:\n', self.mario.state
+        if printable: print '- next state with oldspeed:\n', self.mario.state
 
         # Grab an action from input and simulate the force
         # Either poll() from keyboard for realtime play or let an agent act
         actnum = input if input else action
-        print '- action:', actnum
+        if printable: print '- action:', actnum
         self.mario.reaction(action_mapping[actnum])
 
-        print '- next state:\n', self.mario.state
+        if printable: print '- next state:\n', self.mario.state
         # Give corresponding handlers from momentum_handler.py to mario.reaction()
 
         # Take an observation
