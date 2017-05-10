@@ -51,7 +51,7 @@ while not world_state.has_mission_begun:
 
 
 # Loop until mission ends:
-while world_state.is_mission_running:
+if world_state.is_mission_running:
     actor = movement.AstarActor(agent_host, layout, interval=10)
     actor.run()
 

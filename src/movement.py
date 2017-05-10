@@ -25,6 +25,10 @@ class Actor:
         #### TODO ####
         print 'You are dead!'
 
+    def complete(self):
+        #### TODO ####
+        print 'Mission Complete!'
+
     def run(self):
         print 'int_state:', self.sim.mario.state
         print
@@ -36,6 +40,9 @@ class Actor:
                 print 'iter:', cnt
                 # get next action
                 actnum = self.get_action()
+                # check if finished
+                if actnum == -1: # or if we detect it is close to target
+                    return self.complete()
                 # update pos, dpos ddpos
                 self.sim.run(action=actnum)
                 # change location
@@ -71,7 +78,7 @@ class AstarActor(Actor):
 
     def feed_map(self, layout, target):
         """Feed the layout into the solver.
-        The initial position is (0, 2) from the feet, (0, 3) from center.
+        The initial position is (0, 2) from the feet/in the layout, (0, 3) from center.
         In our solver, the initial position is (1, 3) since we pad the map with a wall box.
         """
         self.layout = pad_layout(layout) # map
@@ -177,13 +184,8 @@ class AstarActor(Actor):
             # path finish check
             if self.action_path:
                 return self.action_path.pop(0)
-            elif not self.finish:
-                state[:, 1] = [0.0, 0.0, 0.0]
-                state[:, 2] = [0.0, 0.0, 0.0]
-                self.finish = True
-                return 0
             else:
-                return 0
+                return -1
         else:
             self.interval_cnt += 1
             return 0
