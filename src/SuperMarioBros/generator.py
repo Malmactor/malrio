@@ -98,7 +98,6 @@ class Prim:
         self.maze[start_x][start_y] = 0
         self.maze = self.maze.repeat(n,axis=0).repeat(n,axis=1)
 
-        self.maze[start_x][start_y] = 4
         self.maze[last.r*n][last.c*n] = 3
 
         return self.maze
