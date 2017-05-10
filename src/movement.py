@@ -106,10 +106,7 @@ class AstarActor(Actor):
 
         frontier_queue = pqdict.minpq({0: [init_state]})
 
-        # TODO: use actoin (base on state matrix) + domain (possible induced state matrix)
-        # instead of directions. For each loop in the heap, pop top state, calc all possible
-        # induced state, then push them into the heap. Notice that final position could be
-        # a range (rough position), since we use float.
+        # astar search
         closest_distance = 99999
         node = None
         while frontier_queue:
@@ -185,7 +182,7 @@ class AstarActor(Actor):
             if self.action_path:
                 return self.action_path.pop(0)
             else:
-                return -1
+                return -1 # denotes mission complete
         else:
             self.interval_cnt += 1
             return 0
