@@ -55,6 +55,15 @@ class Actor:
                     return self.die()
 
 
+class TestActor(Actor):
+    """Actor For Testing"""
+    def __init__(self, host, layout):
+        Actor.__init__(self, host, layout)
+
+    def get_action(self):
+        return 2
+
+
 def l1_distance(a, b):
     return np.sum(np.abs(a - np.array(b)))
 
