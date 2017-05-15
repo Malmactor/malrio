@@ -11,7 +11,7 @@ import numpy as np
 
 def collision_resolved(state, delta):
     # Back to a collision-free position
-    state[0:2, 0] += delta
+    state[0:2, 0] -= delta
 
 
 def hit_ground(state):

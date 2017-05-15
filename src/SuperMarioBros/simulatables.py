@@ -36,11 +36,12 @@ def seg_aabb_collision_resolution(box_center, radius, start, direction, padding=
     dtype = "float16" if config is None or "dtype" not in config else config["dtype"]
     epsilon = 0.001 if config is None or "epsilon" not in config else config["epsilon"]
 
-    sign_vec = np.sign(direction)
     if np.any(np.abs(direction) == 0.0):
         norm = direction + epsilon
     else:
         norm = direction
+
+    sign_vec = np.sign(norm)
 
     near_time_vec = (box_center - sign_vec * (radius + padding) - start) / norm
     far_time_vec = (box_center + sign_vec * (radius + padding) - start) / norm
@@ -155,7 +156,7 @@ class CollidableAABB:
         velocity = collidable_rigid.displacement_difference()[0:2]
 
         # static collision resolution
-        if np.all(velocity <= self.epsilon):
+        if np.all(np.abs(velocity) <= self.epsilon):
             collision["position"] = collidable_rigid.get_center()
             collision["hit"] = self.static_collide(collidable_rigid)
 
