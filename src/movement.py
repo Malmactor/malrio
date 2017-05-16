@@ -118,6 +118,7 @@ class AstarActor(Actor):
         # astar search
         closest_distance = 99999
         node = None
+        solved = False
         while frontier_queue:
 
             # get top
@@ -154,6 +155,7 @@ class AstarActor(Actor):
                     print i, next_state[0:2, 0], next_cost, closest_distance
                     if closest_distance < 0.5:
                         node = raw_next_state
+                        solved = True
                         break
 
                     heuristic = next_cost + distance_to_end
@@ -163,16 +165,22 @@ class AstarActor(Actor):
                 self.sim.mario.state = frontier
 
             if closest_distance < 0.5:
+                solved = True
                 break
 
+
         action_path = []
-        while node:
-            action_path.insert(0, state_action_map[node])
-            node = path_pre[node]
-        action_path.pop(0)
+
+        if solved:
+            while node:
+                action_path.insert(0, state_action_map[node])
+                node = path_pre[node]
+            action_path.pop(0)
+            print action_path
+        else:
+            print 'unsovable'
 
         self.action_path = action_path
-        print action_path
         self.sim.mario.state = self.decode_state(init_state)
 
 
