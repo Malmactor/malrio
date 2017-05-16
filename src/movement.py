@@ -113,22 +113,17 @@ class AstarActor(Actor):
         # cost to get this state, in terms of time (moves)
         cost = {init_state: 0}
 
-        frontier_queue = pqdict.minpq({0: [init_state]})
+        frontier_queue = pqdict.minpq({init_state: 0})
 
         # astar search
         closest_distance = 99999
         node = None
         while frontier_queue:
-            # initial setup
-            priority = frontier_queue.top()
-            random_top = np.random.randint(len(frontier_queue[priority]))
-            raw_frontier = frontier_queue[priority][random_top]
+
+            # get top
+            raw_frontier = frontier_queue.pop()
             frontier = self.decode_state(raw_frontier)
-            # print frontier[0:2, 0], cost[raw_frontier]
             self.sim.mario.state = frontier
-            del frontier_queue[priority][random_top]
-            if not frontier_queue[priority]:
-                del frontier_queue[priority]
 
             # expand frontier
             for i in range(4):
@@ -154,17 +149,15 @@ class AstarActor(Actor):
                     state_action_map[raw_next_state] = i
 
                     # task end test
-                    closest_distance = min(closest_distance, l1_distance(self.end, next_state[0:2, 0]))
+                    distance_to_end = l1_distance(self.end, next_state[0:2, 0])
+                    closest_distance = min(closest_distance, distance_to_end)
                     print i, next_state[0:2, 0], next_cost, closest_distance
                     if closest_distance < 0.5:
                         node = raw_next_state
                         break
 
-                    heuristic = next_cost + l1_distance(self.end, next_state[0:2, 0])
-                    if heuristic in frontier_queue:
-                        frontier_queue[heuristic].append(raw_next_state)
-                    else:
-                        frontier_queue[heuristic] = [raw_next_state]
+                    heuristic = next_cost + distance_to_end
+                    frontier_queue[raw_next_state] = heuristic
 
 
                 self.sim.mario.state = frontier
