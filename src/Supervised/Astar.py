@@ -52,7 +52,7 @@ class Astar:
         frontier_queue = pqdict.minpq({init_state: 0})
 
         # astar search
-        closest_distance = 99999
+        closest_distance = 99999999
         node = None
         solved = False
         while frontier_queue:
@@ -88,7 +88,7 @@ class Astar:
                     # task end test
                     distance_to_end = l1_distance(self.end, next_state[0:2, 0])
                     closest_distance = min(closest_distance, distance_to_end)
-                    print i, next_state[0:2, 0], next_cost, closest_distance
+                    # print i, next_state[0:2, 0], next_cost, closest_distance
                     if closest_distance < 0.5:
                         node = raw_next_state
                         solved = True
@@ -115,14 +115,11 @@ class Astar:
                 node = path_pre[node]
             for i in range(self.interval):
                 action_path.pop(0)
-            return action_path
-        else:
-            return []
 
-        self.sim.mario.state = self.decode_state(init_state)
+        return action_path
 
 
 if __name__ == "__main__":
     astar = Astar()
-    astar.feed_map(layout_fromdefault())
+    astar.feed_map(layout=layout_fromdefault(), interval=5, target=3)
     print astar.get_path()
