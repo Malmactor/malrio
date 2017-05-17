@@ -1,61 +1,128 @@
-"""
-"""
-
-__author__ = "Liyan Chen"
-__copyright__ = "Copyright (c) 2017 Malmactor"
-__license__ = "MIT"
-
+import sys
+import os
+sys.path.append(os.path.abspath('../'))
 
 import numpy as np
 import pqdict
-
-
-def get_start_end(maze):
-    r, c = maze.shape
-    start = np.argwhere(maze == 3).flatten()
-    end = np.argwhere(maze == 4).flatten()
-    return tuple(start), tuple(end)
-
+from SuperMarioBros.simulation import MarioSimulation
+from SuperMarioBros.layout_loader import layout_toxml, layout_fromdefault
 
 def l1_distance(a, b):
     return np.sum(np.abs(a - np.array(b)))
 
 
-def solver(maze):
-    r, c = maze.shape
-    start, end = get_start_end(maze)
-    directions = [np.array([1, 0]), np.array([0, 1]), np.array([-1, 0]), np.array([0, -1])]
-    path = []
+def l2_distance(a, b):
+    return np.linalg.norm(a-b)
 
-    path_pre = {start: None}
-    cost = {start: 0}
-    frontier_queue = pqdict.minpq({0: [start]})
 
-    while frontier_queue:
-        priority = frontier_queue.top()
-        frontier = frontier_queue[priority][0]
-        del frontier_queue[priority][0]
-        if not frontier_queue[priority]:
-            del frontier_queue[priority]
+def pad_layout(layout):
+    return np.pad(layout, (1, 1), 'constant', constant_values=1)
 
-        if frontier == end:
-            break
 
-        for dir_neighbor in directions:
-            next_node = tuple(frontier + dir_neighbor)
-            next_cost = cost[frontier] + 1
-            if maze[next_node] in [0, 3, 4] and (next_node not in cost or next_cost < cost[next_node]):
-                cost[next_node] = next_cost
-                path_pre[next_node] = frontier
-                heuristic = next_cost + l1_distance(next_node, end)
-                # print(next_node)
-                if heuristic in frontier_queue:
-                    frontier_queue[heuristic].append(next_node)
-                else:
-                    frontier_queue[heuristic] = [next_node]
+class Astar:
+    def __init__(self):
+        pass
 
-    node = end
-    while node is not None:
-        path.insert(0, node)
-        node = path_pre[node]
-    return path
+    def feed_map(self, layout, interval=5, target=3):
+        self.interval = interval # upsampling interval
+        self.layout = pad_layout(layout) # map
+        self.target = target # end point
+        self.start = np.array([1, 3])
+        self.end = np.argwhere(self.layout == target).flatten()
+        self.sim = MarioSimulation(layout, {"dtype": "float16"})
+
+    def encode_state(self, state):
+        return str(state.flatten())
+
+    def decode_state(self, state):
+        return np.fromstring(state[1:-1], dtype="float16", sep=' ').reshape((3, 3))
+
+    def get_path(self):
+        r, c = self.layout.shape
+        init_state = self.encode_state(self.sim.mario.state)
+
+        # we use path to record states, and state_action_map to map state to action
+        path = []
+        state_action_map = {init_state: None}
+        # state dict for previous state
+        path_pre = {init_state: None}
+        # cost to get this state, in terms of time (moves)
+        cost = {init_state: 0}
+
+        frontier_queue = pqdict.minpq({init_state: 0})
+
+        # astar search
+        closest_distance = 99999
+        node = None
+        solved = False
+        while frontier_queue:
+
+            # get top
+            raw_frontier = frontier_queue.pop()
+            frontier = self.decode_state(raw_frontier)
+            self.sim.mario.state = frontier
+
+            # expand frontier
+            for i in range(4):
+                next_cost = cost[raw_frontier]
+                prev_state = self.sim.mario.state
+                self.sim.run(action=i, printable=False)
+                next_cost += l2_distance(prev_state[0:2, 0], self.sim.mario.state[0:2, 0])
+
+                # upsample runs
+                for j in range(self.interval - 1):
+                    prev_state = self.sim.mario.state
+                    self.sim.run(action=0, printable=False)
+                    next_cost += l2_distance(prev_state[0:2, 0], self.sim.mario.state[0:2, 0])
+
+                next_state = self.sim.mario.state
+                raw_next_state = self.encode_state(next_state)
+
+                # if new state is legal
+                if not np.array_equal(next_state, frontier) and next_state[0][0] > 0 and next_state[1][0] > 0 and (
+                        raw_next_state not in cost or next_cost < cost[raw_next_state]):
+                    cost[raw_next_state] = next_cost
+                    path_pre[raw_next_state] = raw_frontier
+                    state_action_map[raw_next_state] = i
+
+                    # task end test
+                    distance_to_end = l1_distance(self.end, next_state[0:2, 0])
+                    closest_distance = min(closest_distance, distance_to_end)
+                    print i, next_state[0:2, 0], next_cost, closest_distance
+                    if closest_distance < 0.5:
+                        node = raw_next_state
+                        solved = True
+                        break
+
+                    heuristic = next_cost + distance_to_end
+                    frontier_queue[raw_next_state] = heuristic
+
+
+                self.sim.mario.state = frontier
+
+            if closest_distance < 0.5:
+                solved = True
+                break
+
+
+        action_path = []
+
+        if solved:
+            while node:
+                for i in range(self.interval-1):
+                    action_path.insert(0, 0)
+                action_path.insert(0, state_action_map[node])
+                node = path_pre[node]
+            for i in range(self.interval):
+                action_path.pop(0)
+            return action_path
+        else:
+            return []
+
+        self.sim.mario.state = self.decode_state(init_state)
+
+
+if __name__ == "__main__":
+    astar = Astar()
+    astar.feed_map(layout_fromdefault())
+    print astar.get_path()
