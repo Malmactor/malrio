@@ -4,7 +4,7 @@ import numpy as np
 import pqdict
 from abc import ABCMeta, abstractmethod
 
-from Supervised.astar import Astar
+from Supervised.Astar import Astar
 from SuperMarioBros.simulation import MarioSimulation
 
 class Actor:
@@ -45,7 +45,7 @@ class Actor:
                 if actnum == -1: # or if we detect it is close to target
                     return self.complete()
                 # update pos, dpos ddpos
-                self.sim.run(action=actnum)
+                self.sim.advance_frame(action=actnum)
                 # change location
                 self.host.sendCommand("tp " + str(self.sim.mario.state[0, 0]) +
                         " " + str(self.sim.mario.state[1, 0]) +

@@ -29,7 +29,7 @@ def read_batch_from_tfrecord(filename):
     # with tf.Session() as sess:
     #     coord = tf.train.Coordinator()
     #     threads = tf.train.start_queue_runners(coord=coord)
-    #     data = sess.run([data])
+    #     data = sess.advance_frame([data])
     #     print data
     #     coord.request_stop()
     #     coord.join(threads)

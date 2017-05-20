@@ -13,3 +13,5 @@ from momentum_handler import *
 from simulatables import *
 from simulation import *
 from configuration import *
+from layout_loader import *
+from malmo_setup import *

@@ -63,16 +63,16 @@ class Astar:
             self.sim.mario.state = frontier
 
             # expand frontier
-            for i in range(4):
+            for i in ["remains", "left", "right", "press_jump"]:
                 next_cost = cost[raw_frontier]
                 prev_state = self.sim.mario.state
-                self.sim.run(action=i, printable=False)
+                self.sim.advance_frame(action=i)
                 next_cost += l2_distance(prev_state[0:2, 0], self.sim.mario.state[0:2, 0])
 
                 # upsample runs
                 for j in range(self.interval - 1):
                     prev_state = self.sim.mario.state
-                    self.sim.run(action=0, printable=False)
+                    self.sim.advance_frame(action=0, printable=False)
                     next_cost += l2_distance(prev_state[0:2, 0], self.sim.mario.state[0:2, 0])
 
                 next_state = self.sim.mario.state

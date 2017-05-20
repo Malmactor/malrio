@@ -6,8 +6,10 @@ __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 
 import numpy as np
+import itertools as it
 
-from __init__ import *
+from simulatables import *
+from momentum_handler import *
 
 
 def layout_tobb(layout, config=None):
@@ -72,19 +74,14 @@ class MarioSimulation:
         self.mario = CollidableRigid(init_pos, mario_bb, config)
         self.brick_bb = layout_tobb(layout, config)
 
-    def run(self, input=None, observer=None, action=None, printable=True):
+    def advance_frame(self, action):
         """
-        Main loop of game simulation
-        :param input: Input module, callable or with poll() function
-        :param observer: Observation receiver
-        :param action: Action module, callable or with act() function
-        :param printable: print control
+        Update physics engine object states for next frame
+        :param action: agent action for current frame
         :return: None
         """
         # Advance a time step
         self.mario.update()
-
-        if printable: print '- next unchecked state:\n', self.mario.state
 
         # Locate blocks for collision detections
         bb_to_check = collision_proposal(self.mario, self.brick_bb, self.config)
@@ -96,24 +93,13 @@ class MarioSimulation:
         if collisions:
             closest_collision = min(collisions, key=lambda pair: pair[1]['hit']['time'])
 
-            if printable: print '- collision status:\n', closest_collision
             self.mario.reaction(collision_resolved, closest_collision[1]["hit"]["delta"])
 
             # Process momentum change
             self.mario.reaction(hit_edge_reaction(closest_collision[1]))
 
-        if printable: print '- next state with oldspeed:\n', self.mario.state
-
         # Grab an action from input and simulate the force
-        # Either poll() from keyboard for realtime play or let an agent act
-        actnum = input if input else action
-        if printable: print '- action:', actnum
-        self.mario.reaction(action_mapping[actnum])
+        self.mario.reaction(action_mapping[action])
 
-        if printable: print '- next state:\n', self.mario.state
-        # Give corresponding handlers from momentum_handler.py to mario.reaction()
-
-        # Take an observation
-
-        # Render simulation results to malmo or other output module(optional)
-        # return closest_collision
+    def get_renderable(self):
+        return self.mario.state[:, 0]
