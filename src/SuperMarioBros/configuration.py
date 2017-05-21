@@ -5,10 +5,17 @@ __author__ = "Liyan Chen"
 __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 
+
+import numpy as np
+
 simulation_config = {
     "dtype": "float16",
     "delta_t": 1.0,
-    "epsilon": 0.001
+    "template_path": "SuperMarioBros/mission_template.xml",
+    "epsilon": 0.001,
+    "sec_per_frame": 0.016,
+    "init_pos": np.array([0, 3, 0]),
+    "end_pos": np.array([7, 4, 0]),
 }
 
 phyx_const = {

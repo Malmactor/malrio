@@ -12,4 +12,4 @@ class Renderer:
 
     def render(self, rigid):
         pos = rigid.state[:, 0]
-        self.host.sendCommand("tp " + " ".join(map(lambda num: str(num)), pos))
+        self.host.sendCommand("tp " + " ".join(map(lambda num: str(num), pos)))

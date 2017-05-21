@@ -37,11 +37,13 @@ def collision_proposal(mario, pos2bb, config=None):
     :param config: Global configuration
     :return: List of potential collision boxes
     """
-    minx, miny, maxx, maxy = -2, -2, 3, 3
+    minx, miny, maxx, maxy = -1, -2, 1, 2
+
+    center = mario.get_center()
 
     return list(map(lambda pos: pos2bb[pos],
                     filter(lambda pos: pos in pos2bb,
-                           map(lambda d: tuple(np.trunc(mario.get_center() + d).astype("int")),
+                           map(lambda d: tuple((center + d).astype("int")),
                                it.product(xrange(minx, maxx), xrange(miny, maxy))))))
 
 
@@ -102,4 +104,4 @@ class MarioSimulation:
         self.mario.reaction(action_mapping[action])
 
     def get_renderable(self):
-        return self.mario.state[:, 0]
+        return self.mario

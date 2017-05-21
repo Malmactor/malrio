@@ -5,7 +5,7 @@ import pqdict
 from abc import ABCMeta, abstractmethod
 
 from Supervised.Astar import Astar
-from SuperMarioBros.simulation import MarioSimulation
+from src.SuperMarioBros.simulation import MarioSimulation
 
 class Actor:
     __metaclass__ = ABCMeta

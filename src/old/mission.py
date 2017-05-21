@@ -1,8 +1,8 @@
 import MalmoPython
 import time
 
-import movement
-from SuperMarioBros import *
+import src.movement
+from src.SuperMarioBros import *
 
 layout = layout_fromdefault()
 missionXML = layout_toxml(layout, {"template_path": "SuperMarioBros/mission_template.xml"})
@@ -28,7 +28,7 @@ while not world_state.has_mission_begun:
 # Loop until mission ends:
 if world_state.is_mission_running:
     # actor = movement.TestActor(agent_host, layout)
-    actor = movement.AstarActor(agent_host, layout, interval=5)
+    actor = src.movement.AstarActor(agent_host, layout, interval=5)
     actor.run()
 
 print

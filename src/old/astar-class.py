@@ -32,12 +32,14 @@ class Astar:
         self.sim = MarioSimulation(layout, {"dtype": "float16"})
 
     def encode_state(self, state):
-        return str(state.flatten())
+        return tuple(state.flatten())
 
     def decode_state(self, state):
-        return np.fromstring(state[1:-1], dtype="float16", sep=' ').reshape((3, 3))
+        return np.array(state).reshape((3, 3))
+        #return np.fromstring(state[1:-1], dtype="float16", sep=' ').reshape((3, 3))
 
     def get_path(self):
+        print self.end
         r, c = self.layout.shape
         init_state = self.encode_state(self.sim.mario.state)
 
@@ -53,6 +55,7 @@ class Astar:
 
         # astar search
         closest_distance = 99999999
+        expansion = 0
         node = None
         solved = False
         while frontier_queue:
@@ -61,6 +64,7 @@ class Astar:
             raw_frontier = frontier_queue.pop()
             frontier = self.decode_state(raw_frontier)
             self.sim.mario.state = frontier
+            expansion += 1
 
             # expand frontier
             for i in ["remains", "left", "right", "press_jump"]:
@@ -72,7 +76,7 @@ class Astar:
                 # upsample runs
                 for j in range(self.interval - 1):
                     prev_state = self.sim.mario.state
-                    self.sim.advance_frame(action=0, printable=False)
+                    self.sim.advance_frame(action="remains")
                     next_cost += l2_distance(prev_state[0:2, 0], self.sim.mario.state[0:2, 0])
 
                 next_state = self.sim.mario.state
@@ -110,12 +114,13 @@ class Astar:
         if solved:
             while node:
                 for i in range(self.interval-1):
-                    action_path.insert(0, 0)
+                    action_path.insert(0, "remains")
                 action_path.insert(0, state_action_map[node])
                 node = path_pre[node]
             for i in range(self.interval):
                 action_path.pop(0)
 
+        print expansion
         return action_path
 
 

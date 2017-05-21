@@ -14,7 +14,7 @@ from layout_loader import *
 def instantiate_malmo(start_layout=None):
     """
     Instantiate a malmo agenthost from a given layout
-    :param layout: 2d numpy array of a layout
+    :param start_layout: 2d numpy array of a layout
     :return: Malmo agenthost instance
     """
     layout = layout_fromdefault() if start_layout is None else start_layout
