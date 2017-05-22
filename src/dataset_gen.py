@@ -27,7 +27,8 @@ config = {"dtype": "float16",
             "c": 30,
             "transpose": True,
           },
-          "num_map": 100}
+          "num_map": 100,
+          "timeout": 60}
 
 
 rm = SV.generator.RandMap(config["maze_param"])
@@ -43,7 +44,7 @@ for i in range(config["num_map"]):
         actions = list(SMB.action_mapping.keys())
 
         signal.signal(signal.SIGALRM, signal_handler)
-        signal.alarm(15)
+        signal.alarm(config["timeout"])
         try:
             action_path = SV.a_star(rm.maze, simulation, config["init_pos"], config["end_pos"], actions, interval=5, config=config)
             signal.alarm(0)

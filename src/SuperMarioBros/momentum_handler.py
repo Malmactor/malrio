@@ -23,6 +23,8 @@ def hit_ground(state):
 def hit_sides(state):
     # Invert the x-direction velocity
     state[0, 1] = -state[0, 1]
+    state[0, 2] = -state[0, 2]
+
 
 
 def hit_ceiling(state):
@@ -33,8 +35,10 @@ def hit_ceiling(state):
 def walk(state, direction=1):
     # Change the x-direction velocity to walk speed
     speed = int(phyx_const["walk_speed"], base=16) / phyx_const["norm"]
-
+    acc = int(phyx_const["walk_acc"], base=16) / phyx_const["norm"]
     state[0, 1] = direction * speed
+    state[0, 2] = direction * acc
+
 
 
 def right(state):
@@ -64,8 +68,8 @@ def press_jump(state):
 
 
 def remains(state):
-    # no action
-    pass
+    if state[0, 1]*state[0, 2] > 0:
+        return stop(state)
 
 
 action_mapping = {
