@@ -29,7 +29,10 @@ class KeyPoller:
         return self.poll()
 
     def poll(self):
-        dr, dw, de = select.select([sys.stdin], [], [], 0)
-        if not dr == []:
-            return sys.stdin.read(1)
-        return None
+        bytes = bytearray()
+        while select.select([sys.stdin], [], [], 0)[0]:
+            bytes += sys.stdin.read(1)
+        if bytes:
+            return str(bytes)
+        else:
+            return None

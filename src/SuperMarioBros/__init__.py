@@ -16,3 +16,4 @@ from configuration import *
 from layout_loader import *
 from malmo_setup import *
 from renderer import *
+from keypoller import *

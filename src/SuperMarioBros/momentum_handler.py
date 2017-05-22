@@ -49,11 +49,6 @@ def left(state):
     return walk(state, direction=-1)
 
 
-def stop(state):
-    # Change the x-direction velocity to 0
-    state[0, 1] = 0
-
-
 def press_jump(state):
     # Add initial velocity and gravity to the state
     v0 = int(phyx_const["jump_v0"], base=16) / phyx_const["norm"]
@@ -68,8 +63,7 @@ def press_jump(state):
 
 
 def remains(state):
-    if state[0, 1]*state[0, 2] > 0:
-        return stop(state)
+    state[0, 1] = 0
 
 
 action_mapping = {

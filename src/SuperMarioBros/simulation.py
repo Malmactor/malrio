@@ -70,7 +70,7 @@ class MarioSimulation:
         self.layout = layout
         self.config = config
 
-        init_pos = np.array([0, 3, 0]) if config is None or "init_pos" not in config else config["init_pos"]
+        init_pos = np.array([2, 3, 0]) if config is None or "init_pos" not in config else config["init_pos"]
         mario_bb = np.array([0.5, 1]) if config is None or "mario_bb" not in config else config["mario_bb"]
 
         self.mario = CollidableRigid(init_pos, mario_bb, config)
