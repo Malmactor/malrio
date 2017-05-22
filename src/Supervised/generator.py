@@ -1,7 +1,6 @@
 """Randomized Prim's Minimum Spanning Tree Algorithm for Maze Generation."""
 
 
-from __future__ import print_function
 import sys
 import numpy as np
 
@@ -26,36 +25,29 @@ class Point:
 
 
 class Prim:
-    def __init__(self, r, c, n, transpose):
+    def __init__(self, config):
         """
-        Note:
-            1. the output map may not have size (r, c) due to padding and scaling
-            2. generate() may return Null if unsovable
-            3. You need to set transpose = True for Malrio
+        Note: the output map may not have size (r, c) due to padding and scaling
         r: num of rows
         c: num of colomns
         n: map scaling factor
         transpose: if need transpose for Malrio
         """
-        self.r = r
-        self.c = c
-        self.n = n # scale factor
-        self.transpose = transpose
+        self.r = config["r"]
+        self.c = config["c"]
+        self.n = config["n"]
+        self.transpose = config["transpose"]
+        self.lava = config["lava"]
+        self.init_pos = self.end_pos = (1, 3)
 
     def generate(self):
-        """
-        0 - air
-        1 - block
-        2 - lava
-        3 - end point
-        """
-
+        self.maze = None
         maze_r = self.r
         maze_c = self.c
         n = self.n
 
         # build maze and initialize with only walls and lavas
-        maze = np.random.randint(2, size=(maze_r, maze_c))+1
+        maze = np.ones((maze_r, maze_c))
 
         # set start point at (0, 2) in final layout
         start_x, start_y = maze_r-1, 0
@@ -97,31 +89,89 @@ class Prim:
             maze = maze.repeat(n,axis=0).repeat(n,axis=1)
             maze[last.r*n][last.c*n] = 3
             # add ground
-            ground = np.random.randint(2, size=(1, maze_c*n))+1
+            if self.lava:
+                ground = np.ones((1, maze_c*n))
+            else:
+                ground = np.random.randint(2, size=(1, maze_c*n))+1
             ground[0][0] = 1
             maze = np.vstack([maze, ground, ground])
+            end_pos = list(reversed(np.where(maze==3)))
+            self.end_pos = (end_pos[0][0], self.n*maze_r + 1 - end_pos[1][0])
             # transpose
             if self.transpose:
-                maze = np.copy(np.transpose(maze)[::-1])
+                maze = np.copy(np.transpose(maze[::-1]))
             self.maze = maze
         else:
             self.maze = None
 
-        return self.maze
+
+class RandMap:
+    def __init__(self, config):
+        """
+        Note: the output map may not have size (r, c) due to padding and scaling
+        r: num of rows
+        c: num of colomns
+        n: map scaling factor
+        transpose: if need transpose for Malrio
+        """
+        self.r = config["r"]
+        self.c = config["c"]
+        self.transpose = config["transpose"]
+        self.init_pos = (1, 3)
+        self.end_pos = (self.c-1, 3)
+
+    def generate(self):
+        self.maze = None
+        maze_r = self.r
+        maze_c = self.c
+
+        # build maze and initialize with only walls and lavas
+        maze = np.zeros((maze_r, maze_c))
+        maze[-2:] = np.ones((1, maze_c))
+        # maze[-2:] = np.random.randint(2, size=(1, maze_c))+1
+        maze[maze_r-2][0] = 1
+        maze[maze_r-2][maze_c-1] = 1
+        maze[maze_r-3][maze_c-1] = 3
 
 
-def print_maze(maze):
-    if maze is not None:
-        r, c = maze.shape
-        for x in range(r):
-            for y in range(c):
-                print(maze[x][y], end='')
-            print('', end='\n')
-    else:
-        print('unsovable')
+        # generate lavas
+        i = 1
+        while i < maze_c-2:
+            raml = np.random.randint(10)
+            if raml == 0:
+                maze[-2:, i:i+2] = 2
+                i += 2
+            i += 1
+
+        # generate blocks from ground
+        maxb = min(int(maze_r/3), 4) # from 1/3 lower part
+        if maxb > 1:
+            i = 1
+            while i < maze_c-4 :
+                if maze[maze_r-2][i] != 2 and maze[maze_r-2][i+1] != 2 :
+                    ramh = np.random.randint(maxb)
+                    if ramh > 0:
+                        maze[-2-ramh:-2, i:i+2] = 1
+                        i += 1
+                i += 1
+
+
+        # generate blocks in air
+        maxb = int(maze_r/2) # from 1/2 lower part
+        i = 1
+        while i < maze_c-2:
+            raml = np.random.randint(1+int(maze_c/10))
+            ramh = np.random.randint(maxb)
+            if ramh > 0:
+                maze[ramh, i:i+raml] = 1
+                i += raml + 3
+            i += 1
+
+        if self.transpose:
+            maze = np.copy(np.transpose(maze[::-1]))
+        self.maze = maze
 
 
 if __name__ == '__main__':
-    p = Prim(5, 18, 1, transpose=False)
-    p.generate()
-    print_maze(p.maze)
+    rm = RandMap({'r': 15, 'c': 17, 'transpose': True})
+    rm.generate()
