@@ -14,8 +14,9 @@ simulation_config = {
     "template_path": "SuperMarioBros/mission_template.xml",
     "epsilon": 0.001,
     "sec_per_frame": 0.016,
-    "init_pos": np.array([0, 3, 0]),
-    "end_pos": np.array([7, 4, 0]),
+    "init_pos": np.array([2, 3, 0]),
+    "end_pos": np.array([9, 4, 0]),
+    "empty_action": "remains"
 }
 
 phyx_const = {
