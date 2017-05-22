@@ -27,7 +27,7 @@ config = {"dtype": "float16",
             "c": 30,
             "transpose": True,
           },
-          "num_map": 1}
+          "num_map": 100}
 
 
 rm = SV.generator.RandMap(config["maze_param"])
@@ -35,10 +35,10 @@ config["init_pos"] = np.array([rm.init_pos[0], rm.init_pos[1], 0]) # preset init
 config["end_pos"] = np.array([rm.end_pos[0], rm.end_pos[1], 0]) # preset end pos
 
 for i in range(config["num_map"]):
+    print 'iter', i
     saved = False
     while not saved:
         rm.generate()
-        print rm.maze
         simulation = SMB.MarioSimulation(rm.maze, config=config)
         actions = list(SMB.action_mapping.keys())
 
@@ -53,6 +53,7 @@ for i in range(config["num_map"]):
 
         if action_path: # path find
             if DEBUG:
+                print rm.maze
                 print action_path
                 host = SMB.instantiate_malmo(rm.maze)
                 render = SMB.Renderer(host)
