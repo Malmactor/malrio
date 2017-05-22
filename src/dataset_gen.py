@@ -27,7 +27,7 @@ config = {"dtype": "float16",
             "c": 30,
             "transpose": True,
           },
-          "num_map": 100,
+          "num_map": 500,
           "timeout": 60}
 
 

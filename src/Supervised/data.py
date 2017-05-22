@@ -23,6 +23,24 @@ def store(action_path, layout):
 
     with open('layout.txt','a') as layout_file:
         np.savetxt(layout_file, layout, fmt='%i', newline=" ")
+        layout_file.write("\n")
 
     with open('path.txt','a') as path_file:
         np.savetxt(path_file, translate_path(action_path), fmt='%i', newline=" ")
+        path_file.write("\n")
+
+
+def read(filepath, reshape=None):
+    readlist = []
+    with open(filepath,'r') as layout_file:
+        for line in layout_file:
+            flatarray = np.fromstring(line, dtype=int, sep=' ')
+            if reshape:
+                flatarray = np.reshape(flatarray, reshape)
+            readlist.append(flatarray)
+    print readlist
+
+
+if __name__ == '__main__':
+    read("layout.txt", (30, 10))
+    read("path.txt")
