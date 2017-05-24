@@ -5,6 +5,7 @@ __author__ = "Liyan Chen"
 __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 
+from key_catch import *
 
 key_act_map = {
     "u'a'": "left_nojump",
@@ -15,7 +16,7 @@ key_act_map = {
 }
 
 
-def keyboard_agent(simulation, init_listener, render, config=None):
+def keyboard_agent(simulation, render, config=None):
     """
     Play game from keyboard input
     :param simulation: Simulation instance
@@ -37,8 +38,6 @@ def keyboard_agent(simulation, init_listener, render, config=None):
 
         renderable = simulation.get_renderable()
         render.render(renderable)
-    
     key = None
     init_listener(processKeyInput)
 
-        

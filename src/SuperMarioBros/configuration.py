@@ -12,11 +12,12 @@ simulation_config = {
     "dtype": "float16",
     "delta_t": 1.0,
     "template_path": "SuperMarioBros/mission_template.xml",
-    "epsilon": 0.001,
+    "epsilon": 0.00001,
     "sec_per_frame": 0.016,
     "init_pos": np.array([2, 3, 0]),
     "end_pos": np.array([9, 4, 0]),
-    "empty_action": "remains"
+    "empty_action": "remains",
+    "id2block": {0: 'air', 1: 'brick_block', 2: 'lava', 3: 'red_mushroom'}
 }
 
 phyx_const = {
@@ -46,4 +47,8 @@ phyx_const = {
     "walk_speed": "02000", # original: "01900", here we increase it to simulate "continuous pressing the button"
     "jump_v0": "04000",
     "gravity": "-001E0"
+}
+
+render_config = {
+    "block2color": {"brick_block": "#a52a2a", "lava": "#e34d28", "mario": "#0066cc", "red_mushroom": "#d8ccc0"}
 }

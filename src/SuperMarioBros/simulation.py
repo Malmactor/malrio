@@ -75,6 +75,9 @@ class MarioSimulation:
         self.mario = CollidableRigid(init_pos, mario_bb, config)
         self.brick_bb = layout_tobb(layout, config)
 
+        # Start with gravity
+        self.mario.reaction(give_gravity)
+
     def advance_frame(self, action):
         """
         Update physics engine object states for next frame
@@ -95,12 +98,16 @@ class MarioSimulation:
             closest_collision = min(collisions, key=lambda pair: pair[1]['hit']['time'])
 
             self.mario.reaction(collision_resolved, closest_collision[1]["hit"]["delta"])
+            # self.mario.reaction(collision_resolved, closest_collision[1]["position"])
 
             # Process momentum change
             self.mario.reaction(hit_edge_reaction(closest_collision[1]))
 
         # Grab an action from input and simulate the force
         self.mario.reaction(action_mapping[action])
+
+        if collisions:
+            return closest_collision
 
     def get_renderable(self):
         return self.mario
