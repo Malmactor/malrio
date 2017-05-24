@@ -11,7 +11,9 @@ import numpy as np
 
 def init_phyx_const():
     norm = phyx_const["norm"]
-
+    for k, v in phyx_const.items():
+        if isinstance(v, str):
+            phyx_const[k] = int(v, base=16) / norm
 
 
 def collision_resolved(state, delta):
