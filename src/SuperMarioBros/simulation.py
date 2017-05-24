@@ -59,7 +59,6 @@ def hit_edge_reaction(collision):
 
     return edge2action[np.argmax(np.dot(collision['hit']['normal'], directions))]
 
-
 class MarioSimulation:
     def __init__(self, layout, config=None):
         """
