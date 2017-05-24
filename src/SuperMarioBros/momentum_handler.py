@@ -114,6 +114,20 @@ def horizontal_enact(state, direction):
 
 def vertical_enact(state):
 
+    # Jump from the ground
+    if np.abs(state[1, 1]) < simulation_config["epsilon"]:
+
+        if np.abs(state[0, 1]) < phyx_const["jump_lomi_threshold"]:
+            state[1, 1] = phyx_const["jump_lox_init_v"]
+            state[1, 2] = phyx_const["jump_lox_hold_g"]
+
+        elif np.abs(state[0, 1]) < phyx_const["jump_mihi_threshold"]:
+            state[1, 1] = phyx_const["jump_lox_init_v"]
+            state[1, 2] = phyx_const["jump_mix_hold_g"]
+
+        else:
+
+
 
 
 action_mapping = {
