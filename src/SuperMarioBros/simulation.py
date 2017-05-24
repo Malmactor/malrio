@@ -5,11 +5,10 @@ __author__ = "Liyan Chen"
 __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 
-import numpy as np
 import itertools as it
 
-from simulatables import *
 from momentum_handler import *
+from simulatables import *
 
 
 def layout_tobb(layout, config=None):
@@ -59,6 +58,7 @@ def hit_edge_reaction(collision):
 
     return edge2action[np.argmax(np.dot(collision['hit']['normal'], directions))]
 
+
 class MarioSimulation:
     def __init__(self, layout, config=None):
         """
@@ -101,7 +101,6 @@ class MarioSimulation:
 
         # Grab an action from input and simulate the force
         self.mario.reaction(action_mapping[action])
-
 
     def get_renderable(self):
         return self.mario
