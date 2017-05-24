@@ -67,7 +67,7 @@ class Astar:
             expansion += 1
 
             # expand frontier
-            for i in ["remains", "left", "right", "press_jump"]:
+            for i in ["remains", "left_jump", "right_jump", "left_nojump", "right_nojump", "nolr_jump"]:
                 next_cost = cost[raw_frontier]
                 prev_state = self.sim.mario.state
                 self.sim.advance_frame(action=i)

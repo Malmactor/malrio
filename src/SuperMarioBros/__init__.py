@@ -12,9 +12,9 @@ from simulation import *
 from configuration import *
 from layout_loader import *
 from malmo_setup import *
-from renderer import *
+from malmo_renderer import *
 from keypoller import *
 
 
-# Initialize the phyics configurations by converting constants from hex-strings to floating point numbers
+# Initialize the physics configurations by converting constants from hex-strings to floating point numbers
 init_phyx_const()
