@@ -7,9 +7,11 @@ __license__ = "MIT"
 
 
 key_act_map = {
-    "a": "left",
-    "d": "right",
+    "u'a'": "left",
+    "u'd'": "right",
     " ": "press_jump"
+    "u'a' ": "left_jump"
+    "u'd' ": "right_jump"
 }
 
 
@@ -27,11 +29,9 @@ def keyboard_agent(simulation, keypoller, render, config=None):
     empty_action = config["empty_action"]
 
     key = None
-
+    init_listener()
     while not key == "q":
-        key = keypoller()
-        if key:
-            print key
+        key = getCurrKey()
         if key and key in key_act_map:
             simulation.advance_frame(key_act_map[key])
         else:
