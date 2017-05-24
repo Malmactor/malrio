@@ -30,6 +30,8 @@ def keyboard_agent(simulation, keypoller, render, config=None):
 
     while not key == "q":
         key = keypoller()
+        if key:
+            print key
         if key and key in key_act_map:
             simulation.advance_frame(key_act_map[key])
         else:
