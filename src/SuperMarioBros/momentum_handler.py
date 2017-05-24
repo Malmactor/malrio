@@ -43,11 +43,11 @@ def hit_ceiling(state):
 
 # Action related handlers
 def right(state):
-    return horizontal_movement(state, direction=1)
+    return horizontal_enact(state, direction=1)
 
 
 def left(state):
-    return horizontal_movement(state, direction=-1)
+    return horizontal_enact(state, direction=-1)
 
 
 def press_jump(state):
@@ -67,7 +67,7 @@ def remains(state):
     state[0, 1] = 0
 
 
-def horizontal_movement(state, direction):
+def horizontal_enact(state, direction):
 
     # Ground case
     if np.abs(state[1, 1]) < simulation_config["epsilon"]:
@@ -84,6 +84,29 @@ def horizontal_movement(state, direction):
         # Accelerate towards the same direction
         else:
             state[0, 2] = phyx_const["walk_acc"] * direction
+
+    # Midair case
+    else:
+
+        # Holding forward, including horizontally still cases
+        if np.sign(state[0, 1]) * direction >= 0:
+
+            # Low speed case
+            if np.linalg.norm(state[:, 1]) < phyx_const["midair_hilo_threshold"]:
+                state[0, 2] = phyx_const["midair_forw_lo_acc"] * direction
+
+            # High speed case
+            else:
+                state[0, 2] = phyx_const["midair_forw_hi_acc"] * direction
+
+        # Holding backward
+        else:
+
+            # Low speed and high speed cases
+            if np.linalg.norm(state[:, 1]) < phyx_const["midair_hilo_threshold"]:
+                state[0, 2] = phyx_const["midair_bckw_lo_acc"]
+            else:
+                state[0, 2] = phyx_const["midair_bckw_hi_acc"]
 
 
 action_mapping = {

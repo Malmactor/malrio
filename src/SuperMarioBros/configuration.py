@@ -25,6 +25,11 @@ phyx_const = {
     "max_walk_speed": "01900",
     "walk_acc": "00098",
     "skid_dec": "001A0",
+    "midair_hilo_threshold": "01900",
+    "midair_forw_lo_acc": "00098",
+    "midair_forw_hi_acc": "000E4",
+    "midair_bckw_lo_acc": "000D0",
+    "midair_bckw_hi_acc": "000E4",
     "walk_speed": "02000", # original: "01900", here we increase it to simulate "continuous pressing the button"
     "jump_v0": "04000",
     "gravity": "-001E0"
