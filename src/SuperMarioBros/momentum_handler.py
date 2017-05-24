@@ -193,7 +193,9 @@ def remains(state):
 
 action_mapping = {
     "remains": remains,
-    "left": left,
-    "right": right,
-    "press_jump": press_jump
+    "left_nojump": left_nojump,
+    "right_nojump": right_nojump,
+    "left_jump": left_jump,
+    "right_jump": right_jump,
+    "nolr_jump": nolr_jump
 }
