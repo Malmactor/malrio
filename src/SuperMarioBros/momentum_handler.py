@@ -126,7 +126,25 @@ def vertical_enact(state):
             state[1, 2] = phyx_const["jump_mix_hold_g"]
 
         else:
+            state[1, 1] = phyx_const["jump_hix_init_v"]
+            state[1, 2] = phyx_const["jump_mix_hold_g"]
 
+    # Hold A in midair
+    else:
+        if np.abs(state[0, 1]) < phyx_const["jump_lomi_threshold"]:
+            state[1, 2] = phyx_const["jump_lox_hold_g"]
+
+        elif np.abs(state[0, 1]) < phyx_const["jump_mihi_threshold"]:
+            state[1, 2] = phyx_const["jump_mix_hold_g"]
+
+        else:
+            state[1, 2] = phyx_const["jump_mix_hold_g"]
+
+
+def horizontal_deact(state):
+
+    # Ground case
+    if np.abs(state[1, 1]) < simulation_config["epsilon"]:
 
 
 

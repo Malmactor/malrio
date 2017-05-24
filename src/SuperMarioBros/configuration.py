@@ -36,7 +36,7 @@ phyx_const = {
     "jump_hix_init_v": "05000",
     "jump_lox_hold_g": "-00200",
     "jump_mix_hold_g": "-001E0",
-    "jump_hix_hold_g": "-00280"
+    "jump_hix_hold_g": "-00280",
     "walk_speed": "02000", # original: "01900", here we increase it to simulate "continuous pressing the button"
     "jump_v0": "04000",
     "gravity": "-001E0"
