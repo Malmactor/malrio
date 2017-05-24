@@ -19,4 +19,4 @@ render = UT.TKRender(layout, config=config)
 
 simulation = SMB.MarioSimulation(layout, config=config)
 
-AG.keyboard_agent(simulation, None, render, config=config)
+AG.dummy_agent(simulation, render, config=config)

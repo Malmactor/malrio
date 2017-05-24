@@ -18,7 +18,7 @@ def init_phyx_const():
     norm = phyx_const["norm"]
     for k, v in phyx_const.items():
         if isinstance(v, str):
-            phyx_const[k] = int(v, base=16) / norm
+            phyx_const[k] = np.float32(int(v, base=16) / norm)
 
 
 def give_gravity(state):

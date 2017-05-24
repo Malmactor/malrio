@@ -12,7 +12,7 @@ simulation_config = {
     "dtype": "float16",
     "delta_t": 1.0,
     "template_path": "SuperMarioBros/mission_template.xml",
-    "epsilon": 0.001,
+    "epsilon": 0.00001,
     "sec_per_frame": 0.016,
     "init_pos": np.array([2, 3, 0]),
     "end_pos": np.array([9, 4, 0]),

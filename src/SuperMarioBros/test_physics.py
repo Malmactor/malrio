@@ -6,6 +6,7 @@ __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 
 
+from __init__ import *
 from layout_loader import *
 from simulation import *
 
