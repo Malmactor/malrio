@@ -99,8 +99,6 @@ class MarioSimulation:
             # Process momentum change
             self.mario.reaction(hit_edge_reaction(closest_collision[1]))
 
-            return closest_collision
-
         # Grab an action from input and simulate the force
         self.mario.reaction(action_mapping[action])
 
