@@ -3,8 +3,6 @@ layout: default
 title: Status
 ---
 
-## Malrio Status Report
-
 ### Project Summary
 
 Our project is a Super Mario Maker™ gameplay simulation in minecraft, including two pieces of mechanism: a mario player and a world map generator.
@@ -27,7 +25,14 @@ The ultimate goal of this project is to train the malrio agent with supervised l
 
     3. Mushroom: It simulates the goal flag in Super Mario Bros.
 
-2. Control and collision //TODO
+2. Control and collision: Since physical engine in Minecraft is limited and rigid, we create our own physical enginee for movement of player as well as collision reaction.
+
+    1. States of actor: We use a 3 by 3 matrix to represent the state of the actor: 
+    $$\begin{bmatrix}
+        p_x & v_x & a_x \\
+        p_y & v_y & a_y \\
+        p_z & v_z & a_z \\
+    \end{bmatrix}$$
 
 #### Part II: Dataset
 
@@ -35,9 +40,10 @@ To prepare dataset for supervised learning, we need both maps and corresponding 
 
 1. Maps: Maps are generated using either simple obstacles generator and Prim map generator. The simple obstacles generator generates a world with blocks and lavas whose positions and sizes similar to those of Level 1-1 in Super Mario Bros, by randomly creating obstacles and floating tiles. The Prim map generator generates a maze-like world with Prim's algorithm, which is much harder to solve but guarenteed to be solvable.
 
-2. Actions: We use A-star search as the action generator for each visible area of each map. Our A-star algorithm cooperate closely with our physical enginee by using the provided actions to generate frontiers of each state. Since A-star is guaranteed to be optimal, it serves as an ideal way to generate action labels to get to the goal. We also pre-select the maps that feasible for A-star to run, in terms of sovability and time cost. 
+2. Actions: We use A-star search as the action generator for each visible area of each map. Our A-star algorithm cooperate closely with our physical enginee by using the provided actions to generate frontiers of each state. Since A-star is guaranteed to be optimal, it serves as an ideal way to generate action labels to get to the goal. We also pre-select the maps that feasible for A-star to run, in terms of sovability and time cost.
+
 #### Part III: Supervised Training
-//TODO
+// TODO
 
 ### Evaluation
 // TODO
