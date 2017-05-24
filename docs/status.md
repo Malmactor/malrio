@@ -5,9 +5,9 @@ title: Status
 
 ### Project Summary
 
-Our project is a Super Mario Maker™ gameplay simulation in minecraft, including two pieces of mechanism: a mario player and a world map generator.
+Our project is a Super Mario Maker™ gameplay simulation in minecraft, including two pieces of mechanism: a mario player and a world map generator. We also provide an original physics engine to simulate actions of Mario.
 
-The player is a partially observable agent. For each time step, it perceives a visible frame from the world map and makes a decision for the next action. We provides both deep-learning based AI and A-star searching AI for the agent. Users can also control Mario with keyboards based on our physical engine.
+The player is a partially observable agent. For each time step, it perceives a visible frame from the world map and makes a decision for the next action. We provides both deep-learning based AI and A-star searching AI for the agent. Users can also control Mario with keyboards based on our physics engine.
 
 The generator will randomly generate a minecraft world similar to maps in Super Mario Bros. We provides both simple obstacles generator and Prim map generator. Each map is associated with a goal - red mushroom - for Mario to reach.
 
@@ -25,7 +25,7 @@ The ultimate goal of this project is to train the malrio agent with supervised l
 
     3. Mushroom: It simulates the goal flag in Super Mario Bros.
 
-2. Control and collision: Since physical engine in Minecraft is limited and rigid, we create our own physical enginee for movement of player as well as collision reaction.
+2. Control and collision: Since physics engine in Minecraft is limited and rigid, we create our own physics enginee for movement of player as well as collision reaction.
 
     1. States of actor: We use a 3 by 3 matrix to represent the state of the actor: 
     $$\begin{bmatrix}
@@ -44,7 +44,7 @@ To prepare dataset for supervised learning, we need both maps and corresponding 
 
 1. Maps: Maps are generated using either simple obstacles generator and Prim map generator. The simple obstacles generator generates a world with blocks and lavas whose positions and sizes similar to those of Level 1-1 in Super Mario Bros, by randomly creating obstacles and floating tiles. The Prim map generator generates a maze-like world with Prim's algorithm, which is much harder to solve but guarenteed to be solvable.
 
-2. Actions: We use A-star search as the action generator for each visible area of each map. Our A-star algorithm cooperate closely with our physical enginee by using the provided actions to generate frontiers of each state. Since A-star is guaranteed to be optimal, it serves as an ideal way to generate action labels to get to the goal. We also pre-select the maps that feasible for A-star to run, in terms of sovability and time cost.
+2. Actions: We use A-star search as the action generator for each visible area of each map. Our A-star algorithm cooperate closely with our physics enginee by using the provided actions to generate frontiers of each state. Since A-star is guaranteed to be optimal, it serves as an ideal way to generate action labels to get to the goal. We also pre-select the maps that feasible for A-star to run, in terms of sovability and time cost.
 
 #### Part III: Supervised Training
 // TODO
