@@ -19,6 +19,9 @@ def init_phyx_const():
         if isinstance(v, str):
             phyx_const[k] = int(v, base=16) / norm
 
+def give_gravity(state):
+    state[1, 2] = phyx_const["gravity"]
+
 
 # Collision related handlers
 def collision_resolved(state, delta):
@@ -108,6 +111,8 @@ def horizontal_enact(state, direction):
             else:
                 state[0, 2] = phyx_const["midair_bckw_hi_acc"]
 
+
+def vertical_enact(state):
 
 
 
