@@ -32,11 +32,11 @@ The ultimate goal of this project is to train the malrio agent with supervised l
         p_x & v_x & a_x \\
         p_y & v_y & a_y \\
         p_z & v_z & a_z \\
-    \end{bmatrix}$$, where $$p, v, a$$ denotes position, velocity and acceleration respectly. For each time step $$\Delta t$$, we change the state by $$ v_{t\Delta t} = v_t + a_t \Delta t$$ and $$ p_{t\Delta t} = p_t + v_t \Delta t + \frac{1}{2} a_t \Delta t^2$$ atomatically. For each action of the actor - left move, right move or jump - we only change velocity and acceleration to simulate physical movement in following time steps. We adopt similar hyperparameters of physical settings as Super Mario Bros.
+    \end{bmatrix}$$, where $$p, v, a$$ denotes position, velocity and acceleration respectively. For each time step $$\Delta t$$, we change the state by $$ v_{t+\Delta t} = v_t + a_t \Delta t$$ and $$ p_{t+\Delta t} = p_t + v_t \Delta t + \frac{1}{2} a_t \Delta t^2$$ automatically. For each action of the actor - left move, right move or jump - we only change velocity and acceleration to simulate physical movement in following time steps. We adopt similar hyperparameters of physical settings as Super Mario Bros.
     
     2. Actor control: \\TODO
     
-    3. Collusion: \\TODO
+    3. Collision: \\TODO
 
 #### Part II: Dataset
 
