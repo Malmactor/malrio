@@ -75,6 +75,9 @@ class MarioSimulation:
         self.mario = CollidableRigid(init_pos, mario_bb, config)
         self.brick_bb = layout_tobb(layout, config)
 
+        # Start with gravity
+        self.mario.reaction(give_gravity)
+
     def advance_frame(self, action):
         """
         Update physics engine object states for next frame

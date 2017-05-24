@@ -6,12 +6,14 @@ __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 
 
+from key_catch import *
+
 key_act_map = {
     "u'a'": "left",
     "u'd'": "right",
-    " ": "press_jump"
-    "u'a' ": "left_jump"
-    "u'd' ": "right_jump"
+    " ": "press_jump",
+    "u'a' ": "left_jump",
+    "u'd' ": "right_jump",
 }
 
 

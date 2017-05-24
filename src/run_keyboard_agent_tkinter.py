@@ -1,22 +1,21 @@
-"""Main program for keyboard agent
+"""Main program for running keyboard agent without annoying malmo stuff :)
 """
 
 __author__ = "Liyan Chen"
 __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 
-
 import SuperMarioBros as SMB
 import Agent as AG
-import Utility as UT
 
 
 config = SMB.simulation_config
-config.update(SMB.render_config)
 
 layout = SMB.layout_fromdefault()
 
-render = UT.TKRender(layout, config=config)
+host = SMB.instantiate_malmo(layout)
+
+render = SMB.Renderer(host)
 
 simulation = SMB.MarioSimulation(layout, config=config)
 
