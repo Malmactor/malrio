@@ -9,6 +9,11 @@ from configuration import *
 import numpy as np
 
 
+def init_phyx_const():
+    norm = phyx_const["norm"]
+
+
+
 def collision_resolved(state, delta):
     # Back to a collision-free position
     state[0:2, 0] -= delta
@@ -17,7 +22,6 @@ def collision_resolved(state, delta):
 def hit_ground(state):
     # Cancel the gravitational acceleration abd y-speed
     state[1, 1] = 0.0
-    state[:, 2] = [0.0, 0.0, 0.0]
 
 
 def hit_sides(state):

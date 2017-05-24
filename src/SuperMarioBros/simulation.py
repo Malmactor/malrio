@@ -23,7 +23,7 @@ def layout_tobb(layout, config=None):
 
     for x in range(maxx):
         for y in range(maxy):
-            if layout[x, y] != block2id['air']:
+            if layout[x, y] in (block2id['brick_block'], block2id['lava']):
                 pos2bb[(x, y)] = CollidableAABB((x, y), block_radius, config)
 
     return pos2bb
@@ -37,7 +37,7 @@ def collision_proposal(mario, pos2bb, config=None):
     :param config: Global configuration
     :return: List of potential collision boxes
     """
-    minx, miny, maxx, maxy = -1, -2, 1, 2
+    minx, miny, maxx, maxy = -2, -2, 2, 2
 
     center = mario.get_center()
 
@@ -100,8 +100,11 @@ class MarioSimulation:
             # Process momentum change
             self.mario.reaction(hit_edge_reaction(closest_collision[1]))
 
+            return closest_collision
+
         # Grab an action from input and simulate the force
         self.mario.reaction(action_mapping[action])
+
 
     def get_renderable(self):
         return self.mario
