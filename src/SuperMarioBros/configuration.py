@@ -21,10 +21,12 @@ simulation_config = {
 
 phyx_const = {
     "norm": 65536.0,
+    "stop_threshold": "00100",
     "min_walk_speed": "00130",
     "max_walk_speed": "01900",
     "walk_acc": "00098",
     "skid_dec": "001A0",
+    "rels_dec": "000D0",
     "midair_hilo_threshold": "01900",
     "midair_forw_lo_acc": "00098",
     "midair_forw_hi_acc": "000E4",
@@ -37,6 +39,9 @@ phyx_const = {
     "jump_lox_hold_g": "-00200",
     "jump_mix_hold_g": "-001E0",
     "jump_hix_hold_g": "-00280",
+    "jump_lox_rels_g": "-00700",
+    "jump_mix_rels_g": "-00600",
+    "jump_hix_rels_g": "-00900",
     "walk_speed": "02000", # original: "01900", here we increase it to simulate "continuous pressing the button"
     "jump_v0": "04000",
     "gravity": "-001E0"

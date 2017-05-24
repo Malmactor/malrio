@@ -5,8 +5,9 @@ __author__ = "Liyan Chen"
 __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 
-from configuration import *
 import numpy as np
+
+from configuration import *
 
 
 # State interpretation rules:
@@ -19,11 +20,12 @@ def init_phyx_const():
         if isinstance(v, str):
             phyx_const[k] = int(v, base=16) / norm
 
+
 def give_gravity(state):
     state[1, 2] = phyx_const["gravity"]
 
 
-# Collision related handlers
+# Collision-related handlers
 def collision_resolved(state, delta):
     # Back to a collision-free position
     state[0:2, 0] -= delta
@@ -71,7 +73,6 @@ def remains(state):
 
 
 def horizontal_enact(state, direction):
-
     # Ground case
     if np.abs(state[1, 1]) < simulation_config["epsilon"]:
 
@@ -113,7 +114,6 @@ def horizontal_enact(state, direction):
 
 
 def vertical_enact(state):
-
     # Jump from the ground
     if np.abs(state[1, 1]) < simulation_config["epsilon"]:
 
@@ -142,10 +142,36 @@ def vertical_enact(state):
 
 
 def horizontal_deact(state):
-
     # Ground case
     if np.abs(state[1, 1]) < simulation_config["epsilon"]:
 
+        # If mario is in skidding state, the deceleration will not change
+        # Otherwise, the releasing deceleration will be given to mario
+        if np.abs(np.abs(state[0, 2]) - phyx_const["skid_dec"]) > simulation_config["epsilon"]:
+            sign = np.sign(state[0, 1])
+            state[0, 2] = sign * -1 * phyx_const["rels_dec"]
+
+        # The x-velocity and x-acceleration would be cleared when mario is not moving horizontally
+        if np.abs(state[0, 1]) < phyx_const["stop_threshold"]:
+            state[0, 1] = 0
+            state[0, 2] = 0
+
+    # Midair case
+    else:
+        # Releasing the direction buttons in midair will only drop horizontal accelerations
+        state[0, 2] = 0
+
+
+def vertical_deact(state):
+    # Releasing A on the ground has no effect on mario
+    # Only consider midair cases
+    if np.abs(state[1, 1]) > simulation_config["epsilon"]:
+        if np.abs(state[0, 1]) < phyx_const["jump_lomi_threshold"]:
+            state[1, 2] = phyx_const["jump_lox_rels_g"]
+        elif np.abs(state[0, 1]) < phyx_const["jump_mix_rels_g"]:
+            state[1, 2] = phyx_const["jump_mix_rels_g"]
+        else:
+            state[1, 2] = phyx_const["jump_hix_rels_g"]
 
 
 action_mapping = {
