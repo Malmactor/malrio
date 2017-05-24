@@ -112,6 +112,12 @@ def horizontal_enact(state, direction):
             else:
                 state[0, 2] = phyx_const["midair_bckw_hi_acc"]
 
+    # Clamp maximum speed
+    sign = np.sign(state[0, 1])
+    speed = np.abs(state[0, 1])
+    speed = np.minimum(speed, phyx_const["max_walk_speed"])
+    state[0, 1] = sign * speed
+
 
 def vertical_enact(state):
     # Jump from the ground
@@ -139,6 +145,12 @@ def vertical_enact(state):
 
         else:
             state[1, 2] = phyx_const["jump_mix_hold_g"]
+
+    # Clamp maximum speed
+    sign = np.sign(state[1, 1])
+    speed = np.abs(state[1, 1])
+    speed = np.minimum(speed, phyx_const["max_fall_speed"])
+    state[1, 1] = sign * speed
 
 
 def horizontal_deact(state):
