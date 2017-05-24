@@ -47,31 +47,6 @@ def hit_ceiling(state):
 
 
 # Action related handlers
-def right(state):
-    return horizontal_enact(state, direction=1)
-
-
-def left(state):
-    return horizontal_enact(state, direction=-1)
-
-
-def press_jump(state):
-    # Add initial velocity and gravity to the state
-    v0 = int(phyx_const["jump_v0"], base=16) / phyx_const["norm"]
-    gravity = int(phyx_const["gravity"], base=16) / phyx_const["norm"]
-
-    if np.abs(state[1, 2]) > simulation_config["epsilon"]:
-        state[1, 2] = gravity
-
-    else:
-        state[1, 1] = v0
-        state[1, 2] = gravity
-
-
-def remains(state):
-    state[0, 1] = 0
-
-
 def horizontal_enact(state, direction):
     # Ground case
     if np.abs(state[1, 1]) < simulation_config["epsilon"]:
@@ -184,6 +159,36 @@ def vertical_deact(state):
             state[1, 2] = phyx_const["jump_mix_rels_g"]
         else:
             state[1, 2] = phyx_const["jump_hix_rels_g"]
+
+
+def left_nojump(state):
+    horizontal_enact(state, -1)
+    vertical_deact(state)
+
+
+def left_jump(state):
+    horizontal_enact(state, -1)
+    vertical_enact(state)
+
+
+def right_nojump(state):
+    horizontal_enact(state, 1)
+    vertical_deact(state)
+
+
+def right_jump(state):
+    horizontal_enact(state, 1)
+    vertical_enact(state)
+
+
+def nolr_jump(state):
+    horizontal_deact(state)
+    vertical_enact(state)
+
+
+def remains(state):
+    horizontal_deact(state)
+    vertical_deact(state)
 
 
 action_mapping = {
