@@ -3,7 +3,7 @@ layout: default
 title:  Home
 ---
 
-![Mario in Minecraft](https://raw.githubusercontent.com/irsisyphus/pictures/master/malmo/index_1.jpg)
+![Mario in Minecraft](https://raw.githubusercontent.com/irsisyphus/pictures/master/malmo/index_1.jpg =600x315)
 
 Play Super Mario Games in MineCraft, with
   - Highly intelligent AI
