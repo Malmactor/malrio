@@ -92,10 +92,8 @@ ENV/
 
 # idea IDE
 .idea
-.idea/**/*.*
-./**/.idea
 Preliminary/maze/agent/.idea
 Preliminary/maze/agent/.idea/**/*.*
 
-# HFS
-.DS_Store
+.pylintrc
+.vscode
