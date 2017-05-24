@@ -1,4 +1,4 @@
-"""Debugging for physics
+"""Testing (degbugging) module for physics
 """
 
 __author__ = "Liyan Chen"
