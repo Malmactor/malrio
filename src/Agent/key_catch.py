@@ -18,6 +18,8 @@ class KeyPressed:
 def on_press(key):
     global currKey
     with g:
+        if key == keyboard.Key.esc:
+            return False
         if key not in currKey:
             currKey.append(key)
 
@@ -56,17 +58,18 @@ def getCurrKey():
     return res
 
 
-def KeyOnHold():
+def KeyOnHold(callback):
     while (1):
         ret = getCurrKey()
         if ret:
             print "curr Keys ", ret
+            callback(ret)
         sleep(0.1)
 
-def init_listener():
+def init_listener(callback):
     with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
         try:
-            keysonhold = threading.Thread(target=KeyOnHold)
+            keysonhold = threading.Thread(target=KeyOnHold,args=[callback])
             keysonhold.start()
             keysonhold.join()
             listener.join()

@@ -9,3 +9,4 @@ __license__ = "MIT"
 from static_path_agent import *
 from test_agent import *
 from keyboard_agent import *
+from key_catch import *

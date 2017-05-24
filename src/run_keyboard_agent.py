@@ -21,6 +21,7 @@ render = SMB.Renderer(host)
 
 simulation = SMB.MarioSimulation(layout, config=config)
 
-keypoller = SMB.KeyPoller()
+# keypoller = SMB.KeyPoller()
+init_listener = AG.key_catch.init_listener
 
-AG.keyboard_agent(simulation, keypoller, render, config=config)
+AG.keyboard_agent(simulation, init_listener, render, config=config)

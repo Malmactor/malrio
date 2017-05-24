@@ -7,15 +7,15 @@ __license__ = "MIT"
 
 
 key_act_map = {
-    "u'a'": "left",
-    "u'd'": "right",
-    " ": "press_jump"
-    "u'a' ": "left_jump"
+    "u'a'": "left_nojump",
+    "u'd'": "right_nojump",
+    " ": "nolr_jump",
+    "u'a' ": "left_jump",
     "u'd' ": "right_jump"
 }
 
 
-def keyboard_agent(simulation, keypoller, render, config=None):
+def keyboard_agent(simulation, init_listener, render, config=None):
     """
     Play game from keyboard input
     :param simulation: Simulation instance
@@ -27,15 +27,18 @@ def keyboard_agent(simulation, keypoller, render, config=None):
     """
 
     empty_action = config["empty_action"]
-
-    key = None
-    init_listener()
-    while not key == "q":
-        key = getCurrKey()
+    def processKeyInput(key):
         if key and key in key_act_map:
+            print key_act_map[key]
             simulation.advance_frame(key_act_map[key])
         else:
+            print "N"
             simulation.advance_frame(empty_action)
 
         renderable = simulation.get_renderable()
         render.render(renderable)
+    
+    key = None
+    init_listener(processKeyInput)
+
+        
