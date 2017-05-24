@@ -44,5 +44,6 @@ def layout_fromfile(filename, config=None):
 def layout_fromdefault():
     return default_layout.simple_layout
 
+
 def layout_asblank():
     return default_layout.blank_layout

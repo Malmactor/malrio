@@ -9,6 +9,16 @@ from configuration import *
 import numpy as np
 
 
+# State encoding rules:
+# 1. if y-velocity is 0, mario is on the ground, since collision resolution would have cleared y-velocity in that case.
+
+def init_phyx_const():
+    norm = phyx_const["norm"]
+    for k, v in phyx_const.items():
+        if isinstance(v, str):
+            phyx_const[k] = int(v, base=16) / norm
+
+
 def collision_resolved(state, delta):
     # Back to a collision-free position
     state[0:2, 0] -= delta
@@ -17,14 +27,12 @@ def collision_resolved(state, delta):
 def hit_ground(state):
     # Cancel the gravitational acceleration abd y-speed
     state[1, 1] = 0.0
-    state[:, 2] = [0.0, 0.0, 0.0]
 
 
 def hit_sides(state):
     # Invert the x-direction velocity
     state[0, 1] = -state[0, 1]
     state[0, 2] = -state[0, 2]
-
 
 
 def hit_ceiling(state):
@@ -38,7 +46,6 @@ def walk(state, direction=1):
     acc = int(phyx_const["walk_acc"], base=16) / phyx_const["norm"]
     state[0, 1] = direction * speed
     state[0, 2] = direction * acc
-
 
 
 def right(state):

@@ -65,8 +65,8 @@ def seg_aabb_collision_resolution(box_center, radius, start, direction, padding=
     else:
         collision["normal"] = np.array([0, -sign_vec[1]], dtype=dtype)
 
-    collision["delta"] = collision["time"] * norm
-    collision["position"] = start + collision["delta"]
+    collision["delta"] = (1 - collision["time"]) * norm
+    collision["position"] = start + collision["time"] * norm
 
     return collision
 
@@ -122,6 +122,9 @@ class CollidableAABB:
         self.epsilon = 0.001 if config is None or "epsilon" not in config else config["epsilon"]
         self.static_center = center[0:2]
         self.radius = radius[0:2]
+
+    def __str__(self):
+        return ' '.join(map(lambda num: str(num), self.static_center[:, 0]))
 
     def get_center(self):
         return self.static_center
