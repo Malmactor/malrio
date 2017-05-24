@@ -2,6 +2,9 @@
 layout: default
 title:  Home
 ---
+
+![Mario in Minecraft](https://github.com/irsisyphus/pictures/blob/master/malmo/index_1.jpg)
+
 Play Super Mario Games in MineCraft, with
   - Highly intelligent AI
   - Random Level Generator
