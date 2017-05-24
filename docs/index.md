@@ -4,6 +4,7 @@ title:  Home
 ---
 Play Super Mario Games in MineCraft, with
   - Highly intelligent AI
-  - Random Level Generator, with controllable difficulty
+  - Random Level Generator
+  - Physics Engine similar to Super Mario Games
 
-Keywords: Artificial Intelligence, Deep Learning, Reinforcement Learning, Attention Model, Generative Adversarial Networks, Malmo, MineCraft
+Keywords: Artificial Intelligence, Deep Learning, Supervised Learning, Physics Engine, Malmo, MineCraft, Super Mario
