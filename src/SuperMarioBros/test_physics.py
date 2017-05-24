@@ -10,6 +10,7 @@ from layout_loader import *
 from simulation import *
 
 
+# Not unittesting to avoid overcomplicating problems
 layout = layout_fromdefault()
 
 simulation = MarioSimulation(layout, config=simulation_config)
@@ -21,4 +22,5 @@ print simulation.advance_frame("remains")
 
 print simulation.mario.get_center()
 
+# Expected to be [3, 2.5, 0]
 print simulation.mario.state[:, 0]

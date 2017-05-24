@@ -9,9 +9,10 @@ from configuration import *
 import numpy as np
 
 
-# State encoding rules:
+# State interpretation rules:
 # 1. if y-velocity is 0, mario is on the ground, since collision resolution would have cleared y-velocity in that case.
 
+# Physics constants initialization
 def init_phyx_const():
     norm = phyx_const["norm"]
     for k, v in phyx_const.items():
@@ -19,20 +20,20 @@ def init_phyx_const():
             phyx_const[k] = int(v, base=16) / norm
 
 
+# Collision related handlers
 def collision_resolved(state, delta):
     # Back to a collision-free position
     state[0:2, 0] -= delta
 
 
 def hit_ground(state):
-    # Cancel the gravitational acceleration abd y-speed
+    # Clear y-velocity
     state[1, 1] = 0.0
 
 
 def hit_sides(state):
-    # Invert the x-direction velocity
-    state[0, 1] = -state[0, 1]
-    state[0, 2] = -state[0, 2]
+    # Clear x-velocity
+    state[0, 1] = 0
 
 
 def hit_ceiling(state):
@@ -40,20 +41,13 @@ def hit_ceiling(state):
     state[1, 1] = -state[1, 1]
 
 
-def walk(state, direction=1):
-    # Change the x-direction velocity to walk speed
-    speed = int(phyx_const["walk_speed"], base=16) / phyx_const["norm"]
-    acc = int(phyx_const["walk_acc"], base=16) / phyx_const["norm"]
-    state[0, 1] = direction * speed
-    state[0, 2] = direction * acc
-
-
+# Action related handlers
 def right(state):
-    return walk(state, direction=1)
+    return horizontal_movement(state, direction=1)
 
 
 def left(state):
-    return walk(state, direction=-1)
+    return horizontal_movement(state, direction=-1)
 
 
 def press_jump(state):
@@ -71,6 +65,25 @@ def press_jump(state):
 
 def remains(state):
     state[0, 1] = 0
+
+
+def horizontal_movement(state, direction):
+
+    # Ground case
+    if np.abs(state[1, 1]) < simulation_config["epsilon"]:
+
+        # From still to walking
+        if np.abs(state[0, 1]) < simulation_config["epsilon"]:
+            state[0, 1] = phyx_const["min_walk_speed"] * direction
+            state[0, 2] = phyx_const["walk_acc"] * direction
+
+        # Skidding from the opposite direction to still
+        elif np.sign(state[0, 1]) * direction == -1.0:
+            state[0, 2] = phyx_const["skid_dec"] * direction
+
+        # Accelerate towards the same direction
+        else:
+            state[0, 2] = phyx_const["walk_acc"] * direction
 
 
 action_mapping = {
