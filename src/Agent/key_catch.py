@@ -1,7 +1,7 @@
 import threading
 from time import sleep
 
-from pynput import keyboard
+from pynput import keyboard, keyboard
 
 g = threading.Lock()
 r = threading.RLock()
@@ -32,33 +32,43 @@ def on_release(key):
 def getCurrKey():
     global b
     global currKey
+    #lock r to lock g
     r.acquire()
     b += 1
     if (b == 1):
         g.acquire()
     r.release()
-    ret = currKey
+
+    cks = currKey
+
+    #release r and g
     r.acquire()
     b -= 1
     if (b == 0):
         g.release()
     r.release()
-    return ret
+    res = ""
+    for i in cks:
+        if keyboard.Key.space != i:
+            res += str(i)
+    if keyboard.Key.space in cks:
+        res += " "
+    return res
 
 
 def KeyOnHold():
     while (1):
         ret = getCurrKey()
         if ret:
-            print "curr Keys ", getCurrKey()
+            print "curr Keys ", ret
         sleep(0.1)
 
-
-with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
-    try:
-        keysonhold = threading.Thread(target=KeyOnHold)
-        keysonhold.start()
-        keysonhold.join()
-        listener.join()
-    except Exception as e:
-        print e
+def init_listener():
+    with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
+        try:
+            keysonhold = threading.Thread(target=KeyOnHold)
+            keysonhold.start()
+            keysonhold.join()
+            listener.join()
+        except Exception as e:
+            print e
