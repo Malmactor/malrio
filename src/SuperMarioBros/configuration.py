@@ -50,5 +50,5 @@ phyx_const = {
 }
 
 render_config = {
-    "block2color": {"brick_block": "#a52a2a", "lava": "#e34d28", "mario": "#0066cc"}
+    "block2color": {"brick_block": "#a52a2a", "lava": "#e34d28", "mario": "#0066cc", "red_mushroom": "#d8ccc0"}
 }

@@ -7,18 +7,16 @@ __license__ = "MIT"
 
 import SuperMarioBros as SMB
 import Agent as AG
+import Utility as UT
 
 
 config = SMB.simulation_config
+config.update(SMB.render_config)
 
 layout = SMB.layout_fromdefault()
 
-host = SMB.instantiate_malmo(layout)
-
-render = SMB.Renderer(host)
+render = UT.TKRender(layout, config=config)
 
 simulation = SMB.MarioSimulation(layout, config=config)
 
-keypoller = SMB.KeyPoller()
-
-AG.keyboard_agent(simulation, keypoller, render, config=config)
+AG.keyboard_agent(simulation, None, render, config=config)

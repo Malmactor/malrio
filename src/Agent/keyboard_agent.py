@@ -5,7 +5,6 @@ __author__ = "Liyan Chen"
 __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 
-
 from key_catch import *
 
 key_act_map = {
@@ -40,4 +39,13 @@ def keyboard_agent(simulation, keypoller, render, config=None):
             simulation.advance_frame(empty_action)
 
         renderable = simulation.get_renderable()
+        render.render(renderable)
+
+
+def dummy_agent(simulation, render, config=None):
+    empty_action = config["empty_action"]
+    while True:
+        simulation.advance_frame(empty_action)
+        renderable = simulation.get_renderable()
+        print renderable.get_center()
         render.render(renderable)
