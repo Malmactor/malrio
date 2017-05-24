@@ -14,11 +14,11 @@ The player is a partially observable agent. For each time step, it perceives a v
 
 The generator will randomly generate a minecraft world similar to maps in Super Mario Bros. We provides both simple obstacles generator and Prim map generator. Each map is associated with a goal - red mushroom - for Mario to reach.
 
-The ultimate goal of this project is to train the malrio agent with supervised learning so that, given a random world, it can make decisions based on what it perceives, and try to find and reach the goal state.
+The ultimate goal of this project is to train the malrio agent with reinforcement learning initialized by supervised learning so that, given a random world, it can play the mario to the goal by making decisions based on perceptions.
 
 ### Approach
 
-#### Part I: The Physics Simulator
+#### Part I: Environment setup and Physics Simulation
 
 1. The physical world: In the physics simulator, we attempt to simulate a Mario world inside Minecraft:
 
@@ -28,22 +28,22 @@ The ultimate goal of this project is to train the malrio agent with supervised l
 
     3. Mushroom: It simulates the goal flag in Super Mario Bros.
 
-2. Control and collision: Since physics engine in Minecraft is limited and rigid, we create our own physics enginee for movement of player as well as collision reaction.
+2. Control and collision: Since physics engine in Minecraft is limited to its rules, we create our own physics engine including Newtonian mechanical dynamics simulation and rigid body collision resolution.
 
-    1. States of actor: We use a 3 by 3 matrix to represent the state of the actor: 
+    1. Representation: 3 by 3 matrix representations for Newtonian mechanical dynamics: 
     $$\begin{bmatrix}
-        p_x & v_x & a_x \\
-        p_y & v_y & a_y \\
-        p_z & v_z & a_z \\
-    \end{bmatrix}$$, where $$p, v, a$$ denotes position, velocity and acceleration respectively. For each time step $$\Delta t$$, we change the state by $$ v_{t+\Delta t} = v_t + a_t \Delta t$$ and $$ p_{t+\Delta t} = p_t + v_t \Delta t + \frac{1}{2} a_t \Delta t^2$$ automatically. For each action of the actor - left move, right move or jump - we only change velocity and acceleration to simulate physical movement in following time steps. We adopt similar hyperparameters of physical settings as Super Mario Bros.
+        X & V_x & a_x \\
+        Y & V_y & a_y \\
+        Z & V_z & a_z \\
+    \end{bmatrix}$$, where $$X, V, a$$ denotes displacement, velocity and acceleration respectively. For each time step $$\Delta t$$, a matrix multiplication would give the next state by preserving the following equations: $$ v_{t+\Delta t} = v_t + a_t \Delta t$$, $$ p_{t+\Delta t} = p_t + v_t \Delta t + \frac{1}{2} a_t \Delta t^2$$. Actions and action combinations (left, right, button A, button B) would be reflected upon changes to corresponding accelerations and velocity. We adopt similar hyperparameters of physical settings as Super Mario Bros.
     
     2. Actor control: \\TODO
     
     3. Collision: \\TODO
 
-#### Part II: Dataset
+#### Part II: Datasets collection for supervised training
 
-To prepare dataset for supervised learning, we need both maps and corresponding actions to train the actor.
+To prepare datasets for supervised learning, we need both maps and corresponding actions to train the actor.
 
 1. Maps: Maps are generated using either simple obstacles generator and Prim map generator. The simple obstacles generator generates a world with blocks and lavas whose positions and sizes similar to those of Level 1-1 in Super Mario Bros, by randomly creating obstacles and floating tiles. The Prim map generator generates a maze-like world with Prim's algorithm, which is much harder to solve but guarenteed to be solvable.
 
