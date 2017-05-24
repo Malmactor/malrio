@@ -3,6 +3,9 @@ layout: default
 title: Status
 ---
 
+### Demo Video
+[![Malrio: Play Super Mario with AI in Minecraft](https://img.youtube.com/vi/xnTv_D9pXnI/0.jpg)](https://www.youtube.com/watch?v=StTqXEQ2l-Y "Malrio: Play Super Mario with AI in Minecraft")
+
 ### Project Summary
 
 Our project is a Super Mario Maker™ gameplay simulation in minecraft, including two pieces of mechanism: a mario player and a world map generator. We also provide an original physics engine to simulate actions of Mario.
