@@ -20,17 +20,17 @@ The generator will randomly generate a Minecraft world similar to maps in Super 
 The ultimate goal of this project is to train the malrio agent with reinforcement learning initialized by supervised learning so that, given a random world, it can play the Mario to the goal by making decisions based on perceptions.
 
 ### Approach
-<br>
-#### Part I: Environment setup and Physics Simulation
-<br>
+
+__Part I: Environment setup and Physics Simulation__<br>
 
 1. __The physical world__: In the physics simulator, we attempt to simulate a Mario world inside Minecraft:
-    - _Brick Block_: It simulates ground or unbreakable block in Super Mario Bros. All bricks are colored brown in Malrio, and are unbreakable. When hitting a brick with feet, Mario will land on it. When hitting a brick with head, Mario will fall back. When hitting a brick block with each side of the body, Mario will stop.
+
+    - _Brick_: It simulates ground or unbreakable brick in Super Mario Bros. All bricks are colored brown in Malrio, and are unbreakable. When hitting a brick with feet, Mario will land on it. When hitting a brick with head, Mario will fall back. When hitting a brick with each side of the body, Mario will stop.
     - _Lava_: It simulates items that will kill Mario, such as piranha plant or lava in Super Mario Bros.
     - _Mushroom_: It simulates the goal flag in Super Mario Bros.
 
-
 2. __Control and collision__: Since physics engine in Minecraft is limited to its rules, we create our own physics engine including Newtonian mechanical dynamics simulation and rigid body collision resolution.
+
     - _Representation_: 3 by 3 matrix representations for Newtonian mechanical dynamics:
     $$\begin{bmatrix}
         X & V_x & a_x \\
@@ -38,9 +38,9 @@ The ultimate goal of this project is to train the malrio agent with reinforcemen
         Z & V_z & a_z \\
     \end{bmatrix}$$, where $$X, V, a$$ denotes displacement, velocity and acceleration respectively. For each time step $$\Delta t$$, a matrix multiplication would give the next state by preserving the following equations: $$ v_{t+\Delta t} = v_t + a_t \Delta t$$, $$ p_{t+\Delta t} = p_t + v_t \Delta t + \frac{1}{2} a_t \Delta t^2$$. Actions and action combinations (left, right, button A, button B) would be reflected upon changes to corresponding accelerations and velocity. We adopt similar hyperparameters of physical settings as Super Mario Bros.
     - _Actor control_: //TODO
-    - _Collision_: //TODO
-<br>
-#### Part II: Datasets collection for supervised training
+    - _Collision_: If Mario collide down to the ground, y-axis velocity will be cancelled; if collude up to a brick, y-axis velocity will be inverted; if collide by side bricks, x-axis velocity will be cancelled.
+
+__Part II: Datasets collection for supervised training__<br>
 
 To prepare datasets for supervised learning, we need both maps and corresponding actions to train the actor.
 
@@ -48,7 +48,7 @@ To prepare datasets for supervised learning, we need both maps and corresponding
 
 2. __Actions__: We use A-star search as the action generator for each visible area of each map. Our A-star algorithm cooperate closely with our physics engine by using the provided actions to generate frontiers of each state. Since A-star is guaranteed to be optimal, it serves as an ideal way to generate action labels to get to the goal. We also pre-select the maps that feasible for A-star to run, in terms of solvability and time cost.
 
-#### Part III: Supervised Training
+__Part III: Supervised Training__<br>
 // TODO
 
 ### Evaluation
