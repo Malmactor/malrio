@@ -7,7 +7,7 @@ header-img: "img/home-bg.jpg"
 ---
 
 ### Demo Video
-[![Malrio: Play Super Mario with AI in Minecraft](https://img.youtube.com/vi/xnTv_D9pXnI/0.jpg)](https://www.youtube.com/watch?v=StTqXEQ2l-Y "Malrio: Play Super Mario with AI in Minecraft")
+<iframe src="https://www.youtube.com/embed/31aoE43Ke2g-Y" frameborder="0" allowfullscreen></iframe>
 
 ### Project Summary
 
