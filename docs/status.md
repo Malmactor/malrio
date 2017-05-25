@@ -21,7 +21,7 @@ The ultimate goal of this project is to train the malrio agent with reinforcemen
 
 ### Approach
 
-__Part I: Environment setup and Physics Simulation__<br>
+#### Part I: Environment setup and Physics Simulation
 
 1. __The physical world__: In the physics simulator, we attempt to simulate a Mario world inside Minecraft:
     - _Brick Block_: It simulates ground or unbreakable block in Super Mario Bros. All bricks are colored brown in Malrio, and are unbreakable. When hitting a brick with feet, Mario will land on it. When hitting a brick with head, Mario will fall back. When hitting a brick block with each side of the body, Mario will ???.
@@ -38,7 +38,7 @@ __Part I: Environment setup and Physics Simulation__<br>
     - _Actor control_: //TODO
     - _Collision_: //TODO
 
-__Part II: Datasets collection for supervised training__<br>
+#### Part II: Datasets collection for supervised training
 
 To prepare datasets for supervised learning, we need both maps and corresponding actions to train the actor.
 
@@ -46,7 +46,7 @@ To prepare datasets for supervised learning, we need both maps and corresponding
 
 2. __Actions__: We use A-star search as the action generator for each visible area of each map. Our A-star algorithm cooperate closely with our physics engine by using the provided actions to generate frontiers of each state. Since A-star is guaranteed to be optimal, it serves as an ideal way to generate action labels to get to the goal. We also pre-select the maps that feasible for A-star to run, in terms of solvability and time cost.
 
-__Part III: Supervised Training__<br>
+#### Part III: Supervised Training
 // TODO
 
 ### Evaluation
