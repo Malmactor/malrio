@@ -7,7 +7,7 @@ header-img: "img/home-bg.jpg"
 ---
 
 ### Demo Video
-<iframe src="https://www.youtube.com/embed/31aoE43Ke2g" width="800" height="450" frameborder="0" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/31aoE43Ke2g" width="768" height="432" frameborder="0" allowfullscreen></iframe>
 
 ### Project Summary
 
@@ -29,16 +29,16 @@ __Part I: Environment setup and Physics Simulation__<br>
     - _Lava_: It simulates items that will kill Mario, such as piranha plant or lava in Super Mario Bros.
     - _Mushroom_: It simulates the goal flag in Super Mario Bros.
 
-2. __Control and collision__: Since physics engine in Minecraft is limited to its rules, we create our own physics engine including Newtonian mechanical dynamics simulation and rigid body collision resolution.
+2. __Control and collision__: Since physics engine in Minecraft is limited to its rules, we create our own physics engine including Newtonian mechanical dynamics simulation and rigid body collision resolution. We use a 3 by 3 matrix to represent Newtonian mechanical dynamics:
+<center>$$\begin{bmatrix}
+    X & v_x & a_x \\
+    Y & v_y & a_y \\
+    Z & v_z & a_z \\
+\end{bmatrix}$$</center>where $$X, v, a$$ denotes displacement, velocity and acceleration respectively.
 
-    - _Representation_: We use a 3 by 3 matrix representations for Newtonian mechanical dynamics
-    <center>$$\begin{bmatrix}
-        X & V_x & a_x \\
-        Y & V_y & a_y \\
-        Z & V_z & a_z \\
-    \end{bmatrix}$$</center>where $$X, V, a$$ denotes displacement, velocity and acceleration respectively. For each time step $$\Delta t$$, a matrix multiplication would give the next state by preserving the following equations: $$ v_{t+\Delta t} = v_t + a_t \Delta t$$, $$ p_{t+\Delta t} = p_t + v_t \Delta t + \frac{1}{2} a_t \Delta t^2$$. Actions and action combinations (left, right, button A, button B) would be reflected upon changes to corresponding accelerations and velocity. We adopt similar hyperparameters of physical settings as Super Mario Bros.
-    - _Actor control_: //TODO
-    - _Collision_: If Mario collide down to the ground, y-axis velocity will be cancelled; if collude up to a brick, y-axis velocity will be inverted; if collide by side bricks, x-axis velocity will be cancelled.
+    - _Status Update_:  For each time step $$\Delta t$$, a matrix multiplication would give the next state by preserving the following equations: $$ v_{t+\Delta t} = v_t + a_t \Delta t$$, $$ p_{t+\Delta t} = p_t + v_t \Delta t + \frac{1}{2} a_t \Delta t^2$$. We adopt similar hyperparameters of physical settings as Super Mario Bros.
+    - _Actor control_: We support a group of actions including jump, left move, right move, jump with left move, jump with right move, remain. All actions are achieve by changing velocity and acceleration in next time step.
+    - _Collision_: If Mario collide down to the ground, y-axis velocity will be cancelled; if collide up to a brick, y-axis velocity will be inverted; if collide by side bricks, x-axis velocity will be cancelled.
 
 __Part II: Datasets collection for supervised training__<br>
 
