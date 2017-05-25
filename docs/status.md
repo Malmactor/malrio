@@ -1,6 +1,9 @@
 ---
-layout: default
-title: Status
+layout: page
+title: "Status"
+description: "Status Report of Malrio"
+header-img: "img/home-bg.jpg"
+
 ---
 
 ### Demo Video
@@ -30,16 +33,16 @@ The ultimate goal of this project is to train the malrio agent with reinforcemen
 
 2. Control and collision: Since physics engine in Minecraft is limited to its rules, we create our own physics engine including Newtonian mechanical dynamics simulation and rigid body collision resolution.
 
-    1. Representation: 3 by 3 matrix representations for Newtonian mechanical dynamics: 
+    1. Representation: 3 by 3 matrix representations for Newtonian mechanical dynamics:
     $$\begin{bmatrix}
         X & V_x & a_x \\
         Y & V_y & a_y \\
         Z & V_z & a_z \\
-    \end{bmatrix}$$, where $$X, V, a$$ denotes displacement, velocity and acceleration respectively. For each time step $$\Delta t$$, a matrix multiplication would give the next state by preserving the following equations: $$ v_{t+\Delta t} = v_t + a_t \Delta t$$, $$ p_{t+\Delta t} = p_t + v_t \Delta t + \frac{1}{2} a_t \Delta t^2$$. Actions and action combinations (left, right, button A, button B) would be reflected upon changes to corresponding accelerations and velocity. We adopt similar hyperparameters of physical settings as Super Mario Bros.
-    
-    2. Actor control: \\TODO
-    
-    3. Collision: \\TODO
+    \end{bmatrix}$$, where $$X, V, a$$ denotes displacement, velocity and acceleration respectively. For each time step $$\Delta t$$, a matrix multiplication would give the next state by preserving the following equations: $$ v_{t+\Delta t} = v_t + a_t \Delta t$$, $$ p_{t+\Delta t} = p_t + v_t \Delta t + \frac{1}{2} a_t \Delta t^2$$. Actions and action combinations (left, right, button A, button B) would be reflected upon changes to corresponding accelerations and velocity. We adopt similar hyperparameters of physical settings as Super Mario Bros.
+
+    2. Actor control: //TODO
+
+    3. Collision: //TODO
 
 #### Part II: Datasets collection for supervised training
 

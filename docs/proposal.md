@@ -1,6 +1,9 @@
 ---
-layout: default
-title: Proposal
+layout: page
+title: "Proposal"
+description: "Proposal of Malrio"
+header-img: "img/home-bg.jpg"
+
 ---
 
 ### Summary
