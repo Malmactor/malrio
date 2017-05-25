@@ -1,7 +1,7 @@
 # Site settings
 title: Malrio
 description: "Deep Learning AI + Map Generator for Super Mario Playing in Minecraft"
-url: "https://irsisyphus.github.io"
+url: "https://malmactor.github.io"
 
 # Secondary Parameters
 baseurl: "/malrio"
@@ -10,7 +10,7 @@ headercolor: "#FFFFFF"
 logo: /malrio/img/logo.png
 
 # Tertiary Parameters
-github_username:  irsisyphus
+github_username:  malmactor
 project_repository: malrio
 disqus_shortname: malrio
 g-analytics: UA-75881392-1
@@ -38,7 +38,7 @@ defaults:
 # Prose Settings
 prose:
   ignore: ['feed.xml', '/stl', '/ply', '/js', '/plugin', '/lib', '/projectors', '_layouts', '/_includes', 'Gruntfile.js', 'package.json', 'proselinks.jsonp', 'ppanchor.matin', '.gitignore', '/search', '/css', '/img', 'favicon.png','_data/*.json','LICENSES.md','README.md','colorscheme.scss','members.html','mentions.html','index.md']
-  siteurl: 'https://irsisyphus.github.io/malrio/'
+  siteurl: 'https://malmactor.github.io/malrio/'
   ispp: true
   media: 'img'
   metadata:
