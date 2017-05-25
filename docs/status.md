@@ -31,12 +31,13 @@ __Part I: Environment setup and Physics Simulation__<br>
 
 2. __Control and collision__: Since physics engine in Minecraft is limited to its rules, we create our own physics engine including Newtonian mechanical dynamics simulation and rigid body collision resolution.
 
-    - _Representation_: 3 by 3 matrix representations for Newtonian mechanical dynamics:
+    - _Representation_: We use a 3 by 3 matrix representations for Newtonian mechanical dynamics:<br>
     $$\begin{bmatrix}
         X & V_x & a_x \\
         Y & V_y & a_y \\
         Z & V_z & a_z \\
-    \end{bmatrix}$$, where $$X, V, a$$ denotes displacement, velocity and acceleration respectively. For each time step $$\Delta t$$, a matrix multiplication would give the next state by preserving the following equations: $$ v_{t+\Delta t} = v_t + a_t \Delta t$$, $$ p_{t+\Delta t} = p_t + v_t \Delta t + \frac{1}{2} a_t \Delta t^2$$. Actions and action combinations (left, right, button A, button B) would be reflected upon changes to corresponding accelerations and velocity. We adopt similar hyperparameters of physical settings as Super Mario Bros.
+    \end{bmatrix}$$,<br>
+    where $$X, V, a$$ denotes displacement, velocity and acceleration respectively. For each time step $$\Delta t$$, a matrix multiplication would give the next state by preserving the following equations: $$ v_{t+\Delta t} = v_t + a_t \Delta t$$, $$ p_{t+\Delta t} = p_t + v_t \Delta t + \frac{1}{2} a_t \Delta t^2$$. Actions and action combinations (left, right, button A, button B) would be reflected upon changes to corresponding accelerations and velocity. We adopt similar hyperparameters of physical settings as Super Mario Bros.
     - _Actor control_: //TODO
     - _Collision_: If Mario collide down to the ground, y-axis velocity will be cancelled; if collude up to a brick, y-axis velocity will be inverted; if collide by side bricks, x-axis velocity will be cancelled.
 
