@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Status Report"
-description: "What We Have Done By Late May"
+description: "What we have done by late May"
 header-img: "img/home-bg.jpg"
 
 ---

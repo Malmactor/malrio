@@ -1,7 +1,7 @@
 ---
 layout: page
-title: "Final"
-description: "Final Report of Malrio"
+title: "Final Report"
+description: "Details of Our Work"
 header-img: "img/home-bg.jpg"
 
 ---
