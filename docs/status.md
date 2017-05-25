@@ -3,9 +3,9 @@ layout: page
 title: "Status Report"
 description: "What we have done by late May"
 header-img: "img/home-bg.jpg"
-
 ---
-<br>
+### Demo Video
+
 <iframe src="https://www.youtube.com/embed/31aoE43Ke2g" width="768" height="432" frameborder="0" allowfullscreen></iframe>
 
 ### Project Summary
