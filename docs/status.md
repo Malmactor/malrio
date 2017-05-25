@@ -21,12 +21,15 @@ The ultimate goal of this project is to train the malrio agent with reinforcemen
 
 ### Approach
 
+
 #### Part I: Environment setup and Physics Simulation
+
 
 1. __The physical world__: In the physics simulator, we attempt to simulate a Mario world inside Minecraft:
     - _Brick Block_: It simulates ground or unbreakable block in Super Mario Bros. All bricks are colored brown in Malrio, and are unbreakable. When hitting a brick with feet, Mario will land on it. When hitting a brick with head, Mario will fall back. When hitting a brick block with each side of the body, Mario will ???.
     - _Lava_: It simulates items that will kill Mario, such as piranha plant or lava in Super Mario Bros.
     - _Mushroom_: It simulates the goal flag in Super Mario Bros.
+
 
 2. __Control and collision__: Since physics engine in Minecraft is limited to its rules, we create our own physics engine including Newtonian mechanical dynamics simulation and rigid body collision resolution.
     - _Representation_: 3 by 3 matrix representations for Newtonian mechanical dynamics:
