@@ -1,21 +1,21 @@
 # Members
 
 - name: Chang Gao (cgao7)
-  bio: Supervised algorithm designer, Map generator maker, Dataset maker, Video maker, Website builder
+  bio: Supervised algorithm designer, Map generator maker, Dataset maker, Video maker, Website builder, Physics tester
   img: https://avatars1.githubusercontent.com/u/14730912?v=3&u=d598d546f4801ca7671d1bbc583125ef5688c59f&s=400
   github: irsisyphus
   url: http://irsisyphus.com
   visible: true
 
 - name: Liyan Chen (liyanc)
-  bio: Deep Learning Algorithm Designer, Tensorflow framework designer, Physics engine Designer, Website writer
+  bio: Deep Learning Algorithm Designer, Tensorflow framework designer, Physics engine Designer, Website writer, Physics tester
   img: https://avatars3.githubusercontent.com/u/25853995?v=3&s=400
   github: liyanc
   url: https://github.com/liyanc
   visible: true
 
 - name: Bruce Tan (junyangt)
-  bio: HCI designer, System designer, Map generator writer, Website writer
+  bio: HCI designer, System designer, Map generator writer, Website writer, Physics tester
   img: https://avatars2.githubusercontent.com/u/5958912?v=3&s=400
   github: halfer53
   url: http://halfer53.github.io/
