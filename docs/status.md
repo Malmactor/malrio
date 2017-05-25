@@ -23,26 +23,28 @@ The ultimate goal of this project is to train the malrio agent with reinforcemen
 
 __Part I: Environment setup and Physics Simulation__<br>
 
-1. The physical world: In the physics simulator, we attempt to simulate a Mario world inside Minecraft:
-    - Brick Block: It simulates ground or unbreakable block in Super Mario Bros. All bricks are colored brown in Malrio, and are unbreakable. When hitting a brick with feet, Mario will land on it. When hitting a brick with head, Mario will fall back. When hitting a brick block with each side of the body, Mario will ???.
-    - Lava: It simulates items that will kill Mario, such as piranha plant or lava in Super Mario Bros.
-    - Mushroom: It simulates the goal flag in Super Mario Bros.
-2. Control and collision: Since physics engine in Minecraft is limited to its rules, we create our own physics engine including Newtonian mechanical dynamics simulation and rigid body collision resolution.
-    - Representation: 3 by 3 matrix representations for Newtonian mechanical dynamics:
+1. __The physical world__: In the physics simulator, we attempt to simulate a Mario world inside Minecraft:
+    - _Brick Block_: It simulates ground or unbreakable block in Super Mario Bros. All bricks are colored brown in Malrio, and are unbreakable. When hitting a brick with feet, Mario will land on it. When hitting a brick with head, Mario will fall back. When hitting a brick block with each side of the body, Mario will ???.
+    - _Lava_: It simulates items that will kill Mario, such as piranha plant or lava in Super Mario Bros.
+    - _Mushroom_: It simulates the goal flag in Super Mario Bros.
+
+2. __Control and collision__: Since physics engine in Minecraft is limited to its rules, we create our own physics engine including Newtonian mechanical dynamics simulation and rigid body collision resolution.
+    - _Representation_: 3 by 3 matrix representations for Newtonian mechanical dynamics:
     $$\begin{bmatrix}
         X & V_x & a_x \\
         Y & V_y & a_y \\
         Z & V_z & a_z \\
     \end{bmatrix}$$, where $$X, V, a$$ denotes displacement, velocity and acceleration respectively. For each time step $$\Delta t$$, a matrix multiplication would give the next state by preserving the following equations: $$ v_{t+\Delta t} = v_t + a_t \Delta t$$, $$ p_{t+\Delta t} = p_t + v_t \Delta t + \frac{1}{2} a_t \Delta t^2$$. Actions and action combinations (left, right, button A, button B) would be reflected upon changes to corresponding accelerations and velocity. We adopt similar hyperparameters of physical settings as Super Mario Bros.
-    - Actor control: //TODO
-    - Collision: //TODO
+    - _Actor control_: //TODO
+    - _Collision_: //TODO
 
 __Part II: Datasets collection for supervised training__<br>
 
 To prepare datasets for supervised learning, we need both maps and corresponding actions to train the actor.
 
-1. Maps: Maps are generated using either simple obstacles generator and Prim map generator. The simple obstacles generator generates a world with blocks and lavas whose positions and sizes similar to those of Level 1-1 in Super Mario Bros, by randomly creating obstacles and floating tiles. The Prim map generator generates a maze-like world with Prim's algorithm, which is much harder to solve but guaranteed to be solvable.
-2. Actions: We use A-star search as the action generator for each visible area of each map. Our A-star algorithm cooperate closely with our physics engine by using the provided actions to generate frontiers of each state. Since A-star is guaranteed to be optimal, it serves as an ideal way to generate action labels to get to the goal. We also pre-select the maps that feasible for A-star to run, in terms of solvability and time cost.
+1. __Maps__: Maps are generated using either simple obstacles generator and Prim map generator. The simple obstacles generator generates a world with blocks and lavas whose positions and sizes similar to those of Level 1-1 in Super Mario Bros, by randomly creating obstacles and floating tiles. The Prim map generator generates a maze-like world with Prim's algorithm, which is much harder to solve but guaranteed to be solvable.
+
+2. __Actions__: We use A-star search as the action generator for each visible area of each map. Our A-star algorithm cooperate closely with our physics engine by using the provided actions to generate frontiers of each state. Since A-star is guaranteed to be optimal, it serves as an ideal way to generate action labels to get to the goal. We also pre-select the maps that feasible for A-star to run, in terms of solvability and time cost.
 
 __Part III: Supervised Training__<br>
 // TODO
