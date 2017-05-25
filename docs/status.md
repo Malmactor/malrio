@@ -20,13 +20,12 @@ The generator will randomly generate a Minecraft world similar to maps in Super 
 The ultimate goal of this project is to train the malrio agent with reinforcement learning initialized by supervised learning so that, given a random world, it can play the Mario to the goal by making decisions based on perceptions.
 
 ### Approach
-
-
+<br>
 #### Part I: Environment setup and Physics Simulation
-
+<br>
 
 1. __The physical world__: In the physics simulator, we attempt to simulate a Mario world inside Minecraft:
-    - _Brick Block_: It simulates ground or unbreakable block in Super Mario Bros. All bricks are colored brown in Malrio, and are unbreakable. When hitting a brick with feet, Mario will land on it. When hitting a brick with head, Mario will fall back. When hitting a brick block with each side of the body, Mario will ???.
+    - _Brick Block_: It simulates ground or unbreakable block in Super Mario Bros. All bricks are colored brown in Malrio, and are unbreakable. When hitting a brick with feet, Mario will land on it. When hitting a brick with head, Mario will fall back. When hitting a brick block with each side of the body, Mario will stop.
     - _Lava_: It simulates items that will kill Mario, such as piranha plant or lava in Super Mario Bros.
     - _Mushroom_: It simulates the goal flag in Super Mario Bros.
 
@@ -40,7 +39,7 @@ The ultimate goal of this project is to train the malrio agent with reinforcemen
     \end{bmatrix}$$, where $$X, V, a$$ denotes displacement, velocity and acceleration respectively. For each time step $$\Delta t$$, a matrix multiplication would give the next state by preserving the following equations: $$ v_{t+\Delta t} = v_t + a_t \Delta t$$, $$ p_{t+\Delta t} = p_t + v_t \Delta t + \frac{1}{2} a_t \Delta t^2$$. Actions and action combinations (left, right, button A, button B) would be reflected upon changes to corresponding accelerations and velocity. We adopt similar hyperparameters of physical settings as Super Mario Bros.
     - _Actor control_: //TODO
     - _Collision_: //TODO
-
+<br>
 #### Part II: Datasets collection for supervised training
 
 To prepare datasets for supervised learning, we need both maps and corresponding actions to train the actor.
