@@ -6,7 +6,6 @@ header-img: "img/home-bg.jpg"
 
 ---
 
-### Demo Video
 <iframe src="https://www.youtube.com/embed/31aoE43Ke2g" width="768" height="432" frameborder="0" allowfullscreen></iframe>
 
 ### Project Summary
@@ -30,11 +29,11 @@ __Part I: Environment setup and Physics Simulation__<br>
     - _Mushroom_: It simulates the goal flag in Super Mario Bros.
 
 2. __Control and collision__: Since physics engine in Minecraft is limited to its rules, we create our own physics engine including Newtonian mechanical dynamics simulation and rigid body collision resolution. We use a 3 by 3 matrix to represent Newtonian mechanical dynamics:
-<center>$$\begin{bmatrix}
+$$\begin{bmatrix}
     X & v_x & a_x \\
     Y & v_y & a_y \\
     Z & v_z & a_z \\
-\end{bmatrix}$$</center>where $$X, v, a$$ denotes displacement, velocity and acceleration respectively.
+\end{bmatrix}$$, where $$X, v, a$$ denotes displacement, velocity and acceleration respectively.
 
     - _Status Update_:  For each time step $$\Delta t$$, a matrix multiplication would give the next state by preserving the following equations: $$ v_{t+\Delta t} = v_t + a_t \Delta t$$, $$ p_{t+\Delta t} = p_t + v_t \Delta t + \frac{1}{2} a_t \Delta t^2$$. We adopt similar hyperparameters of physical settings as Super Mario Bros.
     - _Actor control_: We support a group of actions including jump, left move, right move, jump with left move, jump with right move, remain. All actions are achieve by changing velocity and acceleration in next time step.
