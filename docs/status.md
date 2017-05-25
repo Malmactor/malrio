@@ -7,7 +7,8 @@ header-img: "img/home-bg.jpg"
 ---
 
 ### Demo Video
-<br><center><iframe src="https://www.youtube.com/embed/31aoE43Ke2g" width="960" height="540" frameborder="0" allowfullscreen></iframe></center>
+<br>
+<center><iframe src="https://www.youtube.com/embed/31aoE43Ke2g" width="960" height="540" frameborder="0" allowfullscreen></iframe></center>
 
 ### Project Summary
 
@@ -37,7 +38,7 @@ __Part I: Environment setup and Physics Simulation__<br>
         Y & V_y & a_y \\
         Z & V_z & a_z \\
     \end{bmatrix}$$</center>
-    where $$X, V, a$$ denotes displacement, velocity and acceleration respectively. For each time step $$\Delta t$$, a matrix multiplication would give the next state by preserving the following equations: $$ v_{t+\Delta t} = v_t + a_t \Delta t$$, $$ p_{t+\Delta t} = p_t + v_t \Delta t + \frac{1}{2} a_t \Delta t^2$$. Actions and action combinations (left, right, button A, button B) would be reflected upon changes to corresponding accelerations and velocity. We adopt similar hyperparameters of physical settings as Super Mario Bros.
+       where $$X, V, a$$ denotes displacement, velocity and acceleration respectively. For each time step $$\Delta t$$, a matrix multiplication would give the next state by preserving the following equations: $$ v_{t+\Delta t} = v_t + a_t \Delta t$$, $$ p_{t+\Delta t} = p_t + v_t \Delta t + \frac{1}{2} a_t \Delta t^2$$. Actions and action combinations (left, right, button A, button B) would be reflected upon changes to corresponding accelerations and velocity. We adopt similar hyperparameters of physical settings as Super Mario Bros.
     - _Actor control_: //TODO
     - _Collision_: If Mario collide down to the ground, y-axis velocity will be cancelled; if collude up to a brick, y-axis velocity will be inverted; if collide by side bricks, x-axis velocity will be cancelled.
 
