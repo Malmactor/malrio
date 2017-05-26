@@ -5,8 +5,8 @@ __author__ = "Liyan Chen"
 __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 
-import itertools as it
 import copy
+import itertools as it
 
 from momentum_handler import *
 from simulatables import *
@@ -60,6 +60,19 @@ def hit_edge_reaction(collision):
     return edge2action[np.argmax(np.dot(collision['hit']['normal'], directions))]
 
 
+def compensate_gravity(mario, surrounding_bb, config=None):
+    # If mario has gravity, it doesn't need compensation
+    if abs(mario.state[1, 2]) < config["greater_eps"]:
+
+        # Create a hypothesis of ground hitting test
+        hypothetical_mario = copy.deepcopy(mario)
+        hypothetical_mario.state[1, 2] = -0.05
+        hypothetical_mario.state[1, 1] = -0.05
+        hypothetical_mario.update()
+
+        return any(map(lambda bb: bb.collide(hypothetical_mario)['hit'] is not None, surrounding_bb))
+
+
 class MarioSimulation:
     def __init__(self, layout, config=None):
         """
@@ -103,6 +116,10 @@ class MarioSimulation:
 
             # Process momentum change
             self.mario.reaction(hit_edge_reaction(closest_collision[1]))
+
+        if compensate_gravity(self.mario, bb_to_check, self.config):
+            print "give gravity"
+            self.mario.reaction(give_gravity)
 
         # Grab an action from input and simulate the force
         self.mario.reaction(action_mapping[action])

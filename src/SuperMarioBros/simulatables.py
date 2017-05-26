@@ -34,7 +34,7 @@ def seg_aabb_collision_resolution(box_center, radius, start, direction, padding=
     (start + t * direction)
     """
     dtype = "float16" if config is None or "dtype" not in config else config["dtype"]
-    epsilon = 0.001 if config is None or "epsilon" not in config else config["epsilon"]
+    epsilon = 0.001 if config is None or "epsilon" not in config else config["smaller_eps"]
 
     if np.any(np.abs(direction) == 0.0):
         norm = direction + epsilon
@@ -58,8 +58,8 @@ def seg_aabb_collision_resolution(box_center, radius, start, direction, padding=
         return None
 
     # If the segment starts outside, hit time is the near time. Otherwise, its hit time is 0
-    collision = {}
-    collision["time"] = clamp(near_time, 0, 1)
+    collision = dict()
+    collision["time"] = clamp(near_time, 0, 1) - config["greater_eps"]
     if near_time_vec[0] > near_time_vec[1]:
         collision["normal"] = np.array([-sign_vec[0], 0], dtype=dtype)
     else:
@@ -138,15 +138,17 @@ class CollidableAABB:
 
         collision = dict()
 
+        collision['hit'] = {"time": -1}
+
         if p[0] < p[1]:
             sign_vec = np.sign(d)
-            collision["delta"] = np.array([p[0] * sign_vec[0], 0], dtype=self.dtype)
+            collision["delta"] = -np.array([p[0] * sign_vec[0], 0], dtype=self.dtype)
             collision["normal"] = np.array([sign_vec[0], 0], dtype=self.dtype)
             collision["position"] = np.array([self.get_center()[0] + self.radius[0] * sign_vec[0],
                                               collidable.get_center()[1]], dtype=self.dtype)
         else:
             sign_vec = np.sign(d)
-            collision["delta"] = np.array([0, p[1] * sign_vec[1]], dtype=self.dtype)
+            collision["delta"] = -np.array([0, p[1] * sign_vec[1]], dtype=self.dtype)
             collision["normal"] = np.array([0, sign_vec[1]], dtype=self.dtype)
             collision["position"] = np.array([collidable.get_center()[0],
                                               self.get_center()[1] + self.radius[1] * sign_vec[1]], dtype=self.dtype)
@@ -166,8 +168,8 @@ class CollidableAABB:
             if collision["hit"] is None:
                 collision["time"] = 1
             else:
-                collision["time"] = 0
-                collision["hit"]["time"] = 0
+                collision["time"] = -self.config["greater_eps"]
+                collision["hit"]["time"] = -1
 
         # call into segment resolution for sweep resolution
         else:
@@ -176,7 +178,7 @@ class CollidableAABB:
                                                              collidable_rigid.radius, self.config)
 
             if collision["hit"]:
-                collision["time"] = clamp(collision["hit"]["time"] - self.epsilon, 0, 1)
+                collision["time"] = clamp(collision["hit"]["time"], 0, 1)
                 collision["position"] = collidable_rigid.get_center() + velocity * collision["time"]
                 norm = l2_normalize(velocity)
                 collision["hit"]["position"] += norm * collidable_rigid.radius
