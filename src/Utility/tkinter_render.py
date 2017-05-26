@@ -6,6 +6,7 @@ __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 
 import Tkinter as tk
+import numpy as np
 
 
 class TKRender:
@@ -36,13 +37,16 @@ class TKRender:
             init_pos[0] * 16, (maxy - init_pos[1] - 1.5) * 16, (init_pos[0] + 1) * 16, (maxy - init_pos[1] + 0.5) * 16,
             fill=config["block2color"]["mario"])
 
-        text = "X: {}\nV: {}\na: {}".format(str())
+        np.set_printoptions(precision=2)
+        text = "X: {}\nV: {}\na: {}".format("" "" "")
 
-        self.status = self.canvas.create_text()
+        self.status = self.canvas.create_text(50, 30, text=text)
 
     def render(self, rigid):
         displacement = rigid.displacement_difference()
         self.canvas.move(self.mario, displacement[0] * 16, -displacement[1] * 16)
+
+
         self.root.update_idletasks()
         self.root.update()
 
