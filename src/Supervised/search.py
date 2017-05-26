@@ -109,7 +109,7 @@ def a_star(layout, simulation, init_pos, end_pos, actions, interval=5, config=No
                 frontier_queue[next_state] = h
 
                 # Reach the end and exit
-                if l1_distance(get_state_pos(next_state), end_pos) < 0.5:
+                if l1_distance(get_state_pos(next_state), end_pos) <= 0.5:
                     end_state = next_state
                     break
 
