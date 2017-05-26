@@ -19,6 +19,7 @@ layout = SMB.layout_fromdefault()
 
 # render = SMB.Renderer(host)
 render = UT.TKRender(layout, config=config)
+config["render"] = render
 
 simulation = SMB.MarioSimulation(layout, config=config)
 

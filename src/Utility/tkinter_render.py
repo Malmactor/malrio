@@ -20,7 +20,7 @@ class TKRender:
 
         self.root = tk.Tk()
         self.root.resizable(0, 0)
-        self.canvas = tk.Canvas(master=self.root, width=maxx * 16, height=maxy * 16)
+        self.canvas = tk.Canvas(master=self.root, width=maxx * 16 + 100, height=maxy * 16)
         self.canvas.grid(row=0, column=0, sticky=tk.N + tk.S + tk.W + tk.E)
         self.root.rowconfigure(0, weight=1)
         self.root.columnconfigure(0, weight=1)
@@ -40,7 +40,7 @@ class TKRender:
         np.set_printoptions(precision=2)
         self.format = "X: {}\nV: {}\na: {}"
 
-        self.status = self.canvas.create_text(50, 30, text=self.format.format("", "", ""))
+        self.status = self.canvas.create_text(maxx * 16, 30, text=self.format.format("", "", ""), anchor=tk.W)
 
     def render(self, rigid):
         displacement = rigid.displacement_difference()

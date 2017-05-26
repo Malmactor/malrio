@@ -86,6 +86,8 @@ def a_star(layout, simulation, init_pos, end_pos, actions, interval=5, config=No
         expansion += 1
         if frontier[0] > greatest_x:
             greatest_x = frontier[0]
+            simulation = decode_state(frontier, simulation)
+            config["render"].render(simulation.mario)
             print np.array(frontier).reshape((3, 3))
 
         # Expand frontier

@@ -63,6 +63,9 @@ def horizontal_enact(state, direction):
         else:
             state[0, 2] = phyx_const["walk_acc"] * direction
 
+        if np.abs(state[0, 1]) < simulation_config["greater_eps"] and np.abs(state[0, 2]) == phyx_const["skid_dec"]:
+            state[0, 2] = np.sign(state[0, 2]) * phyx_const["min_walk_speed"]
+
     # Midair case
     else:
 
