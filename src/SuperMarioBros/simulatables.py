@@ -93,13 +93,6 @@ class RigidEntity:
     def __str__(self):
         return ' '.join(map(lambda num: str(num), self.state[:, 0]))
 
-    def __getattr__(self, item):
-        mapping = {"x": self.state[0, 0], "y": self.state[1, 0], "z": self.state[2, 0]}
-        if item in mapping:
-            return mapping[item]
-        else:
-            raise AttributeError("object has no attribute \'{:}\'".format(str(item)))
-
     def update(self):
         self.prev_state = np.copy(self.state)
         self.state = np.dot(self.state, self.delta_mat)

@@ -18,13 +18,16 @@ layout = SMB.layout_fromdefault()
 # host = SMB.instantiate_malmo(layout)
 
 # render = SMB.Renderer(host)
-render = UT.TKRender(layout, config=config)
-config["render"] = render
 
 simulation = SMB.MarioSimulation(layout, config=config)
 
-actions = list(SMB.action_mapping.keys())
+actions = ["right_jump", "right_jump", "nolr_jump", "remains"]
 
-action_path = SV.a_star(layout, simulation, config["init_pos"], config["end_pos"], actions, interval=5, config=config)
+#action_path = SV.a_star(layout, simulation, config["init_pos"], config["end_pos"], actions, interval=5, config=config)
+
+action_path = ['right_jump', 'remains', 'remains', 'remains', 'remains', 'right_jump', 'remains', 'remains', 'remains', 'remains', 'right_jump', 'remains', 'remains', 'remains', 'remains', 'right_jump', 'remains', 'remains', 'remains', 'remains', 'right_jump', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'remains', 'right_jump', 'remains', 'remains', 'remains', 'remains', 'right_jump', 'remains', 'remains', 'remains', 'remains']
+print action_path
+
+render = UT.TKRender(layout, config=config)
 
 AG.static_agent(action_path, simulation, render, config=config)

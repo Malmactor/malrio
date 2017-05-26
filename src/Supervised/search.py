@@ -23,6 +23,8 @@ def l2_distance(a, b):
 
 
 def heuristic(pos, target):
+    dist = np.abs(pos - target)
+    return dist[0] * 1.8 + dist[1] / dist[0]
     return l1_distance(pos, target)
 
 
@@ -64,7 +66,7 @@ def a_star(layout, simulation, init_pos, end_pos, actions, interval=5, config=No
     epsilon = 0.001 if config is None or "epsilon" not in config else config["epsilon"]
     empty_action = "remains" if config is None or "empty_action" not in config else config["empty_action"]
 
-    bound = -1, -1, layout.shape[0], layout.shape[1]
+    bound = -1, -1, layout.shape[0] + 8, layout.shape[1] + 8
 
     simulation.mario.state[0:3, 0] = init_pos
     init_state = encode_state(simulation)
@@ -79,7 +81,7 @@ def a_star(layout, simulation, init_pos, end_pos, actions, interval=5, config=No
 
     expansion = 0
     greatest_x = 0
-    max_q = l2_distance(init_pos, end_pos) * 10
+    max_q = l2_distance(init_pos, end_pos) * 20
     pruned_num = 0
 
     while frontier_queue and not end_state:
@@ -87,12 +89,16 @@ def a_star(layout, simulation, init_pos, end_pos, actions, interval=5, config=No
         frontier = frontier_queue.pop()
         expansion += 1
 
+        if frontier[0] > greatest_x:
+            greatest_x = frontier[0]
+            print frontier[0], frontier[3], pruned_num
+
         # Expand frontier
         for act in actions:
             simulation = decode_state(frontier, simulation)
             simulation.advance_frame(act)
 
-            next_cost = l2_distance(get_state_pos(frontier), get_state_pos(simulation)) + cost[frontier] + 1
+            next_cost = l2_distance(get_state_pos(frontier), get_state_pos(simulation)) + cost[frontier] + 1 * interval
 
             # Downsample actions
             for i in range(interval - 1):
@@ -113,10 +119,9 @@ def a_star(layout, simulation, init_pos, end_pos, actions, interval=5, config=No
                     frontier_queue[next_state] = h
                 else:
                     pruned_num += 1
-                    print pruned_num
 
                 # Reach the end and exit
-                if l1_distance(get_state_pos(next_state), end_pos) <= 0.5:
+                if l1_distance(get_state_pos(next_state), end_pos) <= 1:
                     end_state = next_state
                     break
 
