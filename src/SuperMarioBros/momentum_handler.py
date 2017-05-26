@@ -38,6 +38,7 @@ def hit_ground(state):
 
 def hit_sides(state):
     # Clear x-velocity
+    print "hit sides"
     state[0, 1] = 0
 
 
@@ -50,11 +51,14 @@ def hit_ceiling(state):
 def horizontal_enact(state, direction):
     # Ground case
     if np.abs(state[1, 1]) < simulation_config["epsilon"]:
+        print "ground"
 
         # From still to walking
         if np.abs(state[0, 1]) < simulation_config["epsilon"]:
             state[0, 1] = phyx_const["min_walk_speed"] * direction
             state[0, 2] = phyx_const["walk_acc"] * direction
+            print "still"
+            print state
 
         # Skidding from the opposite direction to still
         elif np.sign(state[0, 1]) * direction == -1.0:
@@ -63,6 +67,9 @@ def horizontal_enact(state, direction):
         # Accelerate towards the same direction
         else:
             state[0, 2] = phyx_const["walk_acc"] * direction
+
+        # Work around the collision resolution
+        state[1, 1] = -phyx_const["gravity"] * simulation_config["delta_t"] + 0.1
 
     # Midair case
     else:

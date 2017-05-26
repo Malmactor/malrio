@@ -58,7 +58,7 @@ def seg_aabb_collision_resolution(box_center, radius, start, direction, padding=
         return None
 
     # If the segment starts outside, hit time is the near time. Otherwise, its hit time is 0
-    collision = dict()
+    collision = {}
     collision["time"] = clamp(near_time, 0, 1)
     if near_time_vec[0] > near_time_vec[1]:
         collision["normal"] = np.array([-sign_vec[0], 0], dtype=dtype)
