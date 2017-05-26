@@ -36,6 +36,10 @@ class TKRender:
             init_pos[0] * 16, (maxy - init_pos[1] - 1.5) * 16, (init_pos[0] + 1) * 16, (maxy - init_pos[1] + 0.5) * 16,
             fill=config["block2color"]["mario"])
 
+        text = "X: {}\nV: {}\na: {}".format(str())
+
+        self.status = self.canvas.create_text()
+
     def render(self, rigid):
         displacement = rigid.displacement_difference()
         self.canvas.move(self.mario, displacement[0] * 16, -displacement[1] * 16)

@@ -104,7 +104,6 @@ class MarioSimulation:
         bb_to_check = collision_proposal(self.mario, self.brick_bb, self.config)
 
         if not bb_to_check or compensate_gravity(self.mario, bb_to_check, self.config):
-            print "give gravity"
             self.mario.reaction(give_gravity)
 
         # Resolve collisions

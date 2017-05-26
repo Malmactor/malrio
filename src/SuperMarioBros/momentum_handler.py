@@ -37,7 +37,6 @@ def hit_ground(state):
 
 def hit_sides(state):
     # Clear x-velocity
-    print "hit sides"
     state[0, 1] = 0
 
 
