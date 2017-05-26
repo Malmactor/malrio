@@ -5,8 +5,6 @@ __author__ = "Liyan Chen"
 __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 
-import numpy as np
-
 from configuration import *
 
 

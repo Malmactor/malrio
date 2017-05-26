@@ -5,7 +5,6 @@ __author__ = "Liyan Chen"
 __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 
-
 import numpy as np
 
 simulation_config = {
@@ -47,7 +46,7 @@ phyx_const = {
     "jump_mix_rels_g": "-00600",
     "jump_hix_rels_g": "-00900",
     "max_fall_speed": "04800",
-    "walk_speed": "02000", # original: "01900", here we increase it to simulate "continuous pressing the button"
+    "walk_speed": "02000",  # original: "01900", here we increase it to simulate "continuous pressing the button"
     "jump_v0": "04000",
     "gravity": "-001E0"
 }

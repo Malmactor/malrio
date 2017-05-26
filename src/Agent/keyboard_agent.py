@@ -5,8 +5,6 @@ __author__ = "Liyan Chen"
 __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 
-from key_catch import *
-
 key_act_map = {
     "a": "left_nojump",
     "d": "right_nojump",
@@ -46,4 +44,3 @@ def keyboard_agent(simulation, keypoller, render, config=None):
 
         renderable = simulation.get_renderable()
         render.render(renderable)
-

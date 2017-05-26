@@ -30,7 +30,7 @@ layout = np.copy(np.transpose((np.array(
      [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]]
 ))[::-1]))
 
-simple_layout= np.copy(np.transpose((np.array(
+simple_layout = np.copy(np.transpose((np.array(
     [[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
      [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
@@ -40,7 +40,7 @@ simple_layout= np.copy(np.transpose((np.array(
      [1, 1, 2, 2, 1, 2, 2, 2, 2, 2, 1]]
 ))[::-1]))
 
-blank_layout= np.copy(np.transpose((np.array(
+blank_layout = np.copy(np.transpose((np.array(
     [[0, 0, 0, 0, 0, 0, 0, 0],
      [0, 0, 0, 0, 0, 0, 0, 0],
      [0, 0, 0, 0, 0, 0, 0, 0],

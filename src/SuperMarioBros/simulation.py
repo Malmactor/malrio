@@ -63,7 +63,6 @@ def hit_edge_reaction(collision):
 def compensate_gravity(mario, surrounding_bb, config=None):
     # If mario has gravity, it doesn't need compensation
     if abs(mario.state[1, 2]) < config["greater_eps"]:
-
         # Create a hypothesis of ground hitting test
         hypothetical_mario = copy.deepcopy(mario)
         hypothetical_mario.state[1, 2] = -0.05
@@ -120,7 +119,6 @@ class MarioSimulation:
 
             # Process momentum change
             self.mario.reaction(hit_edge_reaction(closest_collision[1]))
-
 
         # Grab an action from input and simulate the force
         self.mario.reaction(action_mapping[action])
