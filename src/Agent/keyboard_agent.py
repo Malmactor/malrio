@@ -31,12 +31,18 @@ def keyboard_agent(simulation, keypoller, render, config=None):
 
     key = None
 
+    last_action = None
+
     while not key == "q":
         key = keypoller()
         if key and key in key_act_map:
             simulation.advance_frame(key_act_map[key])
+            last_action = key_act_map[key]
         else:
+            if last_action in ["left_nojump", "right_nojump"]:
+                print "interrupted action"
             simulation.advance_frame(empty_action)
+            last_action = empty_action
 
         renderable = simulation.get_renderable()
         render.render(renderable)

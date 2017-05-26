@@ -34,6 +34,7 @@ def collision_resolved(state, delta):
 def hit_ground(state):
     # Clear y-velocity
     state[1, 1] = 0.0
+    state[1, 2] = 0.0
 
 
 def hit_sides(state):
@@ -57,7 +58,7 @@ def horizontal_enact(state, direction):
         if np.abs(state[0, 1]) < simulation_config["epsilon"]:
             state[0, 1] = phyx_const["min_walk_speed"] * direction
             state[0, 2] = phyx_const["walk_acc"] * direction
-            print "still"
+            print "still", np.abs(state[0, 1]), simulation_config["epsilon"], np.abs(state[0, 1]) < simulation_config["epsilon"],0.0046387<1e-05
             print state
 
         # Skidding from the opposite direction to still
@@ -69,7 +70,7 @@ def horizontal_enact(state, direction):
             state[0, 2] = phyx_const["walk_acc"] * direction
 
         # Work around the collision resolution
-        state[1, 1] = -phyx_const["gravity"] * simulation_config["delta_t"] + 0.1
+        state[1, 1] = -phyx_const["gravity"] * simulation_config["delta_t"]
 
     # Midair case
     else:
@@ -193,9 +194,13 @@ def nolr_jump(state):
     vertical_enact(state)
 
 
-def remains(state):
+def no_key(state):
     horizontal_deact(state)
     vertical_deact(state)
+
+
+def remains(state):
+    pass
 
 
 action_mapping = {
@@ -204,5 +209,6 @@ action_mapping = {
     "right_nojump": right_nojump,
     "left_jump": left_jump,
     "right_jump": right_jump,
-    "nolr_jump": nolr_jump
+    "nolr_jump": nolr_jump,
+    "no_key": no_key
 }
