@@ -11,6 +11,7 @@ import SuperMarioBros as SMB
 import Supervised as SV
 
 config = SMB.simulation_config
+config.update(SMB.render_config)
 
 layout = SMB.layout_fromdefault()
 
