@@ -79,16 +79,13 @@ def a_star(layout, simulation, init_pos, end_pos, actions, interval=5, config=No
 
     expansion = 0
     greatest_x = 0
+    max_q = l2_distance(init_pos, end_pos) * 10
+    pruned_num = 0
 
     while frontier_queue and not end_state:
 
         frontier = frontier_queue.pop()
         expansion += 1
-        if frontier[0] > greatest_x:
-            greatest_x = frontier[0]
-            simulation = decode_state(frontier, simulation)
-            config["render"].render(simulation.mario)
-            print np.array(frontier).reshape((3, 3))
 
         # Expand frontier
         for act in actions:
@@ -112,7 +109,11 @@ def a_star(layout, simulation, init_pos, end_pos, actions, interval=5, config=No
                 state_preaction_map[next_state] = act
 
                 h = heuristic(get_state_pos(next_state), end_pos) + next_cost
-                frontier_queue[next_state] = h
+                if h < max_q:
+                    frontier_queue[next_state] = h
+                else:
+                    pruned_num += 1
+                    print pruned_num
 
                 # Reach the end and exit
                 if l1_distance(get_state_pos(next_state), end_pos) <= 0.5:
