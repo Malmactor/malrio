@@ -78,18 +78,22 @@ def a_star(layout, simulation, init_pos, end_pos, actions, interval=5, config=No
     frontier_queue = pqdict.minpq({init_state: heuristic(get_state_pos(init_state), end_pos)})
 
     expansion = 0
+    greatest_x = 0
 
     while frontier_queue and not end_state:
 
         frontier = frontier_queue.pop()
         expansion += 1
+        if frontier[0] > greatest_x:
+            greatest_x = frontier[0]
+            print np.array(frontier).reshape((3, 3))
 
         # Expand frontier
         for act in actions:
             simulation = decode_state(frontier, simulation)
             simulation.advance_frame(act)
 
-            next_cost = l2_distance(get_state_pos(frontier), get_state_pos(simulation)) + cost[frontier]
+            next_cost = l2_distance(get_state_pos(frontier), get_state_pos(simulation)) + cost[frontier] + 1
 
             # Downsample actions
             for i in range(interval - 1):

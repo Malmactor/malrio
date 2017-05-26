@@ -24,6 +24,6 @@ simulation = SMB.MarioSimulation(layout, config=config)
 
 actions = list(SMB.action_mapping.keys())
 
-action_path = SV.a_star(layout, simulation, config["init_pos"], config["end_pos"], actions, interval=3, config=config)
+action_path = SV.a_star(layout, simulation, config["init_pos"], config["end_pos"], actions, interval=5, config=config)
 
 AG.static_agent(action_path, simulation, render, config=config)

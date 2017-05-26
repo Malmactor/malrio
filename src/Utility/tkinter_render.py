@@ -38,15 +38,16 @@ class TKRender:
             fill=config["block2color"]["mario"])
 
         np.set_printoptions(precision=2)
-        text = "X: {}\nV: {}\na: {}".format("" "" "")
+        self.format = "X: {}\nV: {}\na: {}"
 
-        self.status = self.canvas.create_text(50, 30, text=text)
+        self.status = self.canvas.create_text(50, 30, text=self.format.format("", "", ""))
 
     def render(self, rigid):
         displacement = rigid.displacement_difference()
         self.canvas.move(self.mario, displacement[0] * 16, -displacement[1] * 16)
 
-
+        text = self.format.format(str(rigid.state[:, 0]), str(rigid.state[:, 1]), str(rigid.state[:, 2]))
+        self.canvas.itemconfigure(self.status, text=text)
         self.root.update_idletasks()
         self.root.update()
 
