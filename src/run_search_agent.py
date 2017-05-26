@@ -18,12 +18,12 @@ layout = SMB.layout_fromdefault()
 # host = SMB.instantiate_malmo(layout)
 
 # render = SMB.Renderer(host)
-render = UT.TKRender(layout)
+render = UT.TKRender(layout, config=config)
 
 simulation = SMB.MarioSimulation(layout, config=config)
 
 actions = list(SMB.action_mapping.keys())
 
-action_path = SV.a_star(layout, simulation, config["init_pos"], config["end_pos"], actions, interval=5, config=config)
+action_path = SV.a_star(layout, simulation, config["init_pos"], config["end_pos"], actions, interval=3, config=config)
 
 AG.static_agent(action_path, simulation, render, config=config)
