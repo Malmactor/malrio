@@ -5,10 +5,8 @@ __author__ = "Liyan Chen"
 __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 
-
-import SuperMarioBros as SMB
 import Agent as AG
-
+import SuperMarioBros as SMB
 
 config = SMB.simulation_config
 
