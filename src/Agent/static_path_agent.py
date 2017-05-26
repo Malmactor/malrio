@@ -17,7 +17,6 @@ def static_agent(path, simulation, render, config=None):
 
     for step in path:
         simulation.advance_frame(step)
-
         renderables = simulation.get_renderable()
         render.render(renderables)
         if config and config["sec_per_frame"]:
