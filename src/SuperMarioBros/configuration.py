@@ -17,7 +17,7 @@ simulation_config = {
     "block_radius": (0.5, 0.5),
     "sec_per_frame": 0.016,
     "init_pos": np.array([2, 3, 0]),
-    "end_pos": np.array([9, 4, 0]),
+    "end_pos": np.array([9, 3.5, 0]),
     "empty_action": "remains",
     "id2block": {0: 'air', 1: 'brick_block', 2: 'lava', 3: 'red_mushroom'}
 }
