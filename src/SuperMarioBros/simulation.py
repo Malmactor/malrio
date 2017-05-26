@@ -37,7 +37,7 @@ def collision_proposal(mario, pos2bb, config=None):
     :param config: Global configuration
     :return: List of potential collision boxes
     """
-    minx, miny, maxx, maxy = -2, -2, 2, 2
+    minx, miny, maxx, maxy = -2, -1, 2, 1
 
     center = mario.get_center()
 
@@ -104,6 +104,10 @@ class MarioSimulation:
         # Locate blocks for collision detections
         bb_to_check = collision_proposal(self.mario, self.brick_bb, self.config)
 
+        if not bb_to_check or compensate_gravity(self.mario, bb_to_check, self.config):
+            print "give gravity"
+            self.mario.reaction(give_gravity)
+
         # Resolve collisions
         collisions = list(filter(lambda pair: pair[1]['hit'] is not None,
                                  map(lambda bb: (bb.get_center(), bb.collide(self.mario)), bb_to_check)))
@@ -117,9 +121,6 @@ class MarioSimulation:
             # Process momentum change
             self.mario.reaction(hit_edge_reaction(closest_collision[1]))
 
-        if compensate_gravity(self.mario, bb_to_check, self.config):
-            print "give gravity"
-            self.mario.reaction(give_gravity)
 
         # Grab an action from input and simulate the force
         self.mario.reaction(action_mapping[action])

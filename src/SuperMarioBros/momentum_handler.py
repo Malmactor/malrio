@@ -66,9 +66,6 @@ def horizontal_enact(state, direction):
         else:
             state[0, 2] = phyx_const["walk_acc"] * direction
 
-        # Work around the collision resolution
-        #state[1, 1] = -phyx_const["gravity"] * simulation_config["delta_t"]
-
     # Midair case
     else:
 
