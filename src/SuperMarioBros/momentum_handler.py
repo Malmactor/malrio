@@ -39,7 +39,6 @@ def hit_ground(state):
 
 def hit_sides(state):
     # Clear x-velocity
-    print "hit sides"
     state[0, 1] = 0
 
 
@@ -58,7 +57,7 @@ def horizontal_enact(state, direction):
         if np.abs(state[0, 1]) < simulation_config["epsilon"]:
             state[0, 1] = phyx_const["min_walk_speed"] * direction
             state[0, 2] = phyx_const["walk_acc"] * direction
-            print "still", np.abs(state[0, 1]), simulation_config["epsilon"], np.abs(state[0, 1]) < simulation_config["epsilon"],0.0046387<1e-05
+            print "still", np.abs(state[0, 1]), simulation_config["epsilon"]
             print state
 
         # Skidding from the opposite direction to still
