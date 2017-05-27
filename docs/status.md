@@ -35,7 +35,7 @@ $$\begin{bmatrix}
     Z & v_z & a_z \\
 \end{bmatrix}$$, where $$X, v, a$$ denotes displacement, velocity and acceleration respectively.
 
-    - _Status Update_:  For each time step $$\Delta t$$, a matrix multiplication would give the next state by preserving the following equations: $$ v_{t+\Delta t} = v_t + a_t \Delta t$$, $$ p_{t+\Delta t} = p_t + v_t \Delta t + \frac{1}{2} a_t \Delta t^2$$. We adopt similar hyperparameters of physical settings as Super Mario Bros.
+    - _Status Update_:  For each time step $$\Delta t$$, a matrix multiplication would give the next state by preserving the following equations: $$ v_{t+\Delta t} = v_t + a_t \Delta t$$, $$ X_{t+\Delta t} = X_t + v_t \Delta t + \frac{1}{2} a_t \Delta t^2$$. Parameters in SuperMarioBros physics are replicated to reproduce the authentic controling style of it.
     - _Actor control_: We support a group of actions including jump, left move, right move, jump with left move, jump with right move, remain. All actions are achieve by changing velocity and acceleration in next time step.
     - _Collision_: If Mario collide down to the ground, y-axis velocity will be cancelled; if collide up to a brick, y-axis velocity will be inverted; if collide by side bricks, x-axis velocity will be cancelled.
 
