@@ -6,6 +6,7 @@ __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 
 import Tkinter as tk
+
 import numpy as np
 
 
@@ -34,7 +35,8 @@ class TKRender:
                         fill=config["block2color"][id2block[layout[x, y]]])
 
         self.mario = self.canvas.create_rectangle(
-            init_pos[0] * 16, (maxy - init_pos[1] - 1.5) * 16, (init_pos[0] + 1) * 16, (maxy - init_pos[1] + 0.5) * 16,
+            init_pos[0] * 16, (maxy - init_pos[1] - 1.15) * 16, (init_pos[0] + 1) * 16,
+            (maxy - init_pos[1] + 0.15) * 16,
             fill=config["block2color"]["mario"])
 
         np.set_printoptions(precision=2)
