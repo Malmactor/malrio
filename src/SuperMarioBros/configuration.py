@@ -17,7 +17,7 @@ simulation_config = {
     "block_radius": (0.5, 0.5),
     "sec_per_frame": 0.016,
     "init_pos": np.array([2, 3, 0]),
-    "end_pos": np.array([9, 3.5, 0]),
+    "end_pos": np.array([33, 2.5, 0]),
     "empty_action": "remains",
     "id2block": {0: 'air', 1: 'brick_block', 2: 'lava', 3: 'red_mushroom'}
 }
@@ -48,7 +48,7 @@ phyx_const = {
     "max_fall_speed": "04800",
     "walk_speed": "02000",  # original: "01900", here we increase it to simulate "continuous pressing the button"
     "jump_v0": "04000",
-    "gravity": "-001E0"
+    "gravity": "-00250" #original: "-001E0"
 }
 
 render_config = {

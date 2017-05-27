@@ -50,4 +50,3 @@ class TKRender:
         self.canvas.itemconfigure(self.status, text=text)
         self.root.update_idletasks()
         self.root.update()
-
