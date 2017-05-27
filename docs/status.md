@@ -43,12 +43,15 @@ __Part II: Datasets collection for supervised training__<br>
 
 The dataset has pairs of frame-action correspondences. For each pair, a visible frame is cropped and an action is sampled.
 
-1. __Maps__: Maps are generated using either simple obstacles generator and Prim map generator. The simple obstacles generator generates a world with blocks and lavas whose positions and sizes similar to those of Level 1-1 in Super Mario Bros, by randomly creating obstacles and floating tiles. The Prim map generator generates a maze-like world with Prim's algorithm, which is much harder to solve but guaranteed to be solvable.
+1. __World_Maps__: Maps are generated using either simple obstacles generator and Prim map generator. The simple obstacles generator generates a world with blocks and lavas whose positions and sizes similar to those of Level 1-1 in Super Mario Bros, by randomly creating obstacles and floating tiles. The Prim map generator generates a maze-like world with Prim's algorithm, which is much harder to solve but guaranteed to be solvable.
 
 2. __Actions__: We use A-star search as the action generator for each visible area of each map. Our A-star algorithm cooperate closely with our physics engine by using the provided actions to generate frontiers of each state. Since A-star is guaranteed to be optimal, it serves as an ideal way to generate action labels to get to the goal. We also pre-select the maps that feasible for A-star to run, in terms of solvability and time cost.
 
 __Part III: Supervised Training__<br>
-// TODO
+
+The basic end-to-end neural network modal is a stack of cnn layers trained with supervised training.
+
+1. __Input__: 
 
 ### Evaluation
 // TODO
