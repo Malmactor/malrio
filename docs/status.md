@@ -43,17 +43,19 @@ __Part II: Datasets collection for supervised training__<br>
 
 The dataset has pairs of frame-action correspondences. For each pair, a visible frame is cropped and an action is sampled.
 
-1. __Map Generation__: Before a set of frame-action correspondences is collected, an unique world map is generated for producing the set. Maps are generated from simple obstacles generator or Prim map generator. The simple obstacle generator generates a world with randomly generated blocks and pits patterned like Level 1-1 in Super Mario Bros. The Prim map generator generates a maze-like world with Prim's algorithm, which is much harder to solve but guaranteed to be solvable.
+1. __Map Generation__: Before a set of frame-action correspondences is collected, an unique world map is generated for producing the set. Maps are generated from simple obstacles generator or Prim map generator. The simple obstacle generator generates a world with randomly generated blocks and pits patterned like Level 1-1 in Super Mario Bros. The Prim map generator generates a maze-like world with Prim's algorithm, which is harder to solve due to the requirements of spatial reasoning.
 
-2. __Visible Frame Crop__: A square region around mario is cropped as the perception to 
+2. __Visible Frame Crop__: A square region around mario is cropped as the perception to agents at a paricular time.
 
-2. __Actions__: We use A-star search as the action generator for each visible area of each map. Our A-star algorithm cooperate closely with our physics engine by using the provided actions to generate frontiers of each state. Since A-star is guaranteed to be optimal, it serves as an ideal way to generate action labels to get to the goal. We also pre-select the maps that feasible for A-star to run, in terms of solvability and time cost.
+3. __Action Labels__: An A-star search with global perception gives a plausible route from the beginning to the end, which consists of a series of actions at each time step. With the one-to-one mapping relationship to time step, action series can be combined with corresponding visible frames to build frame-action pairs.
+
+4. __Action Downsampling__: With the observation that human players usually cannot change actions at every 60 frames in second, we introduce a prior of action downsampling. During a period of time, agents (including a-star
 
 __Part III: Supervised Training__<br>
 
 The basic end-to-end neural network modal is a stack of cnn layers trained with supervised training.
 
-1. __Input__: A visible frame at a particular time is defined as a 15 blocks x 15 blocks region around mario. 
+1. __Input__: A visible frame at a particular time is defined as a 15 blocks x 15 blocks region around mario. Therefore, the frame can be represented as a square grid with one-hot encoding, where each cell has 4 features with values of [0, 1], indicating the presence of obstacles, mario, coins, and enemies. Since the position of mario is not neccessarily aligned with block boundaries, a sampling scheme is used to provide finer details. In particular, each block is represented by 4 x 4 piexels, and the presence of a bounding box would result the feature of covered pixels to be turned on. And ground truth label from the dataset is encoded as 6 dimensional vector using one-hot encoding, where each dimension represents an action. When an action is labeled, the corresponding feature will be turned on to 1, and other features will be turned off to 0.
 
 ### Evaluation
 // TODO
