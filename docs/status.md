@@ -6,7 +6,7 @@ header-img: "img/home-bg.jpg"
 ---
 ### Demo Video
 
-<iframe src="https://www.youtube.com/embed/8IkFP0T3yOA" width="768" height="432" frameborder="0" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/8IkFP0T3yOA" frameborder="0" allowfullscreen></iframe>
 
 ### Project Summary
 
