@@ -37,11 +37,11 @@ $$\begin{bmatrix}
 
     - _Status Update_:  For each time step $$\Delta t$$, a matrix multiplication would give the next state by preserving the following equations: $$ v_{t+\Delta t} = v_t + a_t \Delta t$$, $$ X_{t+\Delta t} = X_t + v_t \Delta t + \frac{1}{2} a_t \Delta t^2$$. Parameters in SuperMarioBros physics are replicated to reproduce the authentic controling style of it.
     - _Actor control_: We support a group of actions including jump, left move, right move, jump with left move, jump with right move, remain. All actions are achieve by changing velocity and acceleration in next time step.
-    - _Collision_: If Mario collide down to the ground, y-axis velocity will be cancelled; if collide up to a brick, y-axis velocity will be inverted; if collide by side bricks, x-axis velocity will be cancelled.
+    - _Collision_: If Mario collide with the ground, y-velocity will be cancelled; if collide up to a brick, y-axis velocity will be inverted; if collide to bricks in sides, x-axis velocity will be cancelled.
 
 __Part II: Datasets collection for supervised training__<br>
 
-To prepare datasets for supervised learning, we need both maps and corresponding actions to train the actor.
+The dataset has pairs of frame-action correspondences. For each pair, a visible frame is cropped and an action is sampled.
 
 1. __Maps__: Maps are generated using either simple obstacles generator and Prim map generator. The simple obstacles generator generates a world with blocks and lavas whose positions and sizes similar to those of Level 1-1 in Super Mario Bros, by randomly creating obstacles and floating tiles. The Prim map generator generates a maze-like world with Prim's algorithm, which is much harder to solve but guaranteed to be solvable.
 
