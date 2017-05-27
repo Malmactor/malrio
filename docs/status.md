@@ -12,7 +12,7 @@ header-img: "img/home-bg.jpg"
 
 Our project is a Super Mario Maker™ gameplay simulation in Minecraft, including two pieces of mechanism: a Mario player and a world map generator. We also provide an original physics engine to simulate actions of Mario.
 
-The player is a partially observable agent. For each time step, it perceives a visible frame from the world map and makes a decision for the next action. We provides both deep-learning based AI and A-star searching AI for the agent. Users can also control Mario with keyboards based on our physics engine.
+The player is a partially observable agent. For each time step, it perceives a visible frame from the world map and makes a decision for the next action. We provides both deep-learning based AI and A-star searching AI for the agent. Manual control through keyboard is also implemented.
 
 The generator will randomly generate a Minecraft world similar to maps in Super Mario Bros. We provides both simple obstacles generator and Prim map generator. Each map is associated with a goal - red mushroom - for Mario to reach.
 
@@ -35,8 +35,8 @@ $$\begin{bmatrix}
     Z & v_z & a_z \\
 \end{bmatrix}$$, where $$X, v, a$$ denotes displacement, velocity and acceleration respectively.
 
-    - _Status Update_:  For each time step $$\Delta t$$, a matrix multiplication would give the next state by preserving the following equations: $$ v_{t+\Delta t} = v_t + a_t \Delta t$$, $$ X_{t+\Delta t} = X_t + v_t \Delta t + \frac{1}{2} a_t \Delta t^2$$. Parameters in SuperMarioBros physics are replicated to reproduce the authentic controling style of it.
-    - _Actor control_: We support a group of actions including jump, left move, right move, jump with left move, jump with right move, remain. All actions are achieve by changing velocity and acceleration in next time step.
+    - _Status Update_:  For each time step $$\Delta t$$, a matrix multiplication would give the next state by preserving the following equations: $$ v_{t+\Delta t} = v_t + a_t \Delta t$$, $$ X_{t+\Delta t} = X_t + v_t \Delta t + \frac{1}{2} a_t \Delta t^2$$. Parameters of the original SuperMarioBros physics are replicated to reproduce the authentic controling style of it.
+    - _Actor control_: We support a group of actions and action combinations. Like the "⬅️➡️AB" buttons of original Super Mario Bros game,  our control design can make 6 actions: jump, left move, right move, jump with left move, jump with right move, remain. Implementation of actions are achieved by manipulating specific velocity and accelerations of the system.
     - _Collision_: If Mario collide with the ground, y-velocity will be cancelled; if collide up to a brick, y-axis velocity will be inverted; if collide to bricks in sides, x-axis velocity will be cancelled.
 
 __Part II: Datasets collection for supervised training__<br>
