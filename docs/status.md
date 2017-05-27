@@ -57,8 +57,16 @@ The basic end-to-end neural network modal is a stack of cnn layers trained with 
 
 1. __Input__: A visible frame at a particular time is defined as a 15 blocks x 15 blocks region around mario. Therefore, the frame can be represented as a square grid with one-hot encoding, where each cell has 4 features with values of [0, 1], indicating the presence of obstacles, mario, coins, and enemies. Since the position of mario is not neccessarily aligned with block boundaries, a sampling scheme is used to provide finer details. In particular, each block is represented by 4 x 4 piexels, and the presence of a bounding box would result the feature of covered pixels to be turned on. And ground truth label from the dataset is encoded as 6 dimensional vector using one-hot encoding, where each dimension represents an action. When an action is labeled, the corresponding feature will be turned on to 1, and other features will be turned off to 0. Since the simple model only considers 1frame-1action mapping, inputs and labels can be represented as $$X \in R^{b,60,60,4}, Y \in R^{b,6}, \text{where b is the batch size}$$.
 
+2. __CNN Blocks__: There are two kinds of basic Convolusional Neural Network units used in the model. The first one is a nonlinear stack of convolution, batch normalization, activation function(relu). The second one is a affine linear stack of convolution, batch normalization. Since the batch normalization will shift the covariant statistics within a batch, additional bias would be redundent. The reason for using affine linear cnn layers is that we adopted some ResNet-like structure. Therefore, introduction of nonlinearity into the indentity channel would corrupt the residual learning. In addition, we adopted inception-like structures as well. Like inception-resnet-v2, each cnn block is built on serveral branches of cnn layers with various kernel sizes. For design details, please refer to src/Supervised/cnn_units.py file.
+
+3. __Prediction and Loss__: After stacking CNN blocks, a global average pooling is used to produce a vector. Thie vector is passed through serveral small fully-connected layers to generate logits. And final prediction is given by softmaxing the logits. Since the labels and prediction are designed to be a probability distribution over actions, the loss function is defined as the Kullback–Leibler divergence(cross-entropy) between two distributions.
+
+4. __Training__: The model is trained with adam gradient descent optimization to minimize the loss function.
+
 ### Evaluation
-// TODO
+1. __A-star__: Given enough time, the a star search is able to give a feasible solution. However, it usually takes too long. Thus, we only use a star search to generate examples on small maps to give examples to the cnn model.
+
+2. __CNN__: When trained with the dataset, the prediction accuracy is usually around 80% - 90%. Since we have more data points than the parameters in CNN, it does not exibit overfitting and the test accuracy is very close to the training accuracy. In randomly generated maps, the success rate of CNN model is around 37%. The most frequent failure is getting stuck in corners.
 
 ### Remaining Goals and Challenges
 Currently, our prototype is limited to small maps only, and our deep learning models are still primary. For remaining weeks, we plan to
