@@ -72,8 +72,9 @@ The basic end-to-end neural network modal is a stack of cnn layers trained with 
 Currently, our prototype is limited to small maps only, and our deep learning models are still primary. For remaining weeks, we plan to
 
 - Revise our deep neural networks. We will improve quality and accuracy of our current convolutional neural networks, and will also examine on other models. The baseline is able to solve 50 percent of maps solvable by A-star search in our datasets.
+- Introduce more complex structures in the model, including Region Proposal Network(RPN), ConvLSTM, and DNC.
 - Generate more complex map datasets. The baseline is Level 1-1 in Super Mario Bros.
-- If time permits, change to q-learning.
+- If time permits, change to q-learning and double q-learning.
 
 By the time our final report is due, we should be able to achieve an intelligent AI that could solve around 50 to 90 percent of maps of our dataset, where maps are at least as complex as Level 1-1 in Super Mario Bros. The major difficulty lies in the model training and supervised label generation (since it directly determines the training result). Also, there could be still bugs or foibles in our physics engine.
 
