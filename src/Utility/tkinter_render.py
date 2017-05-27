@@ -35,8 +35,8 @@ class TKRender:
                         fill=config["block2color"][id2block[layout[x, y]]])
 
         self.mario = self.canvas.create_rectangle(
-            init_pos[0] * 16, (maxy - init_pos[1] - 1.15) * 16, (init_pos[0] + 1) * 16,
-            (maxy - init_pos[1] + 0.15) * 16,
+            init_pos[0] * 16, (maxy - init_pos[1] - 1.05) * 16, (init_pos[0] + 1) * 16,
+            (maxy - init_pos[1] + 0.05) * 16,
             fill=config["block2color"]["mario"])
 
         np.set_printoptions(precision=2)

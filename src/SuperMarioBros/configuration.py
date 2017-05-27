@@ -15,7 +15,7 @@ simulation_config = {
     "smaller_eps": 0.00000001,
     "greater_eps": 0.001,
     "block_radius": (0.5, 0.5),
-    "mario_bb": np.array([0.45, 0.65]),
+    "mario_bb": np.array([0.45, 0.55]),
     "sec_per_frame": 0.016,
     "init_pos": np.array([2, 3, 0]),
     "end_pos": np.array([33, 2.5, 0]),
