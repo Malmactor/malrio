@@ -1,16 +1,16 @@
 """Agent plays with keyboard input
 """
 
-__author__ = "Liyan Chen"
+__author__ = "Liyan Chen, Chang Gao"
 __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 
 key_act_map = {
     "a": "left_nojump",
     "d": "right_nojump",
-    " ": "nolr_jump",
-    "w": "left_jump",
-    "s": "right_jump"
+    "w": "nolr_jump",
+    "q": "left_jump",
+    "e": "right_jump"
 }
 
 
@@ -31,7 +31,7 @@ def keyboard_agent(simulation, keypoller, render, config=None):
 
     none_times = 0
 
-    while not key == "q":
+    while not key == "m":
         key = keypoller()
         if key and key in key_act_map:
             simulation.advance_frame(key_act_map[key])

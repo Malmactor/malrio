@@ -1,6 +1,9 @@
 # Malrio
+
+![Malrio Logo](https://malmactor.github.io/malrio/img/logo.png)
+
 Visit our [GitHub Page](https://malmactor.github.io/malrio/ "malrio") for general project descriptions.
-# Repository structure
+## Repository structure
 1. __doc__: GitHub Page files
 2. __src__: Code repository
 ## Code directory structure

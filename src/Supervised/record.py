@@ -1,6 +1,9 @@
 import tensorflow as tf
 import numpy as np
 
+__author__ = "Chang Gao"
+__copyright__ = "Copyright (c) 2017 Malmactor"
+__license__ = "MIT"
 
 def write_batch_to_tfrecord(batch, tfrecord_file):
     writer = tf.python_io.TFRecordWriter(tfrecord_file)

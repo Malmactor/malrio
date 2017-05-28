@@ -1,6 +1,11 @@
 import MalmoPython
 import time
 
+__author__ = "Chang Gao"
+__copyright__ = "Copyright (c) 2017 Malmactor"
+__license__ = "MIT"
+
+
 import src.movement
 from src.SuperMarioBros import *
 

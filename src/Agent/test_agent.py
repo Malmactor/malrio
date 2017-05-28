@@ -1,6 +1,10 @@
-
 import numpy as np
 import time
+
+__author__ = "Chang Gao"
+__copyright__ = "Copyright (c) 2017 Malmactor"
+__license__ = "MIT"
+
 
 def test_agent(simulation, render, config=None):
     init_pos = np.array([0, 2, 0]) if config is None or "init_pos" not in config else config["init_pos"]

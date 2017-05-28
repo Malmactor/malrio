@@ -1,5 +1,9 @@
 import numpy as np
 
+__author__ = "Chang Gao"
+__copyright__ = "Copyright (c) 2017 Malmactor"
+__license__ = "MIT"
+
 action_remapping = {
     "remains": 0,
     "left": 1,

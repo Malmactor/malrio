@@ -1,6 +1,10 @@
 """Randomized Prim's Minimum Spanning Tree Algorithm for Maze Generation."""
 
 
+__author__ = "Chang Gao, Liyan Chen, Bruce Tan"
+__copyright__ = "Copyright (c) 2017 Malmactor"
+__license__ = "MIT"
+
 import sys
 import numpy as np
 

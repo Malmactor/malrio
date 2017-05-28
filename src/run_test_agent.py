@@ -1,7 +1,7 @@
 """Main program for testing search agent
 """
 
-__author__ = "Liyan Chen"
+__author__ = "Chang Gao, Liyan Chen"
 __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 

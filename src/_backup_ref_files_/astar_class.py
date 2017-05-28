@@ -7,6 +7,12 @@ import pqdict
 from SuperMarioBros.simulation import MarioSimulation
 from SuperMarioBros.layout_loader import layout_toxml, layout_fromdefault
 
+
+__author__ = "Chang Gao"
+__copyright__ = "Copyright (c) 2017 Malmactor"
+__license__ = "MIT"
+
+
 def l1_distance(a, b):
     return np.sum(np.abs(a - np.array(b)))
 

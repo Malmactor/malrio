@@ -1,7 +1,7 @@
 """Load world map layout into Malmo and other components
 """
 
-__author__ = "Liyan Chen"
+__author__ = "Liyan Chen, Chang Gao"
 __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 
@@ -43,6 +43,9 @@ def layout_fromfile(filename, config=None):
 
 def layout_fromdefault():
     return default_layout.layout
+
+def layout_fromdefault_short():
+    return default_layout.shortlayout
 
 
 def layout_asblank():

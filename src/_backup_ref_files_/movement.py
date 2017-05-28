@@ -2,6 +2,10 @@ import time
 import json
 import numpy as np
 
+__author__ = "Chang Gao, Liyan Chen"
+__copyright__ = "Copyright (c) 2017 Malmactor"
+__license__ = "MIT"
+
 
 class spos:
     def __init__(self, x, y, z):

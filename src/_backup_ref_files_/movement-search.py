@@ -7,6 +7,11 @@ from abc import ABCMeta, abstractmethod
 from Supervised.Astar import Astar
 from src.SuperMarioBros.simulation import MarioSimulation
 
+__author__ = "Chang Gao"
+__copyright__ = "Copyright (c) 2017 Malmactor"
+__license__ = "MIT"
+
+
 class Actor:
     __metaclass__ = ABCMeta
 

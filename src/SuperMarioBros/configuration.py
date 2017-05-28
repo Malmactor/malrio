@@ -1,7 +1,7 @@
 """Simulation configuration parameters
 """
 
-__author__ = "Liyan Chen"
+__author__ = "Liyan Chen, Chang Gao"
 __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 

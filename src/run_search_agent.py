@@ -1,7 +1,7 @@
 """Main program for testing search agent
 """
 
-__author__ = "Liyan Chen"
+__author__ = "Liyan Chen, Chang Gao"
 __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 
@@ -18,7 +18,7 @@ use_mc = False
 config = SMB.simulation_config
 config.update(SMB.render_config)
 
-layout = SMB.layout_fromdefault()
+layout = SMB.layout_fromdefault_short()
 
 simulation = SMB.MarioSimulation(layout, config=config)
 
@@ -27,8 +27,14 @@ if use_astar:
     action_path = SV.a_star(layout, simulation, config["init_pos"], config["end_pos"], actions, interval=5, config=config)
 else:
     action_path = [
-        'right_nojump', 'remains', 'remains', 'remains', 'remains',
-        'right_nojump', 'remains', 'remains', 'remains', 'remains',
+        'remains', 'remains', 'remains', 'remains', 'remains',
+        'remains', 'remains', 'remains', 'remains', 'remains',
+        'remains', 'remains', 'remains', 'remains', 'remains',
+        'remains', 'remains', 'remains', 'remains', 'remains',
+        'right_jump', 'remains', 'remains', 'remains', 'remains',
+        'remains', 'remains', 'remains', 'remains', 'remains',
+        'remains', 'remains', 'remains', 'remains', 'remains',
+        'remains', 'remains', 'remains', 'remains', 'remains',
         'remains', 'remains', 'remains', 'remains', 'remains',
         'remains', 'remains', 'remains', 'remains', 'remains',
         'remains', 'remains', 'remains', 'remains', 'remains',
@@ -37,30 +43,6 @@ else:
         'remains', 'remains', 'remains', 'remains', 'remains',
         'right_jump', 'remains', 'remains', 'remains', 'remains',
         'right_jump', 'remains', 'remains', 'remains', 'remains',
-        'right_jump', 'remains', 'remains', 'remains', 'remains',
-        'right_nojump', 'remains', 'remains', 'remains', 'remains',
-        'remains', 'remains', 'remains', 'remains', 'remains',
-        'remains', 'remains', 'remains', 'remains', 'remains',
-        'remains', 'remains', 'remains', 'remains', 'remains',
-        'remains', 'remains', 'remains', 'remains', 'remains',
-        'right_jump', 'remains', 'remains', 'remains', 'remains',
-        'right_jump', 'remains', 'remains', 'remains', 'remains',
-        'remains', 'remains', 'remains', 'remains', 'remains',
-        'remains', 'remains', 'remains', 'remains', 'remains',
-        'remains', 'remains', 'remains', 'remains', 'remains',
-        'remains', 'remains', 'remains', 'remains', 'remains',
-        'remains', 'remains', 'remains', 'remains', 'remains',
-        'remains', 'remains', 'remains', 'remains', 'remains',
-        'right_nojump', 'remains', 'remains', 'remains', 'remains',
-        'remains', 'remains', 'remains', 'remains', 'remains',
-        'remains', 'remains', 'remains', 'remains', 'remains',
-        'remains', 'remains', 'remains', 'remains', 'remains',
-        'right_jump', 'remains', 'remains', 'remains', 'remains',
-        'right_jump', 'remains', 'remains', 'remains', 'remains',
-        'remains', 'remains', 'remains', 'remains', 'remains',
-        'remains', 'remains', 'remains', 'remains', 'remains',
-        'remains', 'remains', 'remains', 'remains', 'remains',
-        'remains', 'remains', 'remains', 'remains', 'remains',
         'remains', 'remains', 'remains', 'remains', 'remains',
         'remains', 'remains', 'remains', 'remains', 'remains',
         'remains', 'remains', 'remains', 'remains', 'remains',

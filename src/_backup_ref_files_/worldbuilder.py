@@ -1,3 +1,9 @@
+
+__author__ = "Bruce Tan"
+__copyright__ = "Copyright (c) 2017 Malmactor"
+__license__ = "MIT"
+
+
 def generate_world(world_dict):
 
   def genItems():
@@ -29,7 +35,7 @@ def generate_world(world_dict):
               <About>
                 <Summary>Hello world!</Summary>
               </About>
-              
+
               <ModSettings>
                 <MsPerTick>17</MsPerTick>
               </ModSettings>
