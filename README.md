@@ -1,6 +1,5 @@
-# Malrio
-
-![Malrio Logo](https://malmactor.github.io/malrio/img/logo.png)
+# Project Malrio
+<img src="https://malmactor.github.io/malrio/img/logo.png" height = "250" alt="calculator" align=center />
 
 Visit our [GitHub Page](https://malmactor.github.io/malrio/ "malrio") for general project descriptions.
 ## Repository structure
