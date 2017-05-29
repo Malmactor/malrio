@@ -1,7 +1,7 @@
 """Tkinter-based render for visualization
 """
 
-__author__ = "Liyan Chen"
+__author__ = "Liyan Chen, Chang Gao"
 __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 
@@ -21,7 +21,7 @@ class TKRender:
 
         self.root = tk.Tk()
         self.root.resizable(0, 0)
-        self.canvas = tk.Canvas(master=self.root, width=maxx * 16 + 100, height=maxy * 16)
+        self.canvas = tk.Canvas(master=self.root, width=maxx * 16 + 200, height=maxy * 16)
         self.canvas.grid(row=0, column=0, sticky=tk.N + tk.S + tk.W + tk.E)
         self.root.rowconfigure(0, weight=1)
         self.root.columnconfigure(0, weight=1)
