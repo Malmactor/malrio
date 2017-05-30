@@ -6,6 +6,7 @@ __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 
 import unittest
+
 import numpy as np
 
 
