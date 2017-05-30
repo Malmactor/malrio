@@ -11,3 +11,7 @@ import unittest
 class TestTFRecordIO(unittest.TestCase):
     def test_IO(self):
         pass
+
+
+if __name__ == "__main__":
+    unittest.main()
