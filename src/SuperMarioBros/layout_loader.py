@@ -5,9 +5,10 @@ __author__ = "Liyan Chen, Chang Gao"
 __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 
-
 import xml.etree.ElementTree as ET
+
 import numpy as np
+
 import default_layout
 
 
@@ -43,6 +44,7 @@ def layout_fromfile(filename, config=None):
 
 def layout_fromdefault():
     return default_layout.layout
+
 
 def layout_fromdefault_short():
     return default_layout.shortlayout
