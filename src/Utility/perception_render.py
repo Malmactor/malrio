@@ -7,6 +7,7 @@ __license__ = "MIT"
 
 import numpy as np
 
+
 class PerceptionRenderer:
     def __init__(self, layout, tfrecord_writer=None, config=None):
         """
@@ -25,12 +26,14 @@ class PerceptionRenderer:
         self.tfrecord_writer = tfrecord_writer
 
         # pad layout, set y-axis pad to be 0, and x-axis pad to be 1 (including the corners)
-        pad_layout = np.lib.pad(layout, (int(self.crop_area[1]/2), int(self.crop_area[0]/2)), 'constant', constant_values=(1, 1))
-        pad_layout[int(self.crop_area[1]/2):-int(self.crop_area[1]/2), -int(self.crop_area[0]/2):] = 0
+        pad_layout = np.lib.pad(layout, (int(self.crop_area[1] / 2), int(self.crop_area[0] / 2)), 'constant',
+                                constant_values=(1, 1))
+        pad_layout[int(self.crop_area[1] / 2):-int(self.crop_area[1] / 2), -int(self.crop_area[0] / 2):] = 0
         self.pad_layout = pad_layout
         # print pad_layout
 
         # other necessary stuff in config
+        self.config = config
 
     def crop_layout(self, mario_center):
         """
@@ -38,9 +41,8 @@ class PerceptionRenderer:
         :param mario_center: 2D numpy array of mario center position (x, y)
         :return: A cropped region of the layout represented as a 2D numpy array with size of (w, h)
         """
-        return self.pad_layout[int(mario_center[0]):int(mario_center[0])+self.crop_area[0],
-                               int(mario_center[1]):int(mario_center[1])+self.crop_area[1]]
-
+        return self.pad_layout[int(mario_center[0]):int(mario_center[0]) + self.crop_area[0],
+               int(mario_center[1]):int(mario_center[1]) + self.crop_area[1]]
 
     def sample(self, cropped, mario_center):
         """
@@ -51,12 +53,11 @@ class PerceptionRenderer:
         cropped region
         """
         expand_crop = cropped.repeat(2, axis=0).repeat(2, axis=1)
-        dx = int(mario_center[0]/0.5)%2
-        dy = int(mario_center[1]/0.5)%2
-        sample_crop = expand_crop[dx:expand_crop.shape[0]-1+dx, dy:expand_crop.shape[1]-1+dy]
+        dx = int(mario_center[0] / 0.5) % 2
+        dy = int(mario_center[1] / 0.5) % 2
+        sample_crop = expand_crop[dx:expand_crop.shape[0] - 1 + dx, dy:expand_crop.shape[1] - 1 + dy]
         # TODO: one-hot encoding
         return sample_crop
-
 
     def render(self, rigid):
         """
