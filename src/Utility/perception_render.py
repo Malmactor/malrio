@@ -50,7 +50,7 @@ class PerceptionRenderer:
         Rasterize the cropped region and mario into pixel representations
         :param cropped: 2D numpy array of cropped layout
         :param mario_center: 2D numpy array of the mario center position
-        :return: 3D numpy array (4, y * pix_per_block, x * pix_per_block) of pixel-level one-hot encoding for the
+        :return: 3D numpy array (x * pix_per_block, y * pix_per_block, 4) of pixel-level one-hot encoding for the
         cropped region
         """
         expand_crop = cropped.repeat(self.pix_per_block, axis=0).repeat(self.pix_per_block, axis=1)
@@ -64,11 +64,11 @@ class PerceptionRenderer:
 
         # generate one-hot encoding
         new_x, new_y = expand_crop.shape
-        encoding_crop = np.zeros((4, new_x, new_y))
-        encoding_crop[0, x_left:x_right, y_left:y_right] = 1 # mario
-        encoding_crop[1,:,:][expand_crop == 1] = 1 # block
-        encoding_crop[2,:,:][expand_crop == 2] = 1 # lava
-        encoding_crop[3,:,:][expand_crop == 3] = 1 # goal
+        encoding_crop = np.zeros((new_x, new_y, 4))
+        encoding_crop[x_left:x_right, y_left:y_right, 0] = 1 # mario
+        encoding_crop[:,:,1][expand_crop == 1] = 1 # block
+        encoding_crop[:,:,2][expand_crop == 2] = 1 # lava
+        encoding_crop[:,:,3][expand_crop == 3] = 1 # goal
 
         return encoding_crop
 
