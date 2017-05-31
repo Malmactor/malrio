@@ -43,4 +43,7 @@ class PerceptionRenderer:
         :return: None.
         """
         pos = rigid.get_center()
+        # self.crop_layout(...)
+        # self.sample(...)
+        # call writer ...
         pass
