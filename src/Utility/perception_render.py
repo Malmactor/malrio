@@ -6,6 +6,7 @@ __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 
 import numpy as np
+from math import floor, ceil
 
 
 class PerceptionRenderer:
@@ -20,17 +21,17 @@ class PerceptionRenderer:
         }
         """
         self.layout = layout
-        self.crop_area = (15, 15) if config is None or "crop_area" not in config else config["crop_area"]
+        self.crop_area = None if config is None or "crop_area" not in config else config["crop_area"]
         self.layout_area = layout.shape if config is None or "layout_area" not in config else config["layout_area"]
         self.pix_per_block = 4 if config is None or "pix_per_block" not in config else config["pix_per_block"]
         self.tfrecord_writer = tfrecord_writer
+        self.mario_bb = None if config is None or "mario_bb" not in config else config["mario_bb"]
 
         # pad layout, set y-axis pad to be 0, and x-axis pad to be 1 (including the corners)
-        pad_layout = np.lib.pad(layout, (int(self.crop_area[1] / 2), int(self.crop_area[0] / 2)), 'constant',
+        pad_layout = np.lib.pad(layout, (int(self.crop_area[0] / 2), int(self.crop_area[1] / 2)), 'constant',
                                 constant_values=(1, 1))
-        pad_layout[int(self.crop_area[1] / 2):-int(self.crop_area[1] / 2), -int(self.crop_area[0] / 2):] = 0
+        pad_layout[int(self.crop_area[0] / 2):-int(self.crop_area[0] / 2), -int(self.crop_area[1] / 2):] = 0
         self.pad_layout = pad_layout
-        # print pad_layout
 
         # other necessary stuff in config
         self.config = config
@@ -49,17 +50,27 @@ class PerceptionRenderer:
         Rasterize the cropped region and mario into pixel representations
         :param cropped: 2D numpy array of cropped layout
         :param mario_center: 2D numpy array of the mario center position
-        :return: 3D numpy array (x * pix_per_block-1, y * pix_per_block-1, 4) of pixel-level one-hot encoding for the
+        :return: 3D numpy array (4, y * pix_per_block, x * pix_per_block) of pixel-level one-hot encoding for the
         cropped region
         """
-        expand_crop = cropped.repeat(2, axis=0).repeat(2, axis=1)
-        dx = int(mario_center[0] / 0.5) % 2
-        dy = int(mario_center[1] / 0.5) % 2
-        sample_crop = expand_crop[dx:expand_crop.shape[0] - 1 + dx, dy:expand_crop.shape[1] - 1 + dy]
-        # TODO: one-hot encoding
+        expand_crop = cropped.repeat(self.pix_per_block, axis=0).repeat(self.pix_per_block, axis=1)
+        edge_pad = int(self.crop_area[0]/2)*self.pix_per_block
 
+        # bounding box of mario
+        x_left = int(floor((mario_center[0] - self.mario_bb[0]) * self.pix_per_block))+edge_pad
+        x_right = int(floor((mario_center[0] + self.mario_bb[0]) * self.pix_per_block))+edge_pad+1
+        y_left = int(floor((mario_center[1] - self.mario_bb[1]) * self.pix_per_block))+edge_pad
+        y_right = int(floor((mario_center[1] + self.mario_bb[1]) * self.pix_per_block))+edge_pad+1
 
-        return sample_crop
+        # generate one-hot encoding
+        new_x, new_y = expand_crop.shape
+        encoding_crop = np.zeros((4, new_x, new_y))
+        encoding_crop[0, x_left:x_right, y_left:y_right] = 1 # mario
+        encoding_crop[1,:,:][expand_crop == 1] = 1 # block
+        encoding_crop[2,:,:][expand_crop == 2] = 1 # lava
+        encoding_crop[3,:,:][expand_crop == 3] = 1 # goal
+
+        return encoding_crop
 
     def render(self, rigid):
         """

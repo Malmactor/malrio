@@ -9,7 +9,7 @@ import sys
 import numpy as np
 
 
-def make_simple_layout(config={'layout_area': (15, 100), 'layout_inv': True}):
+def make_simple_layout(config):
     """
     Make a simple Mario Map
     :param config: Global configuration{
