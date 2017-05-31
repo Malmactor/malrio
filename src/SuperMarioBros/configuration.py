@@ -20,7 +20,8 @@ simulation_config = {
     "init_pos": np.array([2, 3, 0]),
     "end_pos": np.array([33, 2.5, 0]),
     "empty_action": "remains",
-    "id2block": {0: 'air', 1: 'brick_block', 2: 'lava', 3: 'red_mushroom'}
+    "id2block": {0: 'air', 1: 'brick_block', 2: 'lava', 3: 'red_mushroom'},
+    "crop_area": (15, 15)
 }
 
 phyx_const = {

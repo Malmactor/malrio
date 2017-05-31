@@ -20,7 +20,7 @@ class PerceptionRenderer:
         }
         """
         self.layout = layout
-        self.crop_area = None if config is None or "crop_area" not in config else config["crop_area"]
+        self.crop_area = (15, 15) if config is None or "crop_area" not in config else config["crop_area"]
         self.layout_area = layout.shape if config is None or "layout_area" not in config else config["layout_area"]
         self.pix_per_block = 4 if config is None or "pix_per_block" not in config else config["pix_per_block"]
         self.tfrecord_writer = tfrecord_writer
@@ -57,6 +57,8 @@ class PerceptionRenderer:
         dy = int(mario_center[1] / 0.5) % 2
         sample_crop = expand_crop[dx:expand_crop.shape[0] - 1 + dx, dy:expand_crop.shape[1] - 1 + dy]
         # TODO: one-hot encoding
+
+
         return sample_crop
 
     def render(self, rigid):
