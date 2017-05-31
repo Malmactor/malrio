@@ -6,9 +6,12 @@ __license__ = "MIT"
 
 action_remapping = {
     "remains": 0,
-    "left": 1,
-    "right": 2,
-    "press_jump": 3
+    "left_nojump": 1,
+    "right_nojump": 2,
+    "left_jump": 3,
+    "right_jump": 4,
+    "nolr_jump": 5,
+    "no_key": 6
 }
 
 def translate_path(action_path):

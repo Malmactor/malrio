@@ -91,7 +91,7 @@ def a_star(layout, simulation, init_pos, end_pos, actions, interval=5, config=No
 
         if frontier[0] > greatest_x:
             greatest_x = frontier[0]
-            print frontier[0], frontier[3], pruned_num
+            # print frontier[0], frontier[3], pruned_num
 
         # Expand frontier
         for act in actions:
