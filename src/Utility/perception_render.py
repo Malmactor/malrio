@@ -5,8 +5,9 @@ __author__ = "Chang Gao, Liyan Chen"
 __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 
+from math import floor
+
 import numpy as np
-from math import floor, ceil
 
 
 class PerceptionRenderer:
@@ -54,21 +55,21 @@ class PerceptionRenderer:
         cropped region
         """
         expand_crop = cropped.repeat(self.pix_per_block, axis=0).repeat(self.pix_per_block, axis=1)
-        edge_pad = int(self.crop_area[0]/2)*self.pix_per_block
+        edge_pad = int(self.crop_area[0] / 2) * self.pix_per_block
 
         # bounding box of mario
-        x_left = int(floor((mario_center[0] - self.mario_bb[0]) * self.pix_per_block))+edge_pad
-        x_right = int(floor((mario_center[0] + self.mario_bb[0]) * self.pix_per_block))+edge_pad+1
-        y_left = int(floor((mario_center[1] - self.mario_bb[1]) * self.pix_per_block))+edge_pad
-        y_right = int(floor((mario_center[1] + self.mario_bb[1]) * self.pix_per_block))+edge_pad+1
+        x_left = int(floor((mario_center[0] - self.mario_bb[0]) * self.pix_per_block)) + edge_pad
+        x_right = int(floor((mario_center[0] + self.mario_bb[0]) * self.pix_per_block)) + edge_pad + 1
+        y_left = int(floor((mario_center[1] - self.mario_bb[1]) * self.pix_per_block)) + edge_pad
+        y_right = int(floor((mario_center[1] + self.mario_bb[1]) * self.pix_per_block)) + edge_pad + 1
 
         # generate one-hot encoding
         new_x, new_y = expand_crop.shape
         encoding_crop = np.zeros((new_x, new_y, 4), dtype=self.config["dtype"])
-        encoding_crop[x_left:x_right, y_left:y_right, 0] = 1 # mario
-        encoding_crop[:,:,1][expand_crop == 1] = 1 # block
-        encoding_crop[:,:,2][expand_crop == 2] = 1 # lava
-        encoding_crop[:,:,3][expand_crop == 3] = 1 # goal
+        encoding_crop[x_left:x_right, y_left:y_right, 0] = 1  # mario
+        encoding_crop[:, :, 1][expand_crop == 1] = 1  # block
+        encoding_crop[:, :, 2][expand_crop == 2] = 1  # lava
+        encoding_crop[:, :, 3][expand_crop == 3] = 1  # goal
 
         return encoding_crop
 
