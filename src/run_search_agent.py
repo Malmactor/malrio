@@ -18,7 +18,7 @@ use_mc = False
 config = SMB.simulation_config
 config.update(SMB.render_config)
 
-layout = SMB.layout_fromdefault_short()
+layout = SV.make_simple_layout(config)
 
 simulation = SMB.MarioSimulation(layout, config=config)
 

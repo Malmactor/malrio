@@ -34,7 +34,7 @@ def make_simple_layout(config):
 
 
     # generate lavas
-    i = 2
+    i = 3
     while i < maze_c-2:
         raml = np.random.randint(10)
         if raml == 0:
@@ -45,7 +45,7 @@ def make_simple_layout(config):
     # generate blocks from ground
     maxb = min(int(maze_r/3), 4) # from 1/3 lower part
     if maxb > 1:
-        i = 2
+        i = 3
         while i < maze_c-4 :
             if maze[maze_r-2][i] != 2 and maze[maze_r-2][i+1] != 2 :
                 ramh = np.random.randint(maxb)
@@ -57,7 +57,7 @@ def make_simple_layout(config):
 
     # generate blocks in air
     maxb = int(maze_r/2) # from 1/2 lower part
-    i = 2
+    i = 3
     while i < maze_c-2:
         raml = np.random.randint(1+max(int(maze_c/8), 8))
         ramh = np.random.randint(maxb)
