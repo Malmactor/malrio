@@ -1,7 +1,7 @@
 """Main program for running keyboard agent without annoying malmo stuff :)
 """
 
-__author__ = "Liyan Chen"
+__author__ = "Chang Gao"
 __copyright__ = "Copyright (c) 2017 Malmactor"
 __license__ = "MIT"
 
