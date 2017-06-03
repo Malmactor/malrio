@@ -23,4 +23,4 @@ keypoller = SMB.KeyPoller()
 
 actions = AG.interactive_agent(simulation, keypoller, render, config=config)
 
-SV.data.store(actions, layout)
+SV.data.store(actions, layout, 'gclayout.txt', 'gcpath.txt')

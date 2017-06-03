@@ -21,18 +21,18 @@ def translate_path(action_path):
     return ret
 
 
-def store(action_path, layout):
+def store(action_path, layout, layout_name='layout.txt', path_name='path.txt'):
     """
     store action_path and map
     :param layout: 2D numpy array layout (transposed)
     :param action_path: A list of action_path
     """
 
-    with open('layout.txt','a') as layout_file:
+    with open(layout_name,'a') as layout_file:
         np.savetxt(layout_file, layout, fmt='%i', newline=" ")
         layout_file.write("\n")
 
-    with open('path.txt','a') as path_file:
+    with open(path_name,'a') as path_file:
         np.savetxt(path_file, translate_path(action_path), fmt='%i', newline=" ")
         path_file.write("\n")
 
