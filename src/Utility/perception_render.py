@@ -67,9 +67,9 @@ class PerceptionRenderer:
         new_x, new_y = expand_crop.shape
         encoding_crop = np.zeros((new_x, new_y, 4), dtype=self.config["dtype"])
         encoding_crop[x_left:x_right, y_left:y_right, 0] = 1  # mario
-        encoding_crop[:, :, 1][expand_crop == 1] = 1  # block
-        encoding_crop[:, :, 2][expand_crop == 2] = 1  # lava
-        encoding_crop[:, :, 3][expand_crop == 3] = 1  # goal
+        encoding_crop[:, :, 1][expand_crop == 1] = 1  # bricks
+        encoding_crop[:, :, 2][expand_crop == 2] = 1  # enemies (lava)
+        encoding_crop[:, :, 3][expand_crop == 3] = 1  # rewards and goals
 
         return encoding_crop
 
