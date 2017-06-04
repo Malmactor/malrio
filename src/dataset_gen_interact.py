@@ -11,6 +11,8 @@ import Utility as UT
 import Supervised as SV
 import Utility as Util
 
+DEBUG  = False
+
 # may move to global config
 
 config = SMB.simulation_config
@@ -32,5 +34,6 @@ crop_y = config["pix_per_block"]*config["crop_area"][1]
 
 SV.data.store_cropped(crop_x, crop_y, percept_render, pos_act_pairs, 'input_map.txt', 'input_action.txt', config)
 
-SV.data.read_cropped("input_map.txt", (5, 60, 60, 4))
-SV.data.read_cropped("input_action.txt")
+if DEBUG:
+    SV.data.read_cropped("input_map.txt", (5, 60, 60, 4))
+    SV.data.read_cropped("input_action.txt")
