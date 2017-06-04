@@ -9,6 +9,7 @@ import numpy as np
 
 simulation_config = {
     "dtype": "float32",
+    "store_dtype": "float16",
     "delta_t": 1.0,
     "template_path": "SuperMarioBros/mission_template.xml",
     "epsilon": 0.00000001,
@@ -22,7 +23,9 @@ simulation_config = {
     "end_pos": np.array([119, 2, 0]),
     "empty_action": "remains",
     "id2block": {0: 'air', 1: 'brick_block', 2: 'lava', 3: 'red_mushroom'},
-    "crop_area": (15, 15)
+    "crop_area": (15, 15),
+    'pix_per_block': 4, # unit-to-pixel for map upsample, in each axis
+    "interval": 5, # upsample interval of actions
 }
 
 phyx_const = {
