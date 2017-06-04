@@ -36,21 +36,20 @@ def interactive_agent(simulation, keypoller, render, config=None):
 
         if key and key in key_act_map:
             round_start = True
-            simulation.advance_frame(key_act_map[key])
             postions.append((simulation.mario.state[0, 0], simulation.mario.state[1, 0]))
             actions.append(key_act_map[key])
+            simulation.advance_frame(key_act_map[key])
             none_times = 0
             renderable = simulation.get_renderable()
             render.render(renderable)
             if DEBUG:
                 print key_act_map[key]
-                print (simulation.mario.state[0, 0], simulation.mario.state[1, 0])
 
         elif none_times < interval-1:
-            simulation.advance_frame(empty_action)
             if round_start:
                 postions.append((simulation.mario.state[0, 0], simulation.mario.state[1, 0]))
                 actions.append(empty_action)
+            simulation.advance_frame(empty_action)
             none_times += 1
             if none_times == interval-1:
                 if round_start:
