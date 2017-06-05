@@ -8,6 +8,8 @@ __license__ = "MIT"
 import numpy as np
 import time
 
+DEBUG = True
+
 key_act_map = {
     "a": "left_nojump",
     "d": "right_nojump",
@@ -20,29 +22,41 @@ key_act_map = {
 def interactive_agent(simulation, keypoller, render, config=None):
 
     empty_action = config["empty_action"]
+    interval = config["interval"]
     key = None
-    none_times = 0
-    prevkey = None
+    none_times = -1
+    round_start = False
+
+    pos_act_pairs = []
+    postions = []
     actions = []
 
     while not key == "m":
         key = keypoller()
         
         if key and key in key_act_map:
-            prevkey = key
-            print key_act_map[key]
-            print simulation.mario.state
-            simulation.advance_frame(key_act_map[key])
+            round_start = True
+            postions.append((simulation.mario.state[0, 0], simulation.mario.state[1, 0]))
             actions.append(key_act_map[key])
+            simulation.advance_frame(key_act_map[key])
             none_times = 0
             renderable = simulation.get_renderable()
             render.render(renderable)
-        elif none_times <= 1:
+            if DEBUG:
+                print key_act_map[key]
+
+        elif none_times < interval-1:
+            if round_start:
+                postions.append((simulation.mario.state[0, 0], simulation.mario.state[1, 0]))
+                actions.append(empty_action)
             simulation.advance_frame(empty_action)
-            actions.append(empty_action)
             none_times += 1
+            if none_times == interval-1:
+                if round_start:
+                    pos_act_pairs.append((postions, actions))
+                postions = []
+                actions = []
             renderable = simulation.get_renderable()
             render.render(renderable)
-        # else:
-        #     none_times = simulation.next_none_time(none_times)
-    return actions
+
+    return pos_act_pairs
