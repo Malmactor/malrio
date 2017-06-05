@@ -117,7 +117,7 @@ class CollidableAABB:
         self.radius = radius[0:2]
 
     def __str__(self):
-        return ' '.join(map(lambda num: str(num), self.static_center[:, 0]))
+        return ' '.join(map(lambda num: str(num), self.static_center[:]))
 
     def get_center(self):
         return self.static_center

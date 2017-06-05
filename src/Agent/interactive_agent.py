@@ -22,24 +22,27 @@ def interactive_agent(simulation, keypoller, render, config=None):
     empty_action = config["empty_action"]
     key = None
     none_times = 0
-
+    prevkey = None
     actions = []
 
     while not key == "m":
         key = keypoller()
-
+        
         if key and key in key_act_map:
+            prevkey = key
             print key_act_map[key]
+            print simulation.mario.state
             simulation.advance_frame(key_act_map[key])
             actions.append(key_act_map[key])
             none_times = 0
             renderable = simulation.get_renderable()
             render.render(renderable)
-        elif none_times <= 4:
+        elif none_times <= 1:
             simulation.advance_frame(empty_action)
             actions.append(empty_action)
             none_times += 1
             renderable = simulation.get_renderable()
             render.render(renderable)
-
+        # else:
+        #     none_times = simulation.next_none_time(none_times)
     return actions

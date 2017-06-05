@@ -29,7 +29,7 @@ def layout_tobb(layout, config=None):
     return pos2bb
 
 
-def collision_proposal(mario, pos2bb, config=None):
+def collision_proposal(mario, pos2bb, config=None,xdist=2):
     """
     Propose potential collision box around mario
     :param mario: CollidableRigid instance
@@ -37,7 +37,7 @@ def collision_proposal(mario, pos2bb, config=None):
     :param config: Global configuration
     :return: List of potential collision boxes
     """
-    minx, miny, maxx, maxy = -2, -1, 2, 1
+    minx, miny, maxx, maxy = -xdist, -1, xdist, 1
 
     center = mario.get_center()
 
@@ -79,6 +79,7 @@ class MarioSimulation:
         :param layout: Two-dimensional numpy array layout
         :param config: Global configuration
         """
+            
         self.layout = layout
         self.config = config
 
@@ -97,15 +98,20 @@ class MarioSimulation:
         :param action: agent action for current frame
         :return: None
         """
+        if(self.mario.state[0][0] <= 0.5):
+            return
         # Advance a time step
         self.mario.update()
 
         # Locate blocks for collision detections
         bb_to_check = collision_proposal(self.mario, self.brick_bb, self.config)
+        
 
-        if not bb_to_check or compensate_gravity(self.mario, bb_to_check, self.config):
+        gravity = compensate_gravity(self.mario, bb_to_check, self.config)
+
+        if not bb_to_check or gravity:
             self.mario.reaction(give_gravity)
-
+        
         # Resolve collisions
         collisions = list(filter(lambda pair: pair[1]['hit'] is not None,
                                  map(lambda bb: (bb.get_center(), bb.collide(self.mario)), bb_to_check)))
@@ -127,3 +133,21 @@ class MarioSimulation:
 
     def get_renderable(self):
         return self.mario
+    
+    def next_none_time(self, ori):
+        if(self.mario.state[0][0] <= 0.5):
+            return ori
+        ll = []
+        for bb in self.brick_bb:
+            if bb[0] == int(self.mario.state[0][0]):
+                if bb[1] < int(self.mario.state[1][0]):
+                    ll.append(bb)
+        ll = sorted(ll,key=lambda x:x[1],reverse=True)
+        block_below = ll[0]
+        print self.mario.state, block_below
+        if self.mario.state[1][0] - block_below[1] > 1.05:
+                print "self", self.mario.state, block_below
+                print "END"
+                return 0
+        return ori
+            
