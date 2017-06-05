@@ -4,6 +4,7 @@ title: "Final Report"
 description: "Proudly Introducing Mario"
 header-img: "img/home-bg.jpg"
 ---
+
 ### Video
 
 <iframe src="https://www.youtube.com/embed/8IkFP0T3yOA?VQ=HD1080" width="768" height="432" frameborder="0" allowfullscreen></iframe>
@@ -36,7 +37,7 @@ $$\begin{bmatrix}
 \end{bmatrix}$$, where $$X, v, a$$ denotes displacement, velocity and acceleration respectively.
 
     - _Status Update_:  For each time step $$\Delta t$$, a matrix multiplication would give the next state by preserving the following equations: $$ v_{t+\Delta t} = v_t + a_t \Delta t$$, $$ X_{t+\Delta t} = X_t + v_t \Delta t + \frac{1}{2} a_t \Delta t^2$$. Parameters of the original SuperMarioBros physics are replicated to reproduce the authentic controlling style of it.
-    - _Actor control_: We support a group of actions and action combinations. Like the "⬅️➡️AB" buttons of original Super Mario Bros game,  our control design can make 6 actions: jump, left move, right move, jump with left move, jump with right move, remain. Implementation of actions are achieved by manipulating specific velocity and accelerations of the system.
+    - _Actor control_: We support a group of actions and action combinations. Like the "LFAB" buttons of original Super Mario Bros game,  our control design can make 6 actions: jump, left move, right move, jump with left move, jump with right move, remain. Implementation of actions are achieved by manipulating specific velocity and accelerations of the system.
     - _Collision_: If Mario collide with the ground, y-velocity will be cancelled; if collide up to a brick, y-axis velocity will be inverted; if collide to bricks in sides, x-axis velocity will be cancelled.
 
 __Part II: Datasets collection for supervised training__<br>
