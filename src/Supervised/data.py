@@ -59,10 +59,12 @@ def store_cropped(crop_x, crop_y, render, pos_act_pairs, map_name, path_name, co
     :param pos_act_pairs: position-action pairs, grouped in intervals
     :param map_name, path_name: path to store file
     """
+    count = 0
     interval = config["interval"]
     for positions, rawactions in pos_act_pairs:
         maps = np.zeros((interval, crop_x, crop_y, 4), dtype=config["store_dtype"])
         actions = np.zeros((interval), dtype=config["store_dtype"])
+        al_actions = []
         for i in range(interval):
             maps[i,:,:,:] = render.crop_and_sample(positions[i])
             actions[i] = action_remapping[rawactions[i]]
@@ -72,9 +74,10 @@ def store_cropped(crop_x, crop_y, render, pos_act_pairs, map_name, path_name, co
             map_file.write("\n")
 
         with open(path_name,'a') as path_file:
-            np.savetxt(path_file, actions.flatten(), newline=" ")
+            count += len(al_actions)
+            np.savetxt(path_file, actions, newline=" ")
             path_file.write("\n")
-
+    print(count)
 
 def read_cropped(filepath, reshape=None, config=None):
     dtype = "float16" if config is None or "store_dtype" not in config else config["store_dtype"]

@@ -105,8 +105,6 @@ class MarioSimulation:
 
         # Locate blocks for collision detections
         bb_to_check = collision_proposal(self.mario, self.brick_bb, self.config)
-        
-
         gravity = compensate_gravity(self.mario, bb_to_check, self.config)
 
         if not bb_to_check or gravity:

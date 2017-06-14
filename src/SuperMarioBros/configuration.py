@@ -18,14 +18,14 @@ simulation_config = {
     "block_radius": (0.5, 0.5),
     "mario_bb": np.array([0.45, 0.55]),
     "sec_per_frame": 0.016,
-    'layout_area': (120, 15),
+    'layout_area': (160, 15),
     "init_pos": np.array([1, 2, 0]),
-    "end_pos": np.array([119, 2, 0]),
+    "end_pos": np.array([159, 2, 0]),
     "empty_action": "remains",
     "id2block": {0: 'air', 1: 'brick_block', 2: 'lava', 3: 'red_mushroom'},
     "crop_area": (15, 15),
     'pix_per_block': 4, # unit-to-pixel for map upsample, in each axis
-    "interval": 5, # upsample interval of actions
+    "interval": 6, # upsample interval of actions
 }
 
 phyx_const = {
