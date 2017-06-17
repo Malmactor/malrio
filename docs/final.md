@@ -81,7 +81,10 @@ The basic end-to-end neural network modal is a stack of cnn layers trained with 
 2. __CNN__: When trained with the dataset, the prediction accuracy is usually around 80% - 90%. Since we have more data points than the parameters in CNN, it largely prevents overfitting and the test accuracy is very close to the training accuracy. In randomly generated maps, the success rate of CNN model is around 37%. The most frequent failure is getting stuck in corners.
 
 ### References
-TODO
+\[1] Szegedy, C., Ioffe, S., Vanhoucke, V., & Alemi, A. (2016). Inception-v4, inception-resnet and the impact of residual connections on learning. arXiv preprint arXiv:1602.07261. <br>
+\[2] Ioffe, S., & Szegedy, C. (2015). Batch normalization: Accelerating deep network training by reducing internal covariate shift. arXiv preprint arXiv:1502.03167. <br>
+
+
 
 ### Appendix
 1. __Physics Engine Implementation__: Since Minecraft physics engine has its own rules, we create a separate physics engine in python including Newtonian mechanical dynamics simulation and rigid body collision resolution. Simulation results are sent to Malmo for each frame. One of the core simulation mechanism is a time variant linear system, where a 3 by 3 matrix represents the Newtonian mechanical dynamics of Mario:
