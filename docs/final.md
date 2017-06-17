@@ -11,7 +11,7 @@ header-img: "img/home-bg.jpg"
 
 ### Project Summary
 
-Our project is a Super Mario Maker™ gameplay simulation in Minecraft, including two pieces of mechanism: a Mario player and a world map generator. We also provide an original physics engine to simulate actions of Mario.
+Our project is a Super Mario Maker™ gameplay simulation in Minecraft, including two pieces of mechanism: a Mario player and a world map generator.
 
 The player is a partially observable agent. For each time step, it perceives a visible frame from the world map and makes a decision for the next action. We provides both deep-learning based AI and A-star searching AI for the agent. Manual control through keyboard is also implemented.
 
