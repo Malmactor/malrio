@@ -16,7 +16,7 @@ Our project is a Super Mario Maker™ gameplay simulation in Minecraft, includin
 The generator gives random world arrangements like world levels of Super Mario Bros, which are environments that the mario agent interacts with.
 
 The goal for the agent is to reach the end of the level without falling into pits or hitting with enemies. And the agent interacts with the environment like human players do. It sees a part of the world map around it and decides an action to take. Therefore, the agent is a partially observable agent. Specifically, at each time step, it perceives a stack (5) of recent visible frames from the environment that surrounds it and makes a decision for the next action. The overview of the agent input/output is shown below:
-<img src="https://raw.githubusercontent.com/Malmactor/malrio/master/docs/img/general_3.png" width="768" height="412" alt="info">
+<img src="https://raw.githubusercontent.com/Malmactor/malrio/master/docs/img/general_3.png" width="600" alt="info">
 
 Playing mario with computational algorithms has been an interesting idea for decades, since it is a similar problem to robot maneuvering problems and path-planning problems, which have great significance in real life and are hard to solve with traditional algorithms. Previous methods include a-star and multilayer-perceptrons. However, they either require global map information and manual heuristic design(A*) or lack strong spatial inference capacities. Recent advances in combining reinforcement learning and convolutional neural networks have enabled the method of building an end-to-end neural network with such capacities. Therefore, our project is an end-to-end neural network based AI system to solve the mario playing problem.
 
@@ -75,7 +75,8 @@ The basic end-to-end neural network modal is a stack of CNN layers + ConvLSTM tr
 1. __Input__: A visible frame at a particular time is defined as a 15 blocks x 15 blocks region around Mario. Therefore, the frame can be represented as a square grid with one-hot encoding, where each cell has 4 features with values of [0, 1], indicating the presence of obstacles, Mario, coins, and enemies. Since the position of Mario is not necessarily aligned with block boundaries, a sampling scheme is used to provide finer details. In particular, each block is represented by 4 x 4 pixels, and the presence of a bounding box would result the feature of covered pixels to be turned on. And ground truth label from the dataset is encoded as 6 dimensional vector using one-hot encoding, where each dimension represents an action. When an action is labeled, the corresponding feature will be turned on to 1, and other features will be turned off to 0. Since the simple model only considers 1frame-1action mapping, inputs and labels can be represented as $$X \in R^{b,60,60,4}, Y \in R^{b,6}, \text{where b is the batch size}$$.
 
 2. __Structure__:
-<img src="https://raw.githubusercontent.com/Malmactor/malrio/master/docs/img/archi.png" width="768"alt="info">
+<img src="https://raw.githubusercontent.com/Malmactor/malrio/master/docs/img/archi.jpg" width="600"alt="info">
+
 The overall architecture is composed of two parts: feature extraction and spatial feature map registration. For feature extraction, we use ten inception-resnet blocks to extract the feature maps for object recognition. Those blocks cascade small filters to get larger reception fields with less parameters. The output of this part is five sets of feature maps corresponding to each consecutive frame. For spatial feature map registration, we use two Convolutional LSTM to process these feature maps for object registration, and the result is pooled by a global average pooling layer. Convolutional LSTM is capable of both capturing image information and maintaining long short term memory. Finally, a group of fully connected layers is added to learn the Q-function for Q-learning. The output represents next action of the actor. For design details, please refer to video and our GitHub.
 
 3. __Training__: The model is trained with adam gradient descent optimization to minimize the loss function.
@@ -86,7 +87,7 @@ The overall architecture is composed of two parts: feature extraction and spatia
 2. __Neural Network__: When trained with the dataset, the prediction accuracy is usually around 80%. Since we have more data points than the parameters in the network, it largely prevents overfitting and the test accuracy is very close to the training accuracy. In randomly generated maps, the success rate of CNN model is around 37%. The most frequent failure is getting stuck in corners.
 
 3. __Learning Rate__: We compared our new model with status report version:
-<img src="https://raw.githubusercontent.com/Malmactor/malrio/master/docs/img/lr.png" width="768" alt="info">
+<img src="https://raw.githubusercontent.com/Malmactor/malrio/master/docs/img/lr.png" width="400" alt="info">
 Since we changed to Q-Learning, we now focus on (average) reward value instead of classification accuracy. We can observe that after revising convolutional blocks and adding ConvLSTM for registration, the result improved graetly.
 
 ### References
