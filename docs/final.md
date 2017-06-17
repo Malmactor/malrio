@@ -41,7 +41,7 @@ __Part I: Environment setup and World Representations__<br>
     
 __Part II: Baseline Method__<br>
 
-1. __A\*__: 
+1. __A\*__: A\* agent is different to the 
 
 __Part II: Datasets collection for supervised training__<br>
 
