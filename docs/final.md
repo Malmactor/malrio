@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Final Report"
-description: "Proudly Introducing Mario"
+description: "Proudly Introducing Malrio"
 header-img: "img/home-bg.jpg"
 ---
 
@@ -15,7 +15,12 @@ Our project is a Super Mario Maker™ gameplay simulation in Minecraft, includin
 
 The generator gives random world arrangements like world levels of Super Mario Bros, which are environments that the mario agent interacts with.
 
+<<<<<<< HEAD
 The goal for the agent is to reach the end of the level without falling into pits or hitting with enemies. And the agent interacts with the environment like human players do. It sees a part of the world map around it and decides an action to take. Therefore, the agent is a partially observable agent. Specifically, at each time step, it perceives a stack (5) of recent visible frames from the environment that surrounds it and makes a decision for the next action. The overview of the agent input/output is shown below: ![System overview](< img src="https://raw.githubusercontent.com/Malmactor/malrio/master/docs/img/general_3.png" width = "768" height="auto" alt="info" align="center" />)
+=======
+The goal for the agent is to reach the end of the level without falling into pits or hitting with enemies. And the agent interacts with the environment like human players do. It sees a part of the world map around it and decides an action to take. Therefore, the agent is a partially observable agent. Specifically, at each time step, it perceives a stack (5) of recent visible frames from the environment that surrounds it and makes a decision for the next action. The overview of the agent input/output is shown below: ![System overview](https://github.com/Malmactor/malrio/blob/master/docs/img/general_3.png?raw=true)
+
+>>>>>>> 5304073162ea983c8e4045676e1b67633bbceddc
 
 Playing mario with computational algorithms has been an interesting idea for decades, since it is a similar problem to robot maneuvering problems and path-planning problems, which have great significance in real life and are hard to solve with traditional algorithms. Previous methods include a-star and multilayer-perceptrons. However, they either require global map information and manual heuristic design(A*) or lack strong spatial inference capacities. Recent advances in combining reinforcement learning and convolutional neural networks have enabled the method of building an end-to-end neural network with such capacities. Therefore, our project is an end-to-end neural network based AI system to solve the mario playing problem.
 
@@ -34,14 +39,18 @@ __Part I: Environment setup and World Representations__<br>
     - _Movement_: Like any simple objects in real life, the movement of mario is determined by displacement, velocity, and acceleration.
     - _Interaction_: Mario is not ghost and cannot go through walls or enemies. If he hits into a wall, he will stop; if he hits into an enemy, he will die.
     - _Implementation_: Implementation details are covered in the physics simulation section of appendix.
- 
+
 3. __Agent Reward__: Reward function for both the reinforcement learning and A\* heuristics
 
     - _Definition_: $Reward(state) = \lVert P_{destination} - P_{state} \rVert$
-    
+
 __Part II: Baseline Method__<br>
 
-1. __A\*__: A\* agent is different to the 
+<<<<<<< HEAD
+1. __A\*__:
+=======
+1. __A\*__: A\* agent is different to the
+>>>>>>> d64ddccdeb18468bf056800ba3bdb988f220d6f5
 
 __Part II: Datasets collection for supervised training__<br>
 
@@ -86,4 +95,3 @@ $$\begin{bmatrix}
     - _Status Update_:  For each time step $$\Delta t$$, a matrix multiplication would give the next state by preserving the following equations: $$ v_{t+\Delta t} = v_t + a_t \Delta t$$, $$ X_{t+\Delta t} = X_t + v_t \Delta t + \frac{1}{2} a_t \Delta t^2$$. Parameters of the original SuperMarioBros physics are replicated to reproduce the authentic controlling style of it.
     - _Actor control_: We support a group of actions and action combinations. Like the "LFAB" buttons of original Super Mario Bros game, our control design can make 6 actions: jump, left move, right move, jump with left move, jump with right move, remain. Implementation of actions are achieved by manipulating specific velocity and accelerations of the system.
     - _Collision_: If Mario collide with the ground, y-velocity will be cancelled; if collide up to a brick, y-axis velocity will be inverted; if collide to bricks in sides, x-axis velocity will be cancelled.
-
