@@ -76,8 +76,7 @@ The basic end-to-end neural network modal is a stack of cnn layers trained with 
 TODO
 
 ### Appendix
-__Physics Engine Implementation__ 
-2. __Control and collision__: Since Minecraft physics engine has its own rules, we create a separate physics engine in python including Newtonian mechanical dynamics simulation and rigid body collision resolution. Simulation results are sent to Malmo for each frame. One of the core simulation mechanism is a time variant linear system, where a 3 by 3 matrix represents the Newtonian mechanical dynamics of Mario:
+1. __Physics Engine Implementation__: Since Minecraft physics engine has its own rules, we create a separate physics engine in python including Newtonian mechanical dynamics simulation and rigid body collision resolution. Simulation results are sent to Malmo for each frame. One of the core simulation mechanism is a time variant linear system, where a 3 by 3 matrix represents the Newtonian mechanical dynamics of Mario:
 $$\begin{bmatrix}
     X & v_x & a_x \\
     Y & v_y & a_y \\
