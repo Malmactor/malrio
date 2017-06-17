@@ -13,9 +13,10 @@ header-img: "img/home-bg.jpg"
 
 Our project is a Super Mario Maker™ gameplay simulation in Minecraft, including two pieces of mechanism: a Mario player and a world map generator.
 
-The player is a partially observable agent. For each time step, it perceives a visible frame from the world map and makes a decision for the next action. We provides both deep-learning based AI and A-star searching AI for the agent. Manual control through keyboard is also implemented.
+The generator gives random world arrangements like world levels of Super Mario Bros, which are environments that the mario agent interacts with.
 
-The generator will randomly generate a Minecraft world similar to maps in Super Mario Bros. We provides both simple obstacles generator and Prim map generator. Each map is associated with a goal - red mushroom - for Mario to reach.
+The goal for the agent is to reach the end of the level without falling into pits or hitting with enemies. And the agent interacts with the environment like human players do. It sees a part of the world map around it and decides an action to take. Therefore, the agent is a partially observable agent. Specifically, at each time step, it perceives a stack (5) of recent visible frames from the environment that surrounds it and makes a decision for the next action. The overview of the system is shown below: ![System overview](img/system%20overview.jpg)
+
 
 The ultimate goal of this project is to train the malrio agent with reinforcement learning initialized by supervised learning so that, given a random world, it can play the Mario to the goal by making decisions based on perceptions.
 
