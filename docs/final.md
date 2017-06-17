@@ -15,30 +15,33 @@ Our project is a Super Mario Maker™ gameplay simulation in Minecraft, includin
 
 The generator gives random world arrangements like world levels of Super Mario Bros, which are environments that the mario agent interacts with.
 
-The goal for the agent is to reach the end of the level without falling into pits or hitting with enemies. And the agent interacts with the environment like human players do. It sees a part of the world map around it and decides an action to take. Therefore, the agent is a partially observable agent. Specifically, at each time step, it perceives a stack (5) of recent visible frames from the environment that surrounds it and makes a decision for the next action. The overview of the agent input/output is shown below: <img src="img/general_3.png" />
+The goal for the agent is to reach the end of the level without falling into pits or hitting with enemies. And the agent interacts with the environment like human players do. It sees a part of the world map around it and decides an action to take. Therefore, the agent is a partially observable agent. Specifically, at each time step, it perceives a stack (5) of recent visible frames from the environment that surrounds it and makes a decision for the next action. The overview of the agent input/output is shown below: ![System overview](https://github.com/Malmactor/malrio/blob/master/docs/img/general_3.png?raw=true)
 
-Although playing mario with algorithms is not a new idea
+Playing mario with computational algorithms has been an interesting idea for decades, since it is a similar problem to robot maneuvering problems and path-planning problems, which have great significance in real life and are hard to solve with traditional algorithms. Previous methods include a-star and multilayer-perceptrons. However, they either require global map information and manual heuristic design(A*) or lack strong spatial inference capacities. Recent advances in combining reinforcement learning and convolutional neural networks have enabled the method of building an end-to-end neural network with such capacities. Therefore, our project is an end-to-end neural network based AI system to solve the mario playing problem.
 
 ### Approaches
 
-__Part I: Environment setup and Physics Simulation__<br>
+__Part I: Environment setup and World Representations__<br>
 
-1. __World representations__: In the physics simulator, we attempt to simulate a Mario world inside Minecraft:
+1. __World representations__: Since the environment is built on Minecraft, common objects in super mario world are represented by similar objects in Minecraft:
 
-    - _Brick_: It simulates ground or unbreakable brick in Super Mario Bros. All bricks are colored brown in Malrio, and are unbreakable. When hitting a brick with feet, Mario will land on it. When hitting a brick with head, Mario will fall back. When hitting a brick with each side of the body, Mario will stop.
-    - _Lava_: It simulates items that will kill Mario, such as pits or lava in Super Mario Bros.
-    - _Mushroom_: It simulates the goal flag in Super Mario Bros.
+    - _Minecraft Bricks_: Ground, ceilings, pipes, anything you cannot bread in super mario world. unbreakable brick in Super Mario Bro.
+    - _Minecraft Lava_: Enemies, pits, anything that kills mario.
+    - _Minecraft Mushroom_: Goal Flags.
 
-2. __Control and collision__: Since Minecraft physics engine has its own rules, we create a separate physics engine in python including Newtonian mechanical dynamics simulation and rigid body collision resolution. Simulation results are sent to Malmo for each frame. One of the core simulation mechanism is a time variant linear system, where a 3 by 3 matrix represents the Newtonian mechanical dynamics of Mario:
-$$\begin{bmatrix}
-    X & v_x & a_x \\
-    Y & v_y & a_y \\
-    Z & v_z & a_z \\
-\end{bmatrix}$$, where $$X, v, a$$ denotes displacement, velocity and acceleration respectively.
+2. __Environment Rules__: Simple rules that the mario world run on.
 
-    - _Status Update_:  For each time step $$\Delta t$$, a matrix multiplication would give the next state by preserving the following equations: $$ v_{t+\Delta t} = v_t + a_t \Delta t$$, $$ X_{t+\Delta t} = X_t + v_t \Delta t + \frac{1}{2} a_t \Delta t^2$$. Parameters of the original SuperMarioBros physics are replicated to reproduce the authentic controlling style of it.
-    - _Actor control_: We support a group of actions and action combinations. Like the "LFAB" buttons of original Super Mario Bros game, our control design can make 6 actions: jump, left move, right move, jump with left move, jump with right move, remain. Implementation of actions are achieved by manipulating specific velocity and accelerations of the system.
-    - _Collision_: If Mario collide with the ground, y-velocity will be cancelled; if collide up to a brick, y-axis velocity will be inverted; if collide to bricks in sides, x-axis velocity will be cancelled.
+    - _Movement_: Like any simple objects in real life, the movement of mario is determined by displacement, velocity, and acceleration.
+    - _Interaction_: Mario is not ghost and cannot go through walls or enemies. If he hits into a wall, he will stop; if he hits into an enemy, he will die.
+    - _Implementation_: Implementation details are covered in the physics simulation section of appendix.
+ 
+3. __Agent Reward__: Reward function for both the reinforcement learning and A\* heuristics
+
+    - _Definition_: $Reward(state) = \lVert P_{destination} - P_{state} \rVert$
+    
+__Part II: Baseline Method__<br>
+
+1. __A\*__: 
 
 __Part II: Datasets collection for supervised training__<br>
 
@@ -73,5 +76,15 @@ The basic end-to-end neural network modal is a stack of cnn layers trained with 
 TODO
 
 ### Appendix
-__Physics Engine Implementation__ <br>
+__Physics Engine Implementation__ 
+2. __Control and collision__: Since Minecraft physics engine has its own rules, we create a separate physics engine in python including Newtonian mechanical dynamics simulation and rigid body collision resolution. Simulation results are sent to Malmo for each frame. One of the core simulation mechanism is a time variant linear system, where a 3 by 3 matrix represents the Newtonian mechanical dynamics of Mario:
+$$\begin{bmatrix}
+    X & v_x & a_x \\
+    Y & v_y & a_y \\
+    Z & v_z & a_z \\
+\end{bmatrix}$$, where $$X, v, a$$ denotes displacement, velocity and acceleration respectively.
+
+    - _Status Update_:  For each time step $$\Delta t$$, a matrix multiplication would give the next state by preserving the following equations: $$ v_{t+\Delta t} = v_t + a_t \Delta t$$, $$ X_{t+\Delta t} = X_t + v_t \Delta t + \frac{1}{2} a_t \Delta t^2$$. Parameters of the original SuperMarioBros physics are replicated to reproduce the authentic controlling style of it.
+    - _Actor control_: We support a group of actions and action combinations. Like the "LFAB" buttons of original Super Mario Bros game, our control design can make 6 actions: jump, left move, right move, jump with left move, jump with right move, remain. Implementation of actions are achieved by manipulating specific velocity and accelerations of the system.
+    - _Collision_: If Mario collide with the ground, y-velocity will be cancelled; if collide up to a brick, y-axis velocity will be inverted; if collide to bricks in sides, x-axis velocity will be cancelled.
 
