@@ -9,8 +9,6 @@ header-img: "img/home-bg.jpg"
 
 <iframe src="https://www.youtube.com/embed/8IkFP0T3yOA?VQ=HD1080" width="768" height="432" frameborder="0" allowfullscreen></iframe>
 
-<img src="https://raw.githubusercontent.com/Malmactor/malrio/master/docs/img/general_3.png" width="768" height="412" alt="info"></img>
-
 ### Project Summary
 
 Our project is a Super Mario Maker™ gameplay simulation in Minecraft, including two pieces of mechanism: a Mario player and a world map generator. We also provide an original physics engine to simulate actions of Mario.
