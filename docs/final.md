@@ -40,15 +40,18 @@ __Part I: Environment setup and World Representations__<br>
 
 3. __Agent Reward__: Reward function for both the reinforcement learning and A\* heuristics
 
-    - _Definition_: $Reward(state) = \lVert P_{destination} - P_{state} \rVert$
+    - _Definition_: $Reward(state) = 3000 - \lVert P_{destination} - P_{state} \rVert_1 \text{(L1 distance)}$, where 3000 is a rough estimation of expected path length. 
 
 __Part II: Baseline Method__<br>
 
-<<<<<<< HEAD
-1. __A\*__:
-=======
-1. __A\*__: A\* agent is different to the
->>>>>>> d64ddccdeb18468bf056800ba3bdb988f220d6f5
+1. __A\*__: A\* agent is different to the proposed method in terms of the expected input and prior knowledge. Therefore A\* to reinforcement learning is not an apple-to-apple comparison. The only reason for using A\* as a baseline is to provide some conceptual and qualitative comparisons.
+
+    - _State space_: All possible combinations of mario's displacement, velocity, and acceleration.
+    - _State transfer_: From t to t+1, any states that can be obtained by advancing a time step from the current state without making mario die.
+    - _Heuristic_: $h(state) = \lVert P_{destination} - P_{state} \rVert_1$
+    - _Unfairness_: A\* has both the global world map and exact state transfer functions, while the reinforcement learning agent can only see a small part of the world map around mario and it has no prior knowledge about the state transfer function. To quantitatively compare A\* with a such agent does not make sense. However, in the evaluation section, we will show qualitative comparisons, which indicate that A\* is computationally intractable due to infinite amount of states in continuous state space.
+     
+2. __Basic CNN with supervised training__: 
 
 __Part II: Datasets collection for supervised training__<br>
 
