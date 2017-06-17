@@ -20,13 +20,22 @@ config = SMB.simulation_config
 config.update(SMB.render_config)
 
 
-# state = [ [ 53.8557 , 0.115051 , 0.003479 , ],
-# [ 5.05 , 0.0 , 0.0 , ],
-# [ 0.0 , 0.0 , 0.0 , ],
-# ]
+state = [ [ 102.425 , 0.115051 , 0.003479 , ],
+[ 5.10396 , -0.250488 , -0.00732422 , ],
+[ 0.0 , 0.0 , 0.0 , ],
+]
 
-# config["init_pos"] = np.array([j[0] for j in state])
 
+config["init_pos"] = np.array([j[0] for j in state])
+def ndprint(a):
+        print '[',
+        for b in a:
+            print '[',
+            for c in b:
+                print c,
+                print ',',
+            print('],')
+        print ']',
 
 layout = SMB.layout_fromdefault()
 
@@ -52,12 +61,19 @@ simulation = SMB.MarioSimulation(layout, config)
 keypoller = SMB.KeyPoller()
 
 
-pos_act_pairs = AG.interactive_agent(simulation, keypoller, render, None, config)
+new_actions = AG.interactive_agent(simulation, keypoller, render, config)
 
-crop_x = config["pix_per_block"]*config["crop_area"][0]
-crop_y = config["pix_per_block"]*config["crop_area"][1]
+# print(new_actions)
+with open("input_action.txt","a") as f:
+    for action in new_actions:
+        f.write(action+'\n')
 
-SV.data.store_cropped(crop_x, crop_y, percept_render, pos_act_pairs, 'input_map.txt', 'input_action.txt', config)
+ndprint(simulation.mario.state)
+
+# crop_x = config["pix_per_block"]*config["crop_area"][0]
+# crop_y = config["pix_per_block"]*config["crop_area"][1]
+
+# SV.data.store_cropped(crop_x, crop_y, percept_render, pos_act_pairs, 'input_map.txt', 'input_action.txt', config)
 
 # if DEBUG:
     # SV.data.read_cropped("input_map.txt", (5, 60, 60, 4))

@@ -36,13 +36,11 @@ if use_astar:
     actions = ["right_nojump", "right_jump", "nolr_jump", "remains"]
     action_path = SV.a_star(layout, simulation, config["init_pos"], config["end_pos"], actions, interval=5, config=config)
 else:
-    action_path = ['remains', 'remains', 'remains', 'remains', 'remains',
-        'remains', 'remains', 'remains', 'remains', 'remains',
-        'remains', 'remains', 'remains', 'remains', 'remains']
+    action_path = []
     with open("input_action.txt") as actiontxt:
-        for i,line in enumerate(actiontxt):
-            tpath = [action_remapping[int(val)] for val in map(np.float32,line.split())]
-            action_path.extend(tpath)
+        for line in actiontxt.read().splitlines():
+            print(line)
+            action_path.append(line)
 
 print len(action_path)
 

@@ -124,6 +124,7 @@ class MarioSimulation:
             self.mario.reaction(hit_edge_reaction(closest_collision[1]))
 
         # Grab an action from input and simulate the force
+        print(action)
         self.mario.reaction(action_mapping[action])
 
         if collisions:
