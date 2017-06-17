@@ -81,7 +81,11 @@ The basic end-to-end neural network modal is a stack of CNN layers + ConvLSTM tr
 ### Evaluation
 1. __A-star__: Given enough time, the a star search is able to give a feasible solution. However, it usually takes too long. Thus, we only use a star search to generate examples on small maps to give examples to the cnn model.
 
-2. __CNN__: When trained with the dataset, the prediction accuracy is usually around 80% - 90%. Since we have more data points than the parameters in CNN, it largely prevents overfitting and the test accuracy is very close to the training accuracy. In randomly generated maps, the success rate of CNN model is around 37%. The most frequent failure is getting stuck in corners.
+2. __Neural Network__: When trained with the dataset, the prediction accuracy is usually around 80%. Since we have more data points than the parameters in the network, it largely prevents overfitting and the test accuracy is very close to the training accuracy. In randomly generated maps, the success rate of CNN model is around 37%. The most frequent failure is getting stuck in corners.
+
+3. __Learning Rate__: We compared our new model with status report version:
+<img src="https://raw.githubusercontent.com/Malmactor/malrio/master/docs/img/general_3.png" width="768" height="412" alt="info">
+Since we changed to Q-Learning, we now focus on (average) reward value instead of classification accuracy. We can observe that after revising convolutional blocks and adding ConvLSTM for registration, the result improved graetly.
 
 ### References
 \[1] Szegedy, C., Ioffe, S., Vanhoucke, V., & Alemi, A. (2016). Inception-v4, inception-resnet and the impact of residual connections on learning. arXiv preprint arXiv:1602.07261. <br>
