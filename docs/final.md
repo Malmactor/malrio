@@ -7,7 +7,7 @@ header-img: "img/home-bg.jpg"
 
 ### Video
 
-<iframe src="https://www.youtube.com/embed/8IkFP0T3yOA?VQ=HD1080" width="768" height="432" frameborder="0" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/JkVa7xYHzVA?VQ=HD1080" width="768" height="432" frameborder="0" allowfullscreen></iframe>
 
 ### Project Summary
 
@@ -15,10 +15,9 @@ Our project is a Super Mario Maker™ gameplay simulation in Minecraft, includin
 
 The generator gives random world arrangements like world levels of Super Mario Bros, which are environments that the mario agent interacts with.
 
-The goal for the agent is to reach the end of the level without falling into pits or hitting with enemies. And the agent interacts with the environment like human players do. It sees a part of the world map around it and decides an action to take. Therefore, the agent is a partially observable agent. Specifically, at each time step, it perceives a stack (5) of recent visible frames from the environment that surrounds it and makes a decision for the next action. The overview of the system is shown below: ![System overview](img/system%20overview.jpg)
+The goal for the agent is to reach the end of the level without falling into pits or hitting with enemies. And the agent interacts with the environment like human players do. It sees a part of the world map around it and decides an action to take. Therefore, the agent is a partially observable agent. Specifically, at each time step, it perceives a stack (5) of recent visible frames from the environment that surrounds it and makes a decision for the next action. The overview of the agent input/output is shown below: ![System overview](https://github.com/Malmactor/malrio/blob/master/docs/img/general_3.png)
 
-
-The ultimate goal of this project is to train the malrio agent with reinforcement learning initialized by supervised learning so that, given a random world, it can play the Mario to the goal by making decisions based on perceptions.
+Although playing mario with algorithms is not a new idea
 
 ### Approaches
 
