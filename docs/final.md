@@ -17,7 +17,7 @@ The generator gives random world arrangements like world levels of Super Mario B
 
 The goal for the agent is to reach the end of the level without falling into pits or hitting with enemies. And the agent interacts with the environment like human players do. It sees a part of the world map around it and decides an action to take. Therefore, the agent is a partially observable agent. Specifically, at each time step, it perceives a stack (5) of recent visible frames from the environment that surrounds it and makes a decision for the next action. The overview of the agent input/output is shown below:
 
-<img src="https://raw.githubusercontent.com/Malmactor/malrio/master/docs/img/general_3.png" width ="768" alt="info" align=center />
+<img src="https://raw.githubusercontent.com/Malmactor/malrio/master/docs/img/general_3.png" width="768" alt="info" align=center/>
 
 Playing mario with computational algorithms has been an interesting idea for decades, since it is a similar problem to robot maneuvering problems and path-planning problems, which have great significance in real life and are hard to solve with traditional algorithms. Previous methods include a-star and multilayer-perceptrons. However, they either require global map information and manual heuristic design(A*) or lack strong spatial inference capacities. Recent advances in combining reinforcement learning and convolutional neural networks have enabled the method of building an end-to-end neural network with such capacities. Therefore, our project is an end-to-end neural network based AI system to solve the mario playing problem.
 
